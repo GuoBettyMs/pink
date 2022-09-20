@@ -7,6 +7,7 @@ target 'pink' do
 
   # Pods for pink
   pod 'YPImagePicker'                                 #选取照片和视频 5.2.1
-  
+  #使用 Objective-C 写的 HUD 库，它可以在后台线程中显示一个带有指示器或标签的半透明的 HUD 窗口
+  pod 'MBProgressHUD', '~> 1.2.0'
   
 end

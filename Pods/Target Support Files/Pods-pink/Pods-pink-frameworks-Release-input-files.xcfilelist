@@ -1,4 +1,5 @@
 ${PODS_ROOT}/Target Support Files/Pods-pink/Pods-pink-frameworks.sh
+${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework
 ${BUILT_PRODUCTS_DIR}/PryntTrimmerView/PryntTrimmerView.framework
 ${BUILT_PRODUCTS_DIR}/SteviaLayout/Stevia.framework
 ${BUILT_PRODUCTS_DIR}/YPImagePicker/YPImagePicker.framework

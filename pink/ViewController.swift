@@ -12,8 +12,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("uu")
-        print("添加了YPImagePicker 库")
+        print("添加了MBProgressHUD 库")
     }
 
 
