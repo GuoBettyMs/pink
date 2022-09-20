@@ -12,7 +12,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("添加了MBProgressHUD 库")
+        print("添加了CHTCollectionViewWaterfallLayout 库")
+        print("添加了XLPagerTabStrip 库")
     }
 
 
