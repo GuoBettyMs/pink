@@ -13,6 +13,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         print("uu")
+        print("添加了YPImagePicker 库")
     }
 
 
