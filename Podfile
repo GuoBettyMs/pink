@@ -17,11 +17,13 @@ target 'pink' do
   pod 'AMapSearch'
   pod 'MJRefresh'
   pod 'DateToolsSwift'
+  
   pod 'Alamofire', '~> 5.2'
   pod 'AlipaySDK-iOS'
   pod 'LeanCloud'
   pod 'PopupDialog', '~> 1.1'
   pod 'FaveButton'
   
+  pod 'GrowingTextView', '0.7.2'
   
 end

@@ -18,7 +18,7 @@ class TabBarC: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        print("PopupDialog, FaveButton")
+        print("GrowingTextView")
         
 //        delegate = self
     }
