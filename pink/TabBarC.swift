@@ -18,7 +18,7 @@ class TabBarC: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        print("LeanCloud")
+        print("PopupDialog, FaveButton")
         
 //        delegate = self
     }

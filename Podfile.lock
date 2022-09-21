@@ -8,6 +8,8 @@ PODS:
     - AMapFoundation (>= 1.7.0)
   - CHTCollectionViewWaterfallLayout/Swift (0.9.10)
   - DateToolsSwift (5.0.0)
+  - DynamicBlurView (4.1.0)
+  - FaveButton (3.2.1)
   - GRDB.swift (5.26.1):
     - GRDB.swift/standard (= 5.26.1)
   - GRDB.swift/standard (5.26.1)
@@ -22,6 +24,8 @@ PODS:
     - SwiftProtobuf (~> 1.18)
   - MBProgressHUD (1.2.0)
   - MJRefresh (3.7.5)
+  - PopupDialog (1.1.1):
+    - DynamicBlurView (~> 4.0)
   - PryntTrimmerView (4.0.2)
   - SKPhotoBrowser (7.1.0)
   - SteviaLayout (4.7.3)
@@ -38,10 +42,12 @@ DEPENDENCIES:
   - AMapSearch
   - CHTCollectionViewWaterfallLayout/Swift
   - DateToolsSwift
+  - FaveButton
   - KMPlaceholderTextView (~> 1.4.0)
   - LeanCloud
   - MBProgressHUD (~> 1.2.0)
   - MJRefresh
+  - PopupDialog (~> 1.1)
   - SKPhotoBrowser
   - XLPagerTabStrip (~> 9.0)
   - YPImagePicker
@@ -55,11 +61,14 @@ SPEC REPOS:
     - AMapSearch
     - CHTCollectionViewWaterfallLayout
     - DateToolsSwift
+    - DynamicBlurView
+    - FaveButton
     - GRDB.swift
     - KMPlaceholderTextView
     - LeanCloud
     - MBProgressHUD
     - MJRefresh
+    - PopupDialog
     - PryntTrimmerView
     - SKPhotoBrowser
     - SteviaLayout
@@ -75,11 +84,14 @@ SPEC CHECKSUMS:
   AMapSearch: 8222912b82117557f3739132bb13fad8e2d19073
   CHTCollectionViewWaterfallLayout: b989a459788d7657ac010e03bc0f7eedca95a420
   DateToolsSwift: 4207ada6ad615d8dc076323d27037c94916dbfa6
+  DynamicBlurView: 58e18fae80bb614e34681a4486870e7d257b62e8
+  FaveButton: 93cfebf6030336fa7653fad2068c3152ed668b39
   GRDB.swift: e98cd55ec99dea5da99355d588149063e4cfa0eb
   KMPlaceholderTextView: 2206c3df39979e9396e2d96fa9f427a8951121b0
   LeanCloud: e6de4b8129ab68be7f70a9b77c4304f71c5a1a2c
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   MJRefresh: fdf5e979eb406a0341468932d1dfc8b7f9fce961
+  PopupDialog: 720c92befd8bc23c13442254945213db5612f149
   PryntTrimmerView: 6a43cc90df5d99addeabd33d4ba09b1365322130
   SKPhotoBrowser: cd95b95a6f352fc2a50992721299f75ead77f9ab
   SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
@@ -87,6 +99,6 @@ SPEC CHECKSUMS:
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
   YPImagePicker: f36043210c10b0783034eb1947d6e06e31c461e4
 
-PODFILE CHECKSUM: 5fecd957920fde7ac87698bc7d02a565ed69d527
+PODFILE CHECKSUM: e73edbfea2eeb057d96705f237e3d39c85b1b9e7
 
 COCOAPODS: 1.11.3
