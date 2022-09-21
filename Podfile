@@ -25,7 +25,6 @@ target 'pink' do
   pod 'FaveButton'
   pod 'ImageSlideshow', '~> 1.9.0'
   pod 'Kingfisher', '~> 6.0'
-  
   pod 'GrowingTextView', '0.7.2'
   pod 'SegementSlide', '3.0.1'
   pod 'ActionSheetPicker-3.0'

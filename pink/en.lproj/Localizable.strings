@@ -1,0 +1,16 @@
+/* 
+  Localizable.strings
+  pink
+
+  Created by isdt on 2022/9/21.
+  
+*/
+
+/* 首页上方的发现标签 */
+"Discovery" = "发现";
+
+/* 首页上方的关注标签 */
+"Follow" = "关注";
+
+/* 首页上方的附近标签 */
+"NearBy" = "附近";

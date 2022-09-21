@@ -1,0 +1,15 @@
+
+/* Class = "UITabBarItem"; title = "Post"; ObjectID = "3AL-f9-5yx"; */
+"3AL-f9-5yx.title" = "Post";
+
+/* Class = "UITabBarItem"; title = "Shopping"; ObjectID = "BRc-qX-otb"; */
+"BRc-qX-otb.title" = "Shopping";
+
+/* Class = "UITabBarItem"; title = "Message"; ObjectID = "W9h-bg-wSW"; */
+"W9h-bg-wSW.title" = "Message";
+
+/* Class = "UITabBarItem"; title = "Me"; ObjectID = "mLL-ZX-NSq"; */
+"mLL-ZX-NSq.title" = "Me";
+
+/* Class = "UITabBarItem"; title = "Home"; ObjectID = "nO7-Zs-rR7"; */
+"nO7-Zs-rR7.title" = "Home";

@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import MBProgressHUD
 
 extension UIView{
     
@@ -34,7 +33,7 @@ extension UIViewController{
         hud.mode = .text //不指定的话显示菊花和下面配置的文本
         hud.label.text = title
         hud.detailsLabel.text = subTitle
-        hud.hide(animated: true, afterDelay: 2)
+        hud.hide(animated: true, afterDelay: 2)         //2秒后自动隐藏
     }
 }
 
