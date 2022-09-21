@@ -18,7 +18,7 @@ class TabBarC: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        print("Kingfisher")
+        print("ImageSlideshow")
         
 //        delegate = self
     }
