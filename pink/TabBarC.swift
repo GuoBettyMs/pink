@@ -18,7 +18,7 @@ class TabBarC: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        print("UI")
+        print("MJRefresh, DateToolsSwift")
         
 //        delegate = self
     }
