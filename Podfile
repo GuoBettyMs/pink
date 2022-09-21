@@ -19,5 +19,8 @@ target 'pink' do
   pod 'DateToolsSwift'
   pod 'Alamofire', '~> 5.2'
   pod 'AlipaySDK-iOS'
+  pod 'LeanCloud'
+  
+  
   
 end

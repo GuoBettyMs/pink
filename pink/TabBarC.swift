@@ -18,7 +18,7 @@ class TabBarC: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        print("AlipaySDK-iOS")
+        print("LeanCloud")
         
 //        delegate = self
     }
