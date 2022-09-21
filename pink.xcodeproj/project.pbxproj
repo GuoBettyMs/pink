@@ -14,6 +14,8 @@
 		6A42263C28D9DE7E009B0F4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A42263B28D9DE7E009B0F4E /* Assets.xcassets */; };
 		6A42263F28D9DE7E009B0F4E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A42263D28D9DE7E009B0F4E /* LaunchScreen.storyboard */; };
 		6A42264828D9DEF0009B0F4E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A42264728D9DEF0009B0F4E /* Constants.swift */; };
+		6A42264A28D9E350009B0F4E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A42264928D9E350009B0F4E /* Extensions.swift */; };
+		6A42264C28D9E3F6009B0F4E /* TabBarC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A42264B28D9E3F6009B0F4E /* TabBarC.swift */; };
 		D39D0692E2AF67F0CC4F7C86 /* Pods_pink.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B384C50306A2D65B55C6B23C /* Pods_pink.framework */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +29,8 @@
 		6A42263E28D9DE7E009B0F4E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6A42264028D9DE7E009B0F4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6A42264728D9DEF0009B0F4E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		6A42264928D9E350009B0F4E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		6A42264B28D9E3F6009B0F4E /* TabBarC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarC.swift; sourceTree = "<group>"; };
 		8C31C3405BA47C7F299F9079 /* Pods-pink.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pink.debug.xcconfig"; path = "Target Support Files/Pods-pink/Pods-pink.debug.xcconfig"; sourceTree = "<group>"; };
 		B384C50306A2D65B55C6B23C /* Pods_pink.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_pink.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEE50E483EDDCB435B35227E /* Pods-pink.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pink.release.xcconfig"; path = "Target Support Files/Pods-pink/Pods-pink.release.xcconfig"; sourceTree = "<group>"; };
@@ -73,6 +77,7 @@
 				6A42263B28D9DE7E009B0F4E /* Assets.xcassets */,
 				6A42263D28D9DE7E009B0F4E /* LaunchScreen.storyboard */,
 				6A42264028D9DE7E009B0F4E /* Info.plist */,
+				6A42264B28D9E3F6009B0F4E /* TabBarC.swift */,
 			);
 			path = pink;
 			sourceTree = "<group>";
@@ -81,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				6A42264728D9DEF0009B0F4E /* Constants.swift */,
+				6A42264928D9E350009B0F4E /* Extensions.swift */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -91,7 +97,6 @@
 				8C31C3405BA47C7F299F9079 /* Pods-pink.debug.xcconfig */,
 				FEE50E483EDDCB435B35227E /* Pods-pink.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -218,6 +223,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A42264A28D9E350009B0F4E /* Extensions.swift in Sources */,
+				6A42264C28D9E3F6009B0F4E /* TabBarC.swift in Sources */,
 				6A42263728D9DE7D009B0F4E /* ViewController.swift in Sources */,
 				6A42263328D9DE7D009B0F4E /* AppDelegate.swift in Sources */,
 				6A42263528D9DE7D009B0F4E /* SceneDelegate.swift in Sources */,
@@ -297,7 +304,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -351,7 +358,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -377,6 +384,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -406,6 +414,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

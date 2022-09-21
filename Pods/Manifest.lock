@@ -1,4 +1,9 @@
 PODS:
+  - AMapFoundation (1.7.0)
+  - AMapLocation (2.9.0):
+    - AMapFoundation (>= 1.7.0)
+  - AMapSearch (9.4.0):
+    - AMapFoundation (>= 1.7.0)
   - CHTCollectionViewWaterfallLayout/Swift (0.9.10)
   - KMPlaceholderTextView (1.4.0)
   - MBProgressHUD (1.2.0)
@@ -11,6 +16,8 @@ PODS:
     - SteviaLayout (= 4.7.3)
 
 DEPENDENCIES:
+  - AMapLocation
+  - AMapSearch
   - CHTCollectionViewWaterfallLayout/Swift
   - KMPlaceholderTextView (~> 1.4.0)
   - MBProgressHUD (~> 1.2.0)
@@ -20,6 +27,9 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - AMapFoundation
+    - AMapLocation
+    - AMapSearch
     - CHTCollectionViewWaterfallLayout
     - KMPlaceholderTextView
     - MBProgressHUD
@@ -30,6 +40,9 @@ SPEC REPOS:
     - YPImagePicker
 
 SPEC CHECKSUMS:
+  AMapFoundation: c14fcebd8e4267c593bd2e25067ac86b0ce64aba
+  AMapLocation: f5eb11e11c62f0f599f80b578eec8a1f70deb985
+  AMapSearch: 8222912b82117557f3739132bb13fad8e2d19073
   CHTCollectionViewWaterfallLayout: b989a459788d7657ac010e03bc0f7eedca95a420
   KMPlaceholderTextView: 2206c3df39979e9396e2d96fa9f427a8951121b0
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
@@ -39,6 +52,6 @@ SPEC CHECKSUMS:
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
   YPImagePicker: f36043210c10b0783034eb1947d6e06e31c461e4
 
-PODFILE CHECKSUM: 237ea7fd2567ffeaf46348c76a4a832c18c4e5d1
+PODFILE CHECKSUM: da84937662aaf817e4dac46e80b1da45111a3466
 
 COCOAPODS: 1.11.3

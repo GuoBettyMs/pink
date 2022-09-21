@@ -13,7 +13,8 @@ target 'pink' do
   pod 'XLPagerTabStrip', '~> 9.0'                     #TabBar视图控制器9.0.0
   pod 'SKPhotoBrowser'
   pod 'KMPlaceholderTextView', '~> 1.4.0'
-  
+  pod 'AMapLocation'
+  pod 'AMapSearch'
   
   
   
