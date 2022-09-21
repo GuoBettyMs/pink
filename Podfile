@@ -23,6 +23,7 @@ target 'pink' do
   pod 'LeanCloud'
   pod 'PopupDialog', '~> 1.1'
   pod 'FaveButton'
+  pod 'Kingfisher', '~> 6.0'
   
   pod 'GrowingTextView', '0.7.2'
   pod 'SegementSlide', '3.0.1'

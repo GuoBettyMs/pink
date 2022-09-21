@@ -16,6 +16,7 @@ PODS:
   - GRDB.swift/standard (5.26.1)
   - GrowingTextView (0.7.2)
   - Hero (1.6.2)
+  - Kingfisher (6.3.1)
   - KMPlaceholderTextView (1.4.0)
   - LeanCloud (17.10.1):
     - LeanCloud/RTM (= 17.10.1)
@@ -50,6 +51,7 @@ DEPENDENCIES:
   - FaveButton
   - GrowingTextView (= 0.7.2)
   - Hero
+  - Kingfisher (~> 6.0)
   - KMPlaceholderTextView (~> 1.4.0)
   - LeanCloud
   - MBProgressHUD (~> 1.2.0)
@@ -75,6 +77,7 @@ SPEC REPOS:
     - GRDB.swift
     - GrowingTextView
     - Hero
+    - Kingfisher
     - KMPlaceholderTextView
     - LeanCloud
     - MBProgressHUD
@@ -102,6 +105,7 @@ SPEC CHECKSUMS:
   GRDB.swift: e98cd55ec99dea5da99355d588149063e4cfa0eb
   GrowingTextView: 876bf42005b5e4a4fd740597db12caaf41f0fe6c
   Hero: c69009dbc9e2f0472e081adc644dba05fcedae72
+  Kingfisher: 016c8b653a35add51dd34a3aba36b580041acc74
   KMPlaceholderTextView: 2206c3df39979e9396e2d96fa9f427a8951121b0
   LeanCloud: e6de4b8129ab68be7f70a9b77c4304f71c5a1a2c
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
@@ -115,6 +119,6 @@ SPEC CHECKSUMS:
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
   YPImagePicker: f36043210c10b0783034eb1947d6e06e31c461e4
 
-PODFILE CHECKSUM: 5bc9da29954c0bc1eea680647bcdddf960d5efb1
+PODFILE CHECKSUM: a5e2890077dbae584b830d5a35a18b7602ce1cf6
 
 COCOAPODS: 1.11.3

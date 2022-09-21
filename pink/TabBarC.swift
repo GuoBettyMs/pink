@@ -18,7 +18,7 @@ class TabBarC: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        print("SegementSlide、ActionSheetPicker-3.0、Hero")
+        print("Kingfisher")
         
 //        delegate = self
     }
