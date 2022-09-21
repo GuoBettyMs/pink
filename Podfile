@@ -18,5 +18,6 @@ target 'pink' do
   pod 'MJRefresh'
   pod 'DateToolsSwift'
   pod 'Alamofire', '~> 5.2'
+  pod 'AlipaySDK-iOS'
   
 end
