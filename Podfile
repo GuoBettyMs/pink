@@ -25,5 +25,7 @@ target 'pink' do
   pod 'FaveButton'
   
   pod 'GrowingTextView', '0.7.2'
-  
+  pod 'SegementSlide', '3.0.1'
+  pod 'ActionSheetPicker-3.0'
+  pod 'Hero'
 end
