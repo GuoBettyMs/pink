@@ -17,6 +17,6 @@ target 'pink' do
   pod 'AMapSearch'
   pod 'MJRefresh'
   pod 'DateToolsSwift'
-  
+  pod 'Alamofire', '~> 5.2'
   
 end
