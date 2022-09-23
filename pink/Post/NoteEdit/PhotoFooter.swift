@@ -19,7 +19,7 @@ class PhotoFooter: UICollectionReusableView {
     override func awakeFromNib() {
         super.awakeFromNib()
         addPhotoBtn.layer.borderWidth = 1
-        addPhotoBtn.layer.borderColor = UIColor.tertiaryLabel.cgColor
+        addPhotoBtn.layer.borderColor = UIColor.secondaryLabel.cgColor
     }
     
 }

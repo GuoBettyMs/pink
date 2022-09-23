@@ -11,8 +11,8 @@ target 'pink' do
   pod 'MBProgressHUD', '~> 1.2.0'
   pod 'CHTCollectionViewWaterfallLayout/Swift'        #瀑布流 0.9.10
   pod 'XLPagerTabStrip', '~> 9.0'                     #TabBar视图控制器9.0.0
-  pod 'SKPhotoBrowser'
-  pod 'KMPlaceholderTextView', '~> 1.4.0'
+  pod 'SKPhotoBrowser'                                #图片浏览器
+  pod 'KMPlaceholderTextView', '~> 1.4.0'             #自定义TextView的提示内容
   pod 'AMapLocation'
   pod 'AMapSearch'
   pod 'MJRefresh'

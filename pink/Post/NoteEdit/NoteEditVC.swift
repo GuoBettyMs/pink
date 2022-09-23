@@ -12,98 +12,100 @@
 
 
 import UIKit
-import YPImagePicker
 
 class NoteEditVC: UIViewController {
-
-    var photos = [
-        UIImage(named: "Post-1"), UIImage(named: "Post-2")
-    ]
-    var photoCount: Int{ photos.count }     //定义计算属性,无论数据是否有发生改变,都计算一遍数据,更新数据//
-
+ 
     @IBOutlet weak var photoCollectionV: UICollectionView!
+    @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var titleCountL: UILabel!
+    @IBOutlet weak var textView: UITextView!
     
+    
+    var photos = [
+        UIImage(named: "Post-1")!, UIImage(named: "Post-2")!
+    ]
+//    var videoURL: URL = Bundle.main.url(forResource: "testVideo", withExtension: "mp4")!
+    var videoURL: URL?
+    var photoCount: Int{ photos.count }     //定义计算属性,无论数据是否有发生改变,都计算一遍数据,更新数据//
+    var isVideo: Bool { videoURL != nil }
+    var textViewIAView: TextViewIAView{ textView.inputAccessoryView as! TextViewIAView }
+   
+//    let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-       
+        config()
     }
 
 
-}
+    @IBAction func TFEditDidBegin(_ sender: Any) {
+        titleCountL.isHidden = false
+    }
 
-// MARK: 遵守 UICollectionViewDataSource
-extension NoteEditVC: UICollectionViewDataSource{
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        photoCount
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kPhotoCellID, for: indexPath) as! PhotoCell
-        cell.imageView.image = photos[indexPath.item]
-        return cell
-    }
-     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        //若只有header和footer其中一个也可这样，但不推荐
-        //let photoFooter = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: kPhotoFooterID, for: indexPath) as! PhotoFooter
-        //return photoFooter
-        
-        switch kind {
-        case UICollectionView.elementKindSectionFooter:
-            let photoFooter = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: kPhotoFooterID, for: indexPath) as! PhotoFooter
-            photoFooter.addPhotoBtn.addTarget(self, action: #selector(addPhoto), for: .touchUpInside)
-            return photoFooter
-        default:
-            fatalError("collectionView的footer出问题了")
-            //或 return UICollectionReusableView()
-        }
+    @IBAction func TFEditDidEnd(_ sender: Any) {
+        titleCountL.isHidden = true
     }
     
-}
-
-// MARK: 遵守 UICollectionViewDelegate
-extension NoteEditVC: UICollectionViewDelegate{
+    // MARK: 点击软键盘的完成按钮收起软键盘
+    //和在textFieldShouldReturn里面resignFirstResponder是一个效果
+    @IBAction func TFDidEndOnExit(_ sender: Any) {
+    }
     
-}
+    // MARK: 限制标题字符并实时显示剩余可输字符
+    // 输入字符后再判断是否超过限制字数,再处理
+    @IBAction func TFEditChanged(_ sender: Any) {
+        //当前有高亮文本时(拼音键盘)return,防止拼音尚未输完整,却因超字数而无法编辑
+        guard titleTextField.markedTextRange == nil else { return }
 
-// MARK: - 监听添加相片按钮
-extension NoteEditVC{
-    @objc private func addPhoto(){
-        if photoCount < kMaxPhotoCount{
-            var config = YPImagePickerConfiguration()
-            
-            // MARK: 通用配置
-            config.albumName = Bundle.main.appName //在本地设备中新建一个新文件夹,新文件夹名称为 appName
-            config.screens = [.library] //只展示相册
-            
-            // MARK: 相册配置
-            config.library.defaultMultipleSelection = true //是否可多选
-            config.library.maxNumberOfItems = kMaxPhotoCount - photoCount //最大选取照片或视频数
-            config.library.spacingBetweenItems = kSpacingBetweenItems //照片缩略图之间的间距
-            
-            // MARK: - Gallery(多选完后的展示和编辑页面)-画廊
-            config.gallery.hidesRemoveButton = false //每个照片或视频右上方是否有删除按钮
-            
-            let picker = YPImagePicker(configuration: config)
-            
-            // MARK: 选完或按取消按钮后的异步回调处理（依据配置处理单个或多个）
-            picker.didFinishPicking { [unowned picker] items, _ in
-  
-                for item in items {
-                    if case let .photo(photo) = item{
-                        self.photos.append(photo.image)
-                    }
-                }
-                self.photoCollectionV.reloadData()      //重新加载photoCollectionV的所有数据
-                
-                picker.dismiss(animated: true)
+        //用户输入完字符后进行判断,若大于最大字符数,则截取前面的文本(if里面第一行)
+        if titleTextField.unwrappedText.count > kMaxNoteTitleCount{
+
+            // prefix截取前 kMaxNoteTitleCount 位字符
+            titleTextField.text = String(titleTextField.unwrappedText.prefix(kMaxNoteTitleCount))
+
+            showTextHUD("标题最多输入\(kMaxNoteTitleCount)字哦")
+
+            //用户粘贴文本后的光标位置,默认会跑到粘贴文本的前面,此处改成末尾
+            DispatchQueue.main.async {
+                let end = self.titleTextField.endOfDocument
+                self.titleTextField.selectedTextRange = self.titleTextField.textRange(from: end, to: end)
             }
-            
-            present(picker, animated: true)
-        }else{
-            showTextHUD("最多只能选择\(kMaxPhotoCount)张照片哦")
         }
+        
+        //实时显示剩余可输字符
+        titleCountL.text = "\(kMaxNoteTitleCount - titleTextField.unwrappedText.count)"
+    }
+
+}
+
+// MARK: - 遵守UITextFieldDelegate
+//因系统自带拼音键盘把拼音也当做字符,故需在输入完之后判断,故全部移到TFEditChanged方法中进行处理
+//shouldChangeCharactersIn 输入字符同时判断是否超过限制字数再处理(弊端: 使用拼音键盘会出现拼音过多导致不正常的判断)
+//extension NoteEditVC: UITextFieldDelegate{
+//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//        //range.location--当前输入的字符或粘贴文本的第一个字符的索引
+//        //string--当前输入的字符或粘贴的文本
+//
+//        //实时显示剩余可输字符
+//        titleCountL.text = "\(kMaxNoteTitleCount - titleTextField.unwrappedText.count)"
+//
+//        //限制字串长度为20，以下情况返回false（即不让输入）：
+//        //1-输入的字符或粘贴的文本在整体内容的索引是20的时候（第21个字符不让输）
+//        //2-当前输入的字符的长度+粘贴文本的长度超过20时--防止从一开始一下子粘贴超过20个字符的文本
+//        //当前输入的字符的长度: textField.unwrappedText.count; string.count:粘贴文本的长度
+//        let isExceed = range.location >= kMaxNoteTitleCount || (textField.unwrappedText.count + string.count > kMaxNoteTitleCount)
+//
+//        if isExceed{ showTextHUD("标题最多输入\(kMaxNoteTitleCount)字哦") }
+//        return !isExceed
+//    }
+//}
+
+// MARK: - 遵守UITextViewDelegate
+extension NoteEditVC: UITextViewDelegate{
+    func textViewDidChange(_ textView: UITextView) {
+
+        //当前有高亮文本时(拼音键盘)return,防止拼音尚未输完整,却因超字数而无法编辑
+        guard textView.markedTextRange == nil else { return }
+        textViewIAView.currentTextCount = textView.text.count
     }
 }

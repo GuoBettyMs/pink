@@ -23,6 +23,12 @@
 		6A33F53728DB1A9F00865D58 /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A33F53628DB1A9F00865D58 /* Enum.swift */; };
 		6A33F53A28DB1AE800865D58 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6A33F53C28DB1AE800865D58 /* Localizable.strings */; };
 		6A33F54128DB1B3E00865D58 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6A33F54328DB1B3E00865D58 /* InfoPlist.strings */; };
+		6A33F54728DC688600865D58 /* testVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 6A33F54628DC688600865D58 /* testVideo.mp4 */; };
+		6A33F54928DC6E1100865D58 /* NoteEditVC-DragDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A33F54828DC6E1100865D58 /* NoteEditVC-DragDrop.swift */; };
+		6A33F54B28DD4FAE00865D58 /* NoteEditVC-CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A33F54A28DD4FAE00865D58 /* NoteEditVC-CollectionView.swift */; };
+		6A33F54D28DD597000865D58 /* TextViewIAView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A33F54C28DD597000865D58 /* TextViewIAView.swift */; };
+		6A33F54F28DD5A1D00865D58 /* TextViewIAView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A33F54E28DD5A1D00865D58 /* TextViewIAView.xib */; };
+		6A33F55128DD5B2A00865D58 /* NoteEditVC-Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A33F55028DD5B2A00865D58 /* NoteEditVC-Config.swift */; };
 		6A42263328D9DE7D009B0F4E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A42263228D9DE7D009B0F4E /* AppDelegate.swift */; };
 		6A42263528D9DE7D009B0F4E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A42263428D9DE7D009B0F4E /* SceneDelegate.swift */; };
 		6A42263728D9DE7D009B0F4E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A42263628D9DE7D009B0F4E /* ViewController.swift */; };
@@ -56,6 +62,12 @@
 		6A33F54228DB1B3E00865D58 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		6A33F54428DB1B4200865D58 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6A33F54528DB1C0000865D58 /* pink-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "pink-Bridging-Header.h"; sourceTree = "<group>"; };
+		6A33F54628DC688600865D58 /* testVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = testVideo.mp4; sourceTree = "<group>"; };
+		6A33F54828DC6E1100865D58 /* NoteEditVC-DragDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteEditVC-DragDrop.swift"; sourceTree = "<group>"; };
+		6A33F54A28DD4FAE00865D58 /* NoteEditVC-CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteEditVC-CollectionView.swift"; sourceTree = "<group>"; };
+		6A33F54C28DD597000865D58 /* TextViewIAView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewIAView.swift; sourceTree = "<group>"; };
+		6A33F54E28DD5A1D00865D58 /* TextViewIAView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextViewIAView.xib; sourceTree = "<group>"; };
+		6A33F55028DD5B2A00865D58 /* NoteEditVC-Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteEditVC-Config.swift"; sourceTree = "<group>"; };
 		6A42262F28D9DE7D009B0F4E /* pink.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pink.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A42263228D9DE7D009B0F4E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6A42263428D9DE7D009B0F4E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -121,6 +133,11 @@
 				6A33F52728DAF34A00865D58 /* NoteEditVC.swift */,
 				6A33F52928DAF36000865D58 /* PhotoCell.swift */,
 				6A33F52B28DAF37100865D58 /* PhotoFooter.swift */,
+				6A33F54828DC6E1100865D58 /* NoteEditVC-DragDrop.swift */,
+				6A33F54A28DD4FAE00865D58 /* NoteEditVC-CollectionView.swift */,
+				6A33F54C28DD597000865D58 /* TextViewIAView.swift */,
+				6A33F54E28DD5A1D00865D58 /* TextViewIAView.xib */,
+				6A33F55028DD5B2A00865D58 /* NoteEditVC-Config.swift */,
 			);
 			path = NoteEdit;
 			sourceTree = "<group>";
@@ -171,6 +188,7 @@
 				6A33F53C28DB1AE800865D58 /* Localizable.strings */,
 				6A33F54328DB1B3E00865D58 /* InfoPlist.strings */,
 				6A33F54528DB1C0000865D58 /* pink-Bridging-Header.h */,
+				6A33F54628DC688600865D58 /* testVideo.mp4 */,
 			);
 			path = pink;
 			sourceTree = "<group>";
@@ -268,6 +286,8 @@
 				6A42263C28D9DE7E009B0F4E /* Assets.xcassets in Resources */,
 				6A42263A28D9DE7D009B0F4E /* Main.storyboard in Resources */,
 				6A33F54128DB1B3E00865D58 /* InfoPlist.strings in Resources */,
+				6A33F54728DC688600865D58 /* testVideo.mp4 in Resources */,
+				6A33F54F28DD5A1D00865D58 /* TextViewIAView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,8 +367,12 @@
 				6A33F52828DAF34A00865D58 /* NoteEditVC.swift in Sources */,
 				6A33F51728DAC7A000865D58 /* HomeVC.swift in Sources */,
 				6A42264C28D9E3F6009B0F4E /* TabBarC.swift in Sources */,
+				6A33F55128DD5B2A00865D58 /* NoteEditVC-Config.swift in Sources */,
+				6A33F54928DC6E1100865D58 /* NoteEditVC-DragDrop.swift in Sources */,
 				6A33F52028DAE2A200865D58 /* WaterfallVC.swift in Sources */,
 				6A42263728D9DE7D009B0F4E /* ViewController.swift in Sources */,
+				6A33F54B28DD4FAE00865D58 /* NoteEditVC-CollectionView.swift in Sources */,
+				6A33F54D28DD597000865D58 /* TextViewIAView.swift in Sources */,
 				6A42263328D9DE7D009B0F4E /* AppDelegate.swift in Sources */,
 				6A33F51B28DAE24D00865D58 /* FollowVC.swift in Sources */,
 				6A33F51928DACA5200865D58 /* DiscoveryVC.swift in Sources */,
