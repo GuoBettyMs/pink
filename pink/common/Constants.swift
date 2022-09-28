@@ -14,11 +14,15 @@ let kFollowVCID = "FollowVCID"
 let kNearByVCID = "NearByVCID"
 let kDisCoveryVCID = "DiscoveryVCID"
 let kWaterfallVCID = "WaterfallVCID"
+let kNoteEditVCID = "NoteEditVCID"
+let kChannelTableVCID = "ChannelTableVCID"
 
 // MARK: CellID
 let kWaterfallCellID = "WaterfallCellID"
 let kPhotoCellID = "PhotoCellID"
 let kPhotoFooterID = "PhotoFooterID"
+let kSubChannelCellID = "SubChannelCellID"
+let kPOICellID = "POICellID"
 
 // MARK: - 资源文件相关
 let mainColor = UIColor(named: "main")!

@@ -5,7 +5,16 @@
 //  Created by isdt on 2022/9/15.
 //
 /*
-    视图控制器 HomeVC buttonBarView 的“发现”子视图控制器
+    视图控制器 HomeVC buttonBarView 的“发现”子视图控制器:
+ 1."推荐"
+ 2."旅行"
+ 3."娱乐"
+ 4."才艺"
+ 5."美妆"
+ 6."白富美"
+ 7."美食"
+ 8."萌宠"
+
     该视图控制器有横屏Tab 控制器,因此再次调用 ButtonBarPagerTabStripViewController
     横屏Tab 控制器联动的视图控制器 WaterfallVC 符合瀑布流布局,使用 CHTCollectionViewWaterfallLayout
  */

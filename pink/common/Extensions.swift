@@ -5,17 +5,29 @@
 //  Created by isdt on 2022/9/15.
 //
 /*
- 
     扩展
  */
 
 import UIKit
+
+//对空字符串进行判断:将空格和Newlines去掉后,是否有其他字符
+extension String{
+    var isBlank: Bool{
+        self.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+}
+
+//给可选String 进行安全解包
+extension Optional where Wrapped == String{
+    var unwrappedText: String { self ?? "" }
+}
 
 extension UITextField{
     //对UITextField 的text 进行安全解包,若当前text为空值,则返回空字符串; 不要直接使用 UITextField.text! 进行强制解包
     var unwrappedText: String { text ?? "" } 
 }
 
+    // MARK: -
 extension UIView{
     
     //添加 @IBInspectable , 指给故事版的View设置圆角属性
@@ -30,11 +42,22 @@ extension UIView{
     }
 }
 
+    // MARK: -
 extension UIViewController{
     
     // MARK: 展示加载框或提示框
     
     // MARK: 加载框--手动隐藏
+    func showLoadHUD(_ title: String? = nil){
+        let hud = MBProgressHUD.showAdded(to: view, animated: true)
+        hud.label.text = title
+    }
+    
+    func hideLoadHUD(){
+        DispatchQueue.main.async {
+            MBProgressHUD.hide(for: self.view, animated: true)
+        }
+    }
     
     // MARK:  提示框--自动隐藏
     func showTextHUD(_ title: String, _ subTitle: String? = nil){
@@ -48,16 +71,19 @@ extension UIViewController{
     // MARK: 点击空白处收起键盘
     func hideKeyboardWhenTappedAround(){
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        
         //保证tap手势不会影响到其他touch类控件的手势
         //若不设，则本页面有tableview时，点击cell不会触发didSelectRowAtIndex（除非长按）
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
     }
+    
     @objc func dismissKeyboard(){
         view.endEditing(true) //让view中的所有textfield失去焦点--即关闭小键盘
     }
 }
 
+    // MARK: -
 extension Bundle{
     
     //TabBarC 文件中,33行,存图片进相册App的'我的相簿'里的文件夹名称

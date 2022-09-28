@@ -20,5 +20,17 @@
 
 #endif /* pink_Bridging_Header_h */
 
+//<>-cocoapods导入的库或者系统库,""-本地文件,若不熟练则可统一使用引号
 
+//提示框
 #import "MBProgressHUD.h"           //导入OC文件,在其他文件中就无需再添加
+
+//高德定位
+#import <AMapFoundationKit/AMapFoundationKit.h>
+#import <AMapLocationKit/AMapLocationKit.h>
+
+//高德搜索
+#import <AMapSearchKit/AMapSearchKit.h>
+
+//上拉加载
+#import "MJRefresh.h"

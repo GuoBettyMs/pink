@@ -14,7 +14,7 @@ import YPImagePicker
 import SKPhotoBrowser
 import AVKit
 
-// MARK: - 遵守 UICollectionViewDataSource
+// MARK: -
 extension NoteEditVC: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -23,12 +23,11 @@ extension NoteEditVC: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kPhotoCellID, for: indexPath) as! PhotoCell
-        
         cell.imageView.image = photos[indexPath.item]
-        
         return cell
     }
     
+    // MARK: 遵守 UICollectionViewDataSource - 添加图片
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         //若只有header和footer其中一个也可这样，但不推荐
         //let photoFooter = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: kPhotoFooterID, for: indexPath) as! PhotoFooter
@@ -46,9 +45,10 @@ extension NoteEditVC: UICollectionViewDataSource{
     }
     
 }
-// MARK: - 遵守 UICollectionViewDelegate
+// MARK: -
 extension NoteEditVC: UICollectionViewDelegate{
-    //点击图片,有放大缩小删除退出功能
+    
+    // MARK: 遵守 UICollectionViewDelegate - 点击图片实现放大缩小删除退出功能
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //预览照片/视频+删除照片
         if isVideo{
@@ -67,7 +67,7 @@ extension NoteEditVC: UICollectionViewDelegate{
             }
             // 2. create PhotoBrowser Instance, and present from your viewController.
             let browser = SKPhotoBrowser(photos: images, initialPageIndex: indexPath.item)
-            browser.delegate = self
+            browser.delegate = self             //遵守协议,删除照片
             SKPhotoBrowserOptions.displayAction = false
             SKPhotoBrowserOptions.displayDeleteButton = true
             present(browser, animated: true)
@@ -75,8 +75,10 @@ extension NoteEditVC: UICollectionViewDelegate{
     }
 }
 
-// MARK: - SKPhotoBrowserDelegate
+// MARK: -
 extension NoteEditVC: SKPhotoBrowserDelegate{
+    
+    // MARK: 遵守SKPhotoBrowserDelegate - 删除照片
     func removePhoto(_ browser: SKPhotoBrowser, index: Int, reload: @escaping (() -> Void)) {
         photos.remove(at: index)
         photoCollectionV.reloadData()
@@ -84,27 +86,29 @@ extension NoteEditVC: SKPhotoBrowserDelegate{
     }
 }
 
-// MARK: - 监听
+// MARK: -
 extension NoteEditVC{
+    
+    // MARK: 监听 - 使用YPImagePickerConfiguration & YPImagePicker 增加图片
     @objc private func addPhoto(){
         if photoCount < kMaxPhotoCount{
             var config = YPImagePickerConfiguration()
             
-            // MARK: 通用配置
+            // YPImagePickerConfiguration 通用配置
             config.albumName = Bundle.main.appName //在本地设备中新建一个新文件夹,新文件夹名称为 appName
             config.screens = [.library] //只展示相册
             
-            // MARK: 相册配置
+            // YPImagePickerConfiguration 相册配置
             config.library.defaultMultipleSelection = true //是否可多选
             config.library.maxNumberOfItems = kMaxPhotoCount - photoCount //最大选取照片或视频数
             config.library.spacingBetweenItems = kSpacingBetweenItems //照片缩略图之间的间距
             
-            // MARK: - Gallery(多选完后的展示和编辑页面)-画廊
+            // YPImagePickerConfiguration - Gallery(多选完后的展示和编辑页面)-画廊
             config.gallery.hidesRemoveButton = false //每个照片或视频右上方是否有删除按钮
             
             let picker = YPImagePicker(configuration: config)
             
-            // MARK: 选完或按取消按钮后的异步回调处理（依据配置处理单个或多个）
+            // YPImagePicker 选完或按取消按钮后的异步回调处理（依据配置处理单个或多个）
             picker.didFinishPicking { [unowned picker] items, _ in
   
                 for item in items {

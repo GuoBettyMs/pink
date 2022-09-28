@@ -5,9 +5,7 @@
 //  Created by isdt on 2022/9/23.
 //
 /*
- 
     发布笔记编辑页面的 viewDidLoad 内容
- 
  */
 
 import Foundation
@@ -54,15 +52,21 @@ extension NoteEditVC{
          (textView.inputAccessoryView as! TextViewIAView).maxTextCountLabel.text = "/\(kMaxNoteTextCount)"
          */
 
+        // MARK: AMapLocationManager、AMapSearchAPI
         //请求定位权限
-//        locationManager.requestWhenInUseAuthorization()
-
+        locationManager.requestWhenInUseAuthorization()
+        
+        //定位权限 隐私合规
+        AMapLocationManager.updatePrivacyAgree(AMapPrivacyAgreeStatus.didAgree)
+        AMapLocationManager.updatePrivacyShow(AMapPrivacyShowStatus.didShow, privacyInfo: AMapPrivacyInfoStatus.didContain)
+//        AMapSearchAPI.updatePrivacyAgree(AMapPrivacyAgreeStatus.didAgree)
+//        AMapSearchAPI.updatePrivacyShow(AMapPrivacyShowStatus.didShow, privacyInfo: AMapPrivacyInfoStatus.didContain)
     }
 }
-// MARK: - 监听“完成”按钮
+// MARK: -
 extension NoteEditVC{
     
-    //点击“完成”按钮移除软键盘
+    // MARK: 监听 - 点击“完成”按钮移除软键盘
     @objc private func resignTextView(){
         textView.resignFirstResponder()
     }

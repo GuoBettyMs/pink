@@ -5,6 +5,13 @@
 //  Created by isdt on 2022/9/15.
 //
 /*
+    小粉书的底部导航栏的“主页”功能 -> buttonBarView:
+ 1.“关注”
+ 2."发现"
+ 3.“附近”
+ 
+ */
+/*
     共有四种横屏Tab 控制器,
  TwitterPagerTabStripViewController,
  ButtonBarPagerTabStripViewController,
@@ -35,7 +42,7 @@ class HomeVC: ButtonBarPagerTabStripViewController {
         //1.整体bar--在sb上设
         
         //2.selectedBar--按钮下方的条
-        settings.style.selectedBarBackgroundColor = UIColor(named: "main")!
+        settings.style.selectedBarBackgroundColor = mainColor
         settings.style.selectedBarHeight = 3
         
         //3.buttonBarItem--文本或图片的按钮
