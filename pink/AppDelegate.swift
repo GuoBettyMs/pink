@@ -64,7 +64,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
 
     // MARK: - Core Data Saving support
-
+    
+    // MARK: context存储 - 主线程
+    //主队列上的context存储
     func saveContext () {
         let context = persistentContainer.viewContext
         if context.hasChanges {
@@ -78,16 +80,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    
+    // MARK: context存储 - 后台线程
+    //并发队列上的context存储,本地存储的增删改查
+    func saveBackgroundContext(){
+        //因可以有多个并发队列的context,故每次persistentContainer.viewContext时都会创建个新的,故不能像上面一样.
+        //这里需用使用同一个并发队列的context(即常量文件夹中引用的那个)
+        if backgroundContext.hasChanges{
+            do {
+                try backgroundContext.save()
+            } catch {
+                fatalError("后台存储数据失败(包括增删改):\(error)")
+            }
+        }
+    }
 
 }
 
 // MARK: - 添加SDK
 extension AppDelegate{
+    
     private func config(){
-        //高德
+        //高德Key
         AMapServices.shared().enableHTTPS = true    //开启HTTPS功能
         AMapServices.shared().apiKey = "37e506cd59c2258797c6b4efe462d648"       //配置定位Key
         
+        //UI - 设置所有的navigationItem的返回按钮颜色
+        UINavigationBar.appearance().tintColor = .label
+  
     }
 }
 

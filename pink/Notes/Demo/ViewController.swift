@@ -43,17 +43,19 @@ class ViewController: UIViewController, UICollectionViewDataSource {
     }
     
     private func setUI(){
-        cv.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16).isActive = true
+        cv.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
         cv.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
         cv.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
         cv.heightAnchor.constraint(equalToConstant: 90).isActive = true
+  
         
 //        NSLayoutConstraint.activate([
 //            cv.heightAnchor.constraint(equalToConstant: 90)
 //        ])
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        photos.count
+//        photos.count
+        13
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CVCellID", for: indexPath) as! CVCell

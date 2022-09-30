@@ -71,9 +71,7 @@ class POIVC: UIViewController {
 
 // MARK: - 遵守 UITableViewDataSource
 extension POIVC: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        pois.count
-    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { pois.count }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: kPOICellID, for: indexPath) as! POICell
@@ -81,9 +79,7 @@ extension POIVC: UITableViewDataSource {
         let poi = pois[indexPath.row]
         cell.poi = poi
         
-        if poi[0] == poiName{
-            cell.accessoryType = .checkmark
-        }
+        if poi[0] == poiName{ cell.accessoryType = .checkmark }
         
         return cell
     }

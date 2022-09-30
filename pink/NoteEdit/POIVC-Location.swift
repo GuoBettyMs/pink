@@ -55,6 +55,7 @@ extension POIVC{
                 POIVC.makeAroundSearch()
             }
             
+            //子线程并发的异步执行代码
             if let reGeocode = reGeocode {
 //                print("reGeocode:", reGeocode)
                 //几个常用场景的说明:
@@ -73,6 +74,7 @@ extension POIVC{
                 POIVC.pois.append(currentPOI)                              //添加拼接地址
                 POIVC.aroundSearchedPOIs.append(currentPOI)                //恢复为之前周边搜索的数据
                 
+                //回到主线程执行UI,主线程不能同步sync执行
                 DispatchQueue.main.async {
                     POIVC.tableView.reloadData()            //获取地址需要时间,故需要reloadData,使继续遵守 UITableViewDataSource
                 }
