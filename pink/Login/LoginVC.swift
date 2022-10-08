@@ -40,11 +40,12 @@ class LoginVC: UIViewController {
     
     // MARK: 监听 - 登录事件
     @objc private func login(){
-        #if targetEnvironment(simulator)
-//        presentCodeLoginVC()
-        #else
         localLogin()
-        #endif
+//        #if targetEnvironment(simulator)
+//        presentCodeLoginVC()
+//        #else
+//        localLogin()
+//        #endif
     }
 
 }

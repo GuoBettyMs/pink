@@ -103,7 +103,7 @@ extension AppDelegate{
     private func config(){
         //高德Key
         AMapServices.shared().enableHTTPS = true    //开启HTTPS功能
-        AMapServices.shared().apiKey = "37e506cd59c2258797c6b4efe462d648"       //配置定位Key
+        AMapServices.shared().apiKey = kAMapApiKey       //配置定位Key
         
         //UI - 设置所有的navigationItem的返回按钮颜色
         UINavigationBar.appearance().tintColor = .label
