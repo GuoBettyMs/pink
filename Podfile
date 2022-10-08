@@ -17,7 +17,7 @@ target 'pink' do
   pod 'AMapSearch'                                    #高德地图-地图SDK,搜索功能
   pod 'MJRefresh'                                     #下拉刷新 && 上拉加载
   pod 'DateToolsSwift'                                #简化 iOS 中的日期和时间处理
-  
+  pod 'JVerification'                                 #一键登录
   pod 'Alamofire', '~> 5.2'
   pod 'AlipaySDK-iOS'
   pod 'LeanCloud'
