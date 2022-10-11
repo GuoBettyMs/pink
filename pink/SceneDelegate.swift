@@ -47,6 +47,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
+    // MARK: 支付宝登录授权接口
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard let url = URLContexts.first?.url else {return}
+
+//        print(url)                  //若本应用未被kill,则包括authcode等各种授权回调信息会通过这个url自动传入auth_V2的回调中
+        
+        //若url 包含"safepay",App是从支付宝跳转过来 “pink://safepay/?%7...”
+        if url.host == "safepay"{
+            
+            //调用processAuth_V2Result:standbyCallback:方法获取支付宝登录业务授权结果
+            AlipaySDK.defaultService()?.processAuth_V2Result(url, standbyCallback: { res in
+                //若本应用在授权期间被kill了,则在这里的res里获取授权回调信息,此处省略处理
+            })
+        }
+        
+    }
+    
 
 }
 

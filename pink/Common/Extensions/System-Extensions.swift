@@ -11,19 +11,53 @@
 import UIKit
 import DateToolsSwift
 import AVFoundation
-
-//对空字符串进行判断:将空格和Newlines去掉后,是否有其他字符
+// MARK: -
 extension String{
+    
+    //对空字符串进行判断:将空格和Newlines去掉后,是否有其他字符
     var isBlank: Bool{
         self.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
+    
+    //matches 对电话号码进行判断是否符合 kPhoneRegEx 条件
+    //Int(self) 判断String能不能转为Int,能则不为空
+    var isPhoneNum: Bool{
+        Int(self) != nil && NSRegularExpression(kPhoneRegEx).matches(self)
+    }
+    
+    //matches 对验证码进行判断是否符合 kAuthCodeRegEx 条件
+    //Int(self) 判断String能不能转为Int,能则不为空
+    var isAuthCode: Bool{
+        Int(self) != nil && NSRegularExpression(kAuthCodeRegEx).matches(self)
+    }
+    
+    //随机字符串
+    static func randomString(_ length: Int) -> String{
+        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        return String((0..<length).map{ _ in letters.randomElement()! })        //随机从letters中取出一个,取length次
+    }
 }
 
+// MARK: -
+extension NSRegularExpression {
+    convenience init(_ pattern: String) {
+        do {
+            try self.init(pattern: pattern)
+        } catch {
+            fatalError("非法的正则表达式")//因不能确保调用父类的init函数
+        }
+    }
+    func matches(_ string: String) -> Bool {
+        let range = NSRange(location: 0, length: string.utf16.count)
+        return firstMatch(in: string, options: [], range: range) != nil
+    }
+}
+// MARK: -
 //给可选String 进行安全解包
 extension Optional where Wrapped == String{
     var unwrappedText: String { self ?? "" }
 }
-
+// MARK: -
 extension Date{
     
     //本项目5种时间表示方式:
@@ -50,7 +84,7 @@ extension Date{
         }
     }
 }
-
+// MARK: -
 extension URL{
     
     //从视频中生成封面图
@@ -70,7 +104,22 @@ extension URL{
         }
     }
 }
-
+// MARK: -
+extension UIButton{
+    
+    //自定义登录按钮的可点击状态
+    func setToEnabled(){
+        isEnabled = true
+        backgroundColor = mainColor
+    }
+    
+    //自定义登录按钮的不可点击状态
+    func setToDisabled(){
+        isEnabled = false
+        backgroundColor = mainLightColor
+    }
+}
+// MARK: -
 extension UIImage {
     
     //初始化构造器三原则:
@@ -99,7 +148,7 @@ extension UIImage {
         jpegData(compressionQuality: jpegQuality.rawValue)
     }
 }
-
+// MARK: -
 extension UITextField{
     //对UITextField 的text 进行安全解包,若当前text为空值,则返回空字符串; 不要直接使用 UITextField.text! 进行强制解包
     var unwrappedText: String { text ?? "" }
@@ -109,7 +158,7 @@ extension UITextField{
         unwrappedText.isBlank ? "" : unwrappedText
     }
 }
-
+    // MARK: -
 extension UITextView{
     var unwrappedText: String { text ?? "" }
     
@@ -137,6 +186,28 @@ extension UIView{
     // MARK: -
 extension UIViewController{
     
+    // MARK: 添加&删除指定子控制器
+    func add(child vc: UIViewController){
+        addChild(vc)
+        vc.view.frame = view.bounds         //若vc是代码创建的需加这句(后面的view即为某个containerview),若都是sb上创建的可不加.建议加
+        view.addSubview(vc.view)            //展示子视图控制器视图
+        vc.didMove(toParent: self)
+    }
+    func remove(child vc: UIViewController){
+        vc.willMove(toParent: nil)
+        vc.view.removeFromSuperview()       //移除子视图控制器的根视图
+        vc.removeFromParent()               //移除子视图控制器
+    }
+    
+    //移除所有子视图控制器
+    func removeAllChildren(){
+        if !children.isEmpty{
+            for vc in children{
+                remove(child: vc)
+            }
+        }
+    }
+    
     // MARK: 加载框--手动隐藏
     func showLoadHUD(_ title: String? = nil){
         let hud = MBProgressHUD.showAdded(to: view, animated: true)
@@ -162,6 +233,15 @@ extension UIViewController{
         hud.label.text = title
         hud.detailsLabel.text = subTitle
         hud.hide(animated: true, afterDelay: 2)         //2秒后自动隐藏
+    }
+    
+    //用于在本vc调用,让他显示到别的vc(如父vc)里去
+    func showTextHUD(_ title: String, in view: UIView, _ subTitle: String? = nil){
+        let hud = MBProgressHUD.showAdded(to: view, animated: true)
+        hud.mode = .text        //不指定的话显示菊花和下面配置的文本
+        hud.label.text = title
+        hud.detailsLabel.text = subTitle
+        hud.hide(animated: true, afterDelay: 2)
     }
     
     // MARK: 点击空白处收起键盘

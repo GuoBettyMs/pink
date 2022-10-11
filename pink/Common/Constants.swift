@@ -16,6 +16,11 @@ let kDisCoveryVCID = "DiscoveryVCID"
 let kWaterfallVCID = "WaterfallVCID"
 let kNoteEditVCID = "NoteEditVCID"
 let kChannelTableVCID = "ChannelTableVCID"
+let kLoginNaviID = "LoginNaviID"
+let kLoginVCID = "loginVCID"
+let kMeVCID = "meVCID"
+let kDraftNotesNaviID = "DraftNotesNaviID"
+let kNoteDetailVCID = "NoteDetailVCID"
 
 // MARK: Cell相关ID
 let kWaterfallCellID = "WaterfallCellID"
@@ -28,7 +33,12 @@ let kDraftNoteWaterfallCellID = "DraftNoteWaterfallCellID"
 // MARK: - 资源文件相关
 let mainColor = UIColor(named: "main")!
 let blueColor = UIColor(named: "blue")!
+let mainLightColor = UIColor(named: "main-light")!
 let imagePH = UIImage(named: "imagePH")!
+
+// MARK: - UserDefaults的key
+let kNameFromAppleID = "nameFromAppleID"
+let kEmailFromAppleID = "emailFromAppleID"
 
 // MARK: - CoreData
 let appDelegate = UIApplication.shared.delegate as! AppDelegate       //单例模式对象: UIApplication.shared
@@ -76,6 +86,53 @@ let kPOIsInitArr = [["不显示位置", ""]]          //完全同步copy周边�
 let kPOIsOffset = 20                           //每页展示的搜索数量
 
 //极光一键登录
-let kJAppKey = "e590b77d81335e8dd9d9f960"           //配置一键登录Key
+let kJAppKey = "e590b77d81335e8dd9d9f960"       //配置一键登录Key
 
-//faifno
+//支付宝登录
+//kAliPayAppID: 应用真实ID、kAliPayPID: 商户ID、kAlipayPrivateKey:极光一键登录平台上传的公钥对应的私钥(建议用支付宝开发平台开发助手申请的)
+let kAppScheme = "pink"                             //浏览器搜索栏输入"pink://",回车后可直接跳转到App
+let kAliPayAppID = "2021000121677944"               //沙箱APPID
+let kAliPayPID = "2088621993691831"                 //沙箱PID
+let kAlipayPrivateKey = "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCNLQOqKnkbVlK6Zm57tZR/ldjAD2hYtN5oz1O8HdxRI4hIOPqUONaz3aiLozX/lMT75FjKazLZIcUaNtyduSb7NKp9/sNKi+qrHMZuteiQTQrsdhcLi15KgKShbKCzsiknyQ/BW7fnL/3xp8oj5ZzBwobepAVadxatGRDKDY/TMGFwePGlcQph8FmnR2gi/Z6tw8jxDVmfoc6t9ER7M35u4fsXQ2EbBp2qNFhlzzM3kT3we482BGiBUKmfJJm2qdZ5E8EWVPC/zOCOelhVKqgFbnJYMOzxE89b6gJVcjGQhRl0VqrFU6hwv8XFu22qsfn4QOYl2JaTUST1jT9VWoTzAgMBAAECggEAeVWE3s2eRLaOZ5H9xukq9fTN01PqtMLOnHoEV5u6bSoCyT/fbWDkdrY9U7Y0hLNSEcQR4/b6Ps/dXUhlmFE3hZOgLKW3JuzWBba3fRNvDAaLKuvbpppjsdiapfp8q7Sl1oHhvqebiWEf+n/hJbUEYytTSyrhRv0vShpO6bl6MWEI2Y/uYWNW3DdXw8a4ljRNvNRCp7za0/1ljg2bH9obpqoKl62wDGz00qgQC+LHwp49Qa3w/X9c6j3g+jXvheGvksWRk/dVZ49E2Q6IdqdzMddvZx62igC8yhZiAhd1DEJUOJ6s/ZKB0jbsvjE1LkjyPT/LJp95IChY6TdjLcY5gQKBgQDlrX8NVb5GZq5zxXfWh4SA23zH9TG7HY8a4cmJWSgpyttTmIcJ4owkDbNcQfpwMgfhanDIfB4xc3gVQfbJck8k4QvMBcBu9XEimq45V9MdxyRzUuPQwUouAmjkFSy+peP23P3qFqf5hvswdp3ukBUG/K+9C/NEDII+6nQOtpp3kwKBgQCdWvcqRUX+g3zIXvx2XE2VxGD8OH/Fl0wLMyaSUAGpQ7qC33qKNKD5b5PMQ3OE7AC/0DqPHdB2APPvSk3ZAyoxOUERWtKVxnJWdj2lwsH3OdBd+xVmP42Id3pIN5fDIKBjN2OilZpVVBlAbmKE7tOF1Gz0GIeK53Ic25DUdgVZIQKBgQCtDDVn9KxyGrdiHuwVxPE+rSCs/77Cfpjt5iSUyYoLQv5RU+CawAhaub/jyQpKMkfhvPLQ+0M8ewWE7rhkOy4KWU0sIUFF2MOvEOAn8FXuX7bE9TUUei3L0KD7CEE4O4Ew5HyjPQK+bMchUp3XutM8+nHme/SD1vDjOn7K/yYO5QKBgEteyereWYNqObfD/4s19Reag5Xr/g+Hw63Np1kHp3QK8+hB4PEX+k7fydxaJpfxbv5xX8szTaloFW91mMosgOYo9Wi5pwqEjjmp0yd1nPCtKYgKfxqFsGZATDsRHckh9JDxc/DpVY4vhRTeiqP/vSNqN3HH2gyHhZoa9Uk+6prhAoGBAKl5jlHNVvpfzQMdv4dF2PN2wSk7IQCOl1PEzftd1GejmKuliFFu30zn8WVuwkOoSVZzo2IAZ133s76DGHrISV9bVAtgL2eG1cVhpg2/ekgdL+qsG+ea2YtD7DqW16L90OObz5tOVc+UHwN2gIDRPcSBHxbcc7Hcqn7oABzvtA6M"  //沙箱公钥对应的私钥
+
+//正则表达式
+let kPhoneRegEx = "^1\\d{10}$"       //^1表示以1开头，$表示结尾，\d表示数字，{10}表示前面的\d有10位,验证手机号码个数是否正确
+let kAuthCodeRegEx = "^\\d{6}$"      //^表示开头，$表示结尾，\d表示数字，{6}表示前面的\d有6位,验证验证码个数是否正确
+
+// MARK: - Leancloud
+//配置相关
+let kLCAppID = "4NLz9QdvBA1wlBsJIKNKVf01-gzGzoHsz"
+let kLCAppKey = "rrE6YI1D01Sqq4H8LyOjY2tg"
+let kLCServerURL = "https://4nlz9qdv.lc-cn-n1-shared.com"
+
+//User表
+let kNickNameCol = "nickName"
+let kAvatarCol = "avatar"
+let kGenderCol = "gender"               //在云端LeanCloud设置默认字段
+let kIntroCol = "intro"                 //在云端LeanCloud设置默认字段
+
+//Note表
+let kCoverPhotoCol = "coverPhoto"
+let kCoverPhotoRatioCol = "coverPhotoRatio"
+let kPhotosCol = "photos"
+let kVideoCol = "video"
+let kTitleCol = "title"
+let kTextCol = "text"
+let kChannelCol = "channel"
+let kSubChannelCol = "subChannel"
+let kPOINameCol = "poiName"
+let kIsVideoCol = "isVideo"
+let kLikeCountCol = "likeCount"
+let kFavCountCol = "favCount"
+let kCommentCountCol = "commentCount"
+let kAuthorCol = "author"
+let kHasEditCol = "hasEdit"
+
+
+// MARK: - 全局函数
+func largeIcon(_ iconName: String, with color: UIColor = .label) -> UIImage{
+    let config = UIImage.SymbolConfiguration(scale: .large)
+    let icon = UIImage(systemName: iconName, withConfiguration: config)!
+    
+    return icon.withTintColor(color)
+}

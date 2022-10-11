@@ -18,10 +18,10 @@ target 'pink' do
   pod 'MJRefresh'                                     #下拉刷新 && 上拉加载
   pod 'DateToolsSwift'                                #简化 iOS 中的日期和时间处理
   pod 'JVerification'                                 #一键登录
-  pod 'Alamofire', '~> 5.2'
-  pod 'AlipaySDK-iOS'
-  pod 'LeanCloud'
-  pod 'PopupDialog', '~> 1.1'
+  pod 'Alamofire', '~> 5.2'                           #HTTP 网络库
+  pod 'AlipaySDK-iOS'                                 #支付宝支付-客户端iOS集成SDK(包含APP登录和APP支付)
+  pod 'LeanCloud'                                     #云端
+  pod 'PopupDialog', '~> 1.1'                         #弹出对话框
   pod 'FaveButton'
   pod 'ImageSlideshow', '~> 1.9.0'
   pod 'Kingfisher', '~> 6.0'

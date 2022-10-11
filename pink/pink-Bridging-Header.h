@@ -9,7 +9,7 @@
     桥接方法见: https://developer.apple.com/documentation/swift/importing-objective-c-into-swift
     手动方法:
  1.新建文件 File > New > File > [ operating system ] > Source > Header File 自己创建一个桥接头。"-Bridging-Header.h"
- 2.点击左侧列表的 project,弹出项目设置, 点击 target ,在 Build Settings 中的 Swift Compiler - General 中(也可直接搜 brid)
+ 2.点击项目名称, 点击 target ,在 Build Settings 中的 Swift Compiler - General 中(也可直接搜 brid)
  3.找到 Objective-C Bridging Header ,选择第二个空, 填入具有桥接头文件的路径, 如 pink/pink-Bridging-Header.h
  4.在桥接文件 pink-Bridging-Header 中,增加 OC文件,如 #import "MBProgressHUD.h"
  */
@@ -35,5 +35,9 @@
 //上拉加载
 #import "MJRefresh.h"
 
-//一键登录
+//极光一键登录
 # import "JVERIFICATIONService.h"
+
+//支付宝支付
+# import <AlipaySDK/AlipaySDK.h>
+# import "APRSASigner.h"            //签名器,对字符串进行签名

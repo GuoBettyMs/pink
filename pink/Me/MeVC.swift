@@ -11,6 +11,7 @@
  */
 
 import UIKit
+import LeanCloud
 
 class MeVC: UIViewController {
 
@@ -21,8 +22,15 @@ class MeVC: UIViewController {
         //1.sb上:上一个vc(MeVC)的navigationitem中修改为空格字符串串
         //2.代码:上一个vc(此页)navigationItem.backButtonTitle = ""
         navigationItem.backButtonDisplayMode = .minimal
-
     }
 
+    @IBAction func logoutTest(_ sender: Any) {
+        LCUser.logOut()
+        
+        let loginVC = storyboard!.instantiateViewController(withIdentifier: kLoginVCID)
+        loginAndMeParentVC.removeAllChildren()             //移除所有子视图控制器
+        loginAndMeParentVC.add(child: loginVC)             //添加登录页面
+        
+    }
 }
 

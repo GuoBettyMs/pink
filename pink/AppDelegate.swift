@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import LeanCloud
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -108,6 +109,17 @@ extension AppDelegate{
         //UI - 设置所有的navigationItem的返回按钮颜色
         UINavigationBar.appearance().tintColor = .label
   
+        //初始化LeanCloud,在LeanCloud控制台找到id、key、serverURL
+        LCApplication.logLevel = .off           //不开启 SDK 的调试日志（debug log）
+        do {
+            try LCApplication.default.set(
+                id: kLCAppID,
+                key: kLCAppKey,
+                serverURL: kLCServerURL)
+        } catch {
+            print(error)
+        }
+        
     }
 }
 
