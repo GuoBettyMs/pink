@@ -5,9 +5,8 @@
 //  Created by isdt on 2022/9/20.
 //
 /*
-    小粉书的底部导航栏的“主页”功能 -> “发现”子视图控制器 -> 横屏Tab 控制器联动的视图控制器的瀑布流布局可由以下代码完成:
-    用UICollectionView, 和 AutoLayout
- 
+    代码完成瀑布流布局:
+    用UICollectionView, 和 AutoLayout完成小粉书的底部导航栏的“主页”功能 -> “发现”子视图控制器 -> 横屏Tab 控制器联动的视图控制器的瀑布流布局
 */
 
 

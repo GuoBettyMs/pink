@@ -9,6 +9,7 @@
  */
 
 import CoreData
+import LeanCloud
 
 extension WaterfallVC{
     
@@ -70,4 +71,33 @@ extension WaterfallVC{
 
     }
     
+    // MARK: 获取云端笔记
+    func getNotes(){
+        
+        //基础查询
+        let query = LCQuery(className: kNoteTable)
+        query.whereKey(kChannelCol, .equalTo(channel))      //根据横滑话题进行基础查询
+        query.whereKey(kAuthorCol, .included)               //查询笔记作者,并包含各自对应的博客文章
+        query.whereKey(kUpdatedAtCol, .descending)
+        query.limit = kNotesOffset                          //上拉加载的分页
+        query.find { result in
+            switch result {
+            case .success(objects: let notes):
+                // notes 是包含满足条件的 objects 对象的数组
+                self.notes = notes
+//                print("notes : \(notes)")           //需要把AppDelegate的LCApplication.logLevel改为 .debug
+                self.collectionView.reloadData()
+                break
+            case .failure(error: let error):
+                print("云端基础查询失败: \(error)")
+            }
+            /* 等同于
+             if case let .success(objects: notes) = result{
+                 self.notes = notes
+                 self.collectionView.reloadData()
+             }
+             */
+            
+        }
+    }
 }

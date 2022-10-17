@@ -88,9 +88,9 @@ extension SocialLoginVC: ASAuthorizationControllerDelegate{
                 case .success:
                     //assert(user.objectId != nil, "error")
                     self.configAfterLogin(user, name, email)                //LeanCloud数据存储
-                    self.showTextHUD("苹果登录成功", in: self.parent!.view)
+                    self.showTextHUD("苹果登录成功", in: self.parent!.view)   //在父视图居中展示提示框
                 case .failure(error: let error):
-                    self.showTextHUD("苹果登录失败", in: self.parent!.view, error.reason)           //在父视图展示提示框
+                    self.showTextHUD("苹果登录失败", in: self.parent!.view, error.reason)           //在父视图居中展示提示框
                 }
             }
 

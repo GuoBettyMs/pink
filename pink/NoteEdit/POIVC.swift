@@ -110,7 +110,7 @@ extension POIVC: AMapSearchDelegate{
 
         hideLoadHUD()           //关闭菊花加载效果
         let poiCount = response.count
-        print(poiCount)
+//        print("地点数量: \(poiCount)")
         
         //获取搜索总页数
         if poiCount > kPOIsOffset{

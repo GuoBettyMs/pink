@@ -69,11 +69,8 @@ extension UIViewController{
                 
 //                print("一键登录成功,loginToken: \(loginToken)")
                 JVERIFICATIONService.clearPreLoginCache()                //清除预取号缓存
-                self.showTextHUD("一键登录成功")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-                    let meVC = self.storyboard!.instantiateViewController(identifier: kMeVCID)
-                    self.add(child: meVC)                //跳转到“个人”界面
-                })
+                let meVC = self.storyboard!.instantiateViewController(identifier: kMeVCID)
+                self.add(child: meVC)                //跳转到“个人”界面
                 
                 //发送token到我们自己的服务器
                 //1.服务器收到后携带此token并调用运营商接口（参考极光REST API）--可用postman模拟发送（注意鉴权和body中发参数）
@@ -82,7 +79,6 @@ extension UIViewController{
                 //self.getEncryptedPhoneNum(loginToken)           //Alamofire测试-网络请求加密手机号码
             }else{
 //                print("一键登录失败")                   //可提示用户UI并指引用户接下来的操作
-                self.showTextHUD("一键登录失败")
                 self.otherLogin()
             }
         }) { (type, content) in
@@ -106,7 +102,7 @@ extension UIViewController{
 // MARK: -
 extension UIViewController{
     
-    // MARK: 监听 - 验证码登录
+    // MARK: 监听 - 除一键登录外的其他方式登录
     @objc private func otherLogin(){
         JVERIFICATIONService.dismissLoginController(animated: true) {
             self.presentCodeLoginVC()

@@ -15,63 +15,32 @@
 import UIKit
 import CHTCollectionViewWaterfallLayout
 import XLPagerTabStrip
-
+import LeanCloud
 
 class WaterfallVC: UICollectionViewController {
+    //笔记话题
+    var channel = ""
     
-    var channel = ""    
-    var isMyDraft = true
+    //草稿页相关数据
+    var isMyDraft = false
     var draftNotes: [DraftNote] = []
+    
+    //首页相关数据
+    var notes: [LCObject] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         config()
+        getNotes()
         getDraftNotes()
     }
 
-}
-
-// MARK: - 遵守 CHTCollectionViewDelegateWaterfallLayout
-extension WaterfallVC: CHTCollectionViewDelegateWaterfallLayout{
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        /*
-        let cellW = (screenRect.width - kWaterfallPadding * 3) / 2
-        var cellH: CGFloat = 0
-        
-        // MARK: 瀑布流布局 - 草稿瀑布流
-        if isMyDraft{
-            //cell 高度 = 图片高度 + StackView(TitleLabel+DateLabel)高度50 + StackView上间距15 + StackView下间距15
-            let draftNote = draftNotes[indexPath.item]
-            let imageSize = UIImage(draftNote.coverPhoto)?.size ?? imagePH.size
-            let imageH = imageSize.height
-            let imageW = imageSize.width
-            let imageRatio = imageH / imageW            //取图片的高宽比
-            cellH = cellW * imageRatio + kDraftNoteWaterfallCellBottomViewH
-        }else{
-            // MARK: 瀑布流布局 - HomeVC 瀑布流
-            cellH = UIImage(named: "Discovery-\(indexPath.item + 1)")!.size.height
-        }
-        return CGSize(width: cellW, height: cellH)
-        */
-        
-        if isMyDraft{
-            let cellW = (screenRect.width - kWaterfallPadding * 3) / 2
-            var cellH: CGFloat = 0
-            let draftNote = draftNotes[indexPath.item]
-            let imageSize = UIImage(draftNote.coverPhoto)?.size ?? imagePH.size
-            let imageH = imageSize.height
-            let imageW = imageSize.width
-            let imageRatio = imageH / imageW            //取图片的高宽比
-            cellH = cellW * imageRatio + kDraftNoteWaterfallCellBottomViewH
-            
-            return CGSize(width: cellW, height: cellH)
-        }else{
-            return UIImage(named: "Discovery-\(indexPath.item + 1)")!.size
-        }
-        
+    @IBAction func dismissDraftNotesVC(_ sender: Any) {
+        dismiss(animated: true)
     }
 }
+
 
 extension WaterfallVC: IndicatorInfoProvider{
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {

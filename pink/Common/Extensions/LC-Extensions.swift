@@ -27,7 +27,7 @@ extension LCFile{
                         table.save { (result) in
                             switch result {
                             case .success:
-                                //print("文件已关联/文件已存入字段")
+//                                print("文件已关联/文件已存入\(record)字段")
                                 break
                             case .failure(error: let error):
                                 print("保存表的数据失败: \(error)")
@@ -44,5 +44,38 @@ extension LCFile{
             }
             group?.leave()
         } 
+    }
+}
+
+extension LCObject{
+    // MARK: 扩展 - 取出云端对象的不同类型字段数据
+    func getExactStringVal(_ col: String) -> String { get(col)?.stringValue ?? "" }
+    func getExactIntVal(_ col: String) -> Int { get(col)?.intValue ?? 0 }
+    func getExactDoubelVal(_ col: String) -> Double { get(col)?.doubleValue ?? 1 }  //这里取1,方便大多数情况使用
+    func getExactBoolValDefaultF(_ col: String) -> Bool { get(col)?.boolValue ?? false }            //查询不到则返回false(如性别)
+    func getExactBoolValDefaultT(_ col: String) -> Bool { get(col)?.boolValue ?? true }     //查询不到则返回true(如查hasReply字段)
+    
+    enum imageType {
+        case avatar
+        case coverPhoto
+    }
+    
+    // MARK: 扩展 - 取出云端对象path
+    //从云端的某个file(image类型)字段取出path再变成URL
+    func getImageURL(from col: String, _ type: imageType) -> URL{
+        if let file = get(col) as? LCFile, let path = file.url?.stringValue, let url = URL(string: path) {
+            //加载成功
+            return url
+        }else{
+            //加载失败
+            switch type{
+            case .avatar:
+                //头像图片返回xcode文件的avatarPH.jpeg
+                return Bundle.main.url(forResource: "avatarPH", withExtension: "jpeg")!
+            case .coverPhoto:
+                //封面图片返回xcode文件的imagePH.png
+                return Bundle.main.url(forResource: "imagePH", withExtension: "png")!
+            }
+        }
     }
 }

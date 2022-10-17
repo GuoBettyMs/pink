@@ -52,7 +52,7 @@
 		6A6C09B828E14927000A8327 /* ChannelTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6C09B728E14927000A8327 /* ChannelTableVC.swift */; };
 		6A6C09BA28E15AB7000A8327 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6C09B928E15AB7000A8327 /* Protocols.swift */; };
 		6A6C09BC28E17E4E000A8327 /* POIVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6C09BB28E17E4E000A8327 /* POIVC.swift */; };
-		6A6C09BE28E1985C000A8327 /*  POIVC-Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6C09BD28E1985C000A8327 /*  POIVC-Config.swift */; };
+		6A6C09BE28E1985C000A8327 /* POIVC-Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6C09BD28E1985C000A8327 /* POIVC-Config.swift */; };
 		6A6C09C028E19919000A8327 /* POIVC-Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6C09BF28E19919000A8327 /* POIVC-Location.swift */; };
 		6A6C09C228E1CC1E000A8327 /* POICell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6C09C128E1CC1E000A8327 /* POICell.swift */; };
 		6A6C09C428E3047F000A8327 /* POIVC-KeywordsSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6C09C328E3047F000A8327 /* POIVC-KeywordsSearch.swift */; };
@@ -71,6 +71,15 @@
 		6AEA519628F2CA3000E0A986 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AEA514628F2CA2F00E0A986 /* libssl.a */; };
 		6AEA519828F3C16600E0A986 /* AfterLogin-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEA519728F3C16600E0A986 /* AfterLogin-Extensions.swift */; };
 		6AEA519A28F3C6CB00E0A986 /* LC-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEA519928F3C6CB00E0A986 /* LC-Extensions.swift */; };
+		6AEA519D28F64EC800E0A986 /* LocalizationTableVCDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEA519C28F64EC800E0A986 /* LocalizationTableVCDemo.swift */; };
+		6AEA519F28F65CF400E0A986 /* NoteEditVC-Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEA519E28F65CF400E0A986 /* NoteEditVC-Note.swift */; };
+		6AEEBA9B28F7B36B0027A9DC /* NoteDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEEBA9A28F7B36B0027A9DC /* NoteDetailVC.swift */; };
+		6AEEBA9D28F7B3FA0027A9DC /* NoteDetailVC-UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEEBA9C28F7B3FA0027A9DC /* NoteDetailVC-UI.swift */; };
+		6AEEBA9F28F7B4080027A9DC /* NoteDetailVC-Cofig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEEBA9E28F7B4080027A9DC /* NoteDetailVC-Cofig.swift */; };
+		6AEEBAA128F7B7120027A9DC /* CustomViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEEBAA028F7B7120027A9DC /* CustomViews.swift */; };
+		6AEEBAA328F93A880027A9DC /* avatarPH.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 6AEEBAA228F93A880027A9DC /* avatarPH.jpeg */; };
+		6AEEBAA528F93A8E0027A9DC /* imagePH.png in Resources */ = {isa = PBXBuildFile; fileRef = 6AEEBAA428F93A8E0027A9DC /* imagePH.png */; };
+		6AEEBAA728F954590027A9DC /* WaterfallVC-Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEEBAA628F954590027A9DC /* WaterfallVC-Layout.swift */; };
 		D39D0692E2AF67F0CC4F7C86 /* Pods_pink.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B384C50306A2D65B55C6B23C /* Pods_pink.framework */; };
 /* End PBXBuildFile section */
 
@@ -127,7 +136,7 @@
 		6A6C09B728E14927000A8327 /* ChannelTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelTableVC.swift; sourceTree = "<group>"; };
 		6A6C09B928E15AB7000A8327 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		6A6C09BB28E17E4E000A8327 /* POIVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIVC.swift; sourceTree = "<group>"; };
-		6A6C09BD28E1985C000A8327 /*  POIVC-Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " POIVC-Config.swift"; sourceTree = "<group>"; };
+		6A6C09BD28E1985C000A8327 /* POIVC-Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "POIVC-Config.swift"; sourceTree = "<group>"; };
 		6A6C09BF28E19919000A8327 /* POIVC-Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "POIVC-Location.swift"; sourceTree = "<group>"; };
 		6A6C09C128E1CC1E000A8327 /* POICell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POICell.swift; sourceTree = "<group>"; };
 		6A6C09C328E3047F000A8327 /* POIVC-KeywordsSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "POIVC-KeywordsSearch.swift"; sourceTree = "<group>"; };
@@ -224,6 +233,15 @@
 		6AEA519728F3C16600E0A986 /* AfterLogin-Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AfterLogin-Extensions.swift"; sourceTree = "<group>"; };
 		6AEA519928F3C6CB00E0A986 /* LC-Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LC-Extensions.swift"; sourceTree = "<group>"; };
 		6AEA519B28F411B400E0A986 /* pink.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = pink.entitlements; sourceTree = "<group>"; };
+		6AEA519C28F64EC800E0A986 /* LocalizationTableVCDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationTableVCDemo.swift; sourceTree = "<group>"; };
+		6AEA519E28F65CF400E0A986 /* NoteEditVC-Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteEditVC-Note.swift"; sourceTree = "<group>"; };
+		6AEEBA9A28F7B36B0027A9DC /* NoteDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailVC.swift; sourceTree = "<group>"; };
+		6AEEBA9C28F7B3FA0027A9DC /* NoteDetailVC-UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteDetailVC-UI.swift"; sourceTree = "<group>"; };
+		6AEEBA9E28F7B4080027A9DC /* NoteDetailVC-Cofig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteDetailVC-Cofig.swift"; sourceTree = "<group>"; };
+		6AEEBAA028F7B7120027A9DC /* CustomViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViews.swift; sourceTree = "<group>"; };
+		6AEEBAA228F93A880027A9DC /* avatarPH.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = avatarPH.jpeg; sourceTree = "<group>"; };
+		6AEEBAA428F93A8E0027A9DC /* imagePH.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imagePH.png; sourceTree = "<group>"; };
+		6AEEBAA628F954590027A9DC /* WaterfallVC-Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WaterfallVC-Layout.swift"; sourceTree = "<group>"; };
 		8C31C3405BA47C7F299F9079 /* Pods-pink.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pink.debug.xcconfig"; path = "Target Support Files/Pods-pink/Pods-pink.debug.xcconfig"; sourceTree = "<group>"; };
 		B384C50306A2D65B55C6B23C /* Pods_pink.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_pink.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEE50E483EDDCB435B35227E /* Pods-pink.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pink.release.xcconfig"; path = "Target Support Files/Pods-pink/Pods-pink.release.xcconfig"; sourceTree = "<group>"; };
@@ -265,6 +283,7 @@
 				6A3A2A6428E53EAB0007E97C /* WaterfallVC-Delegate.swift */,
 				6A33F52128DAE2BA00865D58 /* WaterfallCell.swift */,
 				6A3A2A5E28E5384A0007E97C /* DraftNoteWaterfallCell.swift */,
+				6AEEBAA628F954590027A9DC /* WaterfallVC-Layout.swift */,
 			);
 			path = WaterFall;
 			sourceTree = "<group>";
@@ -273,6 +292,7 @@
 			isa = PBXGroup;
 			children = (
 				6A42263628D9DE7D009B0F4E /* ViewController.swift */,
+				6AEA519C28F64EC800E0A986 /* LocalizationTableVCDemo.swift */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -284,6 +304,7 @@
 				6A33F55028DD5B2A00865D58 /* NoteEditVC-Config.swift */,
 				6A3A2A5828E4545D0007E97C /* NoteEditVC-UI.swift */,
 				6A3A2A5628E454500007E97C /* NoteEditVC-DraftNote.swift */,
+				6AEA519E28F65CF400E0A986 /* NoteEditVC-Note.swift */,
 				6A3A2A5428E4543D0007E97C /* NoteEditVC-Helper.swift */,
 				6A33F54828DC6E1100865D58 /* NoteEditVC-DragDrop.swift */,
 				6A33F54A28DD4FAE00865D58 /* NoteEditVC-CollectionView.swift */,
@@ -294,7 +315,7 @@
 				6A6C09B528E147CE000A8327 /* ChannelVC.swift */,
 				6A6C09B728E14927000A8327 /* ChannelTableVC.swift */,
 				6A6C09BB28E17E4E000A8327 /* POIVC.swift */,
-				6A6C09BD28E1985C000A8327 /*  POIVC-Config.swift */,
+				6A6C09BD28E1985C000A8327 /* POIVC-Config.swift */,
 				6A6C09BF28E19919000A8327 /* POIVC-Location.swift */,
 				6A6C09C328E3047F000A8327 /* POIVC-KeywordsSearch.swift */,
 				6A6C09C128E1CC1E000A8327 /* POICell.swift */,
@@ -317,6 +338,8 @@
 		6A3A2A5328E436AF0007E97C /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				6AEEBAA428F93A8E0027A9DC /* imagePH.png */,
+				6AEEBAA228F93A880027A9DC /* avatarPH.jpeg */,
 				6A33F53C28DB1AE800865D58 /* Localizable.strings */,
 				6A33F54328DB1B3E00865D58 /* InfoPlist.strings */,
 			);
@@ -326,7 +349,6 @@
 		6A40223F28E68EA70031A5FB /* Post */ = {
 			isa = PBXGroup;
 			children = (
-				6A42264B28D9E3F6009B0F4E /* TabBarC.swift */,
 				6A33F52428DAE79300865D58 /* PostVC.swift */,
 			);
 			path = Post;
@@ -355,15 +377,17 @@
 			isa = PBXGroup;
 			children = (
 				6AEA519B28F411B400E0A986 /* pink.entitlements */,
+				6A42264628D9DECB009B0F4E /* Common */,
 				6A99410628F15149009E56A3 /* Login */,
 				6A99410328F14FEC009E56A3 /* Me */,
-				6A42264628D9DECB009B0F4E /* Common */,
 				6A33F52628DAF32D00865D58 /* NoteEdit */,
+				6AEEBA9928F7A8130027A9DC /* NoteDetail */,
 				6A33F51E28DAE28F00865D58 /* WaterFall */,
 				6A33F51528DAC76800865D58 /* Home */,
 				6A40223F28E68EA70031A5FB /* Post */,
 				6A3A2A5328E436AF0007E97C /* Resource */,
 				6A33F52F28DB1A4500865D58 /* Notes */,
+				6A42264B28D9E3F6009B0F4E /* TabBarC.swift */,
 				6A42263828D9DE7D009B0F4E /* Main.storyboard */,
 				6A42263B28D9DE7E009B0F4E /* Assets.xcassets */,
 				6A42263D28D9DE7E009B0F4E /* LaunchScreen.storyboard */,
@@ -383,6 +407,7 @@
 				6A99410928F1534A009E56A3 /* Extensions */,
 				6A6C09B928E15AB7000A8327 /* Protocols.swift */,
 				6AEA513128F16D3B00E0A986 /* Constants.swift */,
+				6AEEBAA028F7B7120027A9DC /* CustomViews.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -524,6 +549,16 @@
 			path = openssl;
 			sourceTree = "<group>";
 		};
+		6AEEBA9928F7A8130027A9DC /* NoteDetail */ = {
+			isa = PBXGroup;
+			children = (
+				6AEEBA9A28F7B36B0027A9DC /* NoteDetailVC.swift */,
+				6AEEBA9C28F7B3FA0027A9DC /* NoteDetailVC-UI.swift */,
+				6AEEBA9E28F7B4080027A9DC /* NoteDetailVC-Cofig.swift */,
+			);
+			path = NoteDetail;
+			sourceTree = "<group>";
+		};
 		E8A2A98F11299669A911CE75 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -603,6 +638,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AEEBAA328F93A880027A9DC /* avatarPH.jpeg in Resources */,
 				6A42263F28D9DE7E009B0F4E /* LaunchScreen.storyboard in Resources */,
 				6A33F53A28DB1AE800865D58 /* Localizable.strings in Resources */,
 				6A42263C28D9DE7E009B0F4E /* Assets.xcassets in Resources */,
@@ -610,6 +646,7 @@
 				6A33F54128DB1B3E00865D58 /* InfoPlist.strings in Resources */,
 				6A33F54728DC688600865D58 /* testVideo.mp4 in Resources */,
 				6A33F54F28DD5A1D00865D58 /* TextViewIAView.xib in Resources */,
+				6AEEBAA528F93A8E0027A9DC /* imagePH.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -707,6 +744,7 @@
 				6A6C09B628E147CE000A8327 /* ChannelVC.swift in Sources */,
 				6AEA519428F2CA3000E0A986 /* openssl_wrapper.m in Sources */,
 				6A3A2A6128E53D420007E97C /* WaterfallVC-Config.swift in Sources */,
+				6AEEBA9D28F7B3FA0027A9DC /* NoteDetailVC-UI.swift in Sources */,
 				6AEA513228F16D3B00E0A986 /* Constants.swift in Sources */,
 				6A99410528F15135009E56A3 /* LoginVC.swift in Sources */,
 				6A42264C28D9E3F6009B0F4E /* TabBarC.swift in Sources */,
@@ -717,7 +755,12 @@
 				6A33F52028DAE2A200865D58 /* WaterfallVC.swift in Sources */,
 				6A6C09C428E3047F000A8327 /* POIVC-KeywordsSearch.swift in Sources */,
 				6A99410828F152B5009E56A3 /* LocalLogin-Extensions.swift in Sources */,
+				6AEEBAA128F7B7120027A9DC /* CustomViews.swift in Sources */,
+				6AEA519F28F65CF400E0A986 /* NoteEditVC-Note.swift in Sources */,
+				6AEEBA9B28F7B36B0027A9DC /* NoteDetailVC.swift in Sources */,
 				6A42263728D9DE7D009B0F4E /* ViewController.swift in Sources */,
+				6AEEBA9F28F7B4080027A9DC /* NoteDetailVC-Cofig.swift in Sources */,
+				6AEA519D28F64EC800E0A986 /* LocalizationTableVCDemo.swift in Sources */,
 				6A33F54B28DD4FAE00865D58 /* NoteEditVC-CollectionView.swift in Sources */,
 				6A33F54D28DD597000865D58 /* TextViewIAView.swift in Sources */,
 				6AEA513C28F2BA0D00E0A986 /* SocialLoginVC-Alipay.swift in Sources */,
@@ -725,7 +768,8 @@
 				6A42263328D9DE7D009B0F4E /* AppDelegate.swift in Sources */,
 				6A33F51B28DAE24D00865D58 /* FollowVC.swift in Sources */,
 				6A33F51928DACA5200865D58 /* DiscoveryVC.swift in Sources */,
-				6A6C09BE28E1985C000A8327 /*  POIVC-Config.swift in Sources */,
+				6A6C09BE28E1985C000A8327 /* POIVC-Config.swift in Sources */,
+				6AEEBAA728F954590027A9DC /* WaterfallVC-Layout.swift in Sources */,
 				6A33F53128DB1A5B00865D58 /* Closures.swift in Sources */,
 				6A33F53328DB1A7D00865D58 /* Valuetypes+Referencetypes.swift in Sources */,
 				6A42263528D9DE7D009B0F4E /* SceneDelegate.swift in Sources */,

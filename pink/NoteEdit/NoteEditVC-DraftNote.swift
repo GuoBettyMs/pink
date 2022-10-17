@@ -25,9 +25,9 @@ extension NoteEditVC{
             
             draftNote.isVideo = self.isVideo
             self.handleOthers(draftNote)                  //处理其他数据
-           
+            //UI操作,在主线程执行
             DispatchQueue.main.async {
-                self.showTextHUD("创建草稿成功",false)             //UI操作,在主线程执行
+                self.showTextHUD("保存草稿成功",false)      //跳转界面,选false
             }
         }
         dismiss(animated: true)             //创建草稿后退出笔记编辑界面
@@ -48,7 +48,7 @@ extension NoteEditVC{
                 
                 //更新草稿后获取新的草稿数据, WaterfallVC-Delegate.swift-40,因获取草稿数据时采用了菊花加载动画,故不再使用showTextHUD
                 self.updateDraftNoteFinished?()
-                self.showTextHUD("更新草稿成功",false)             //UI操作,在主线程执行
+                self.showTextHUD("更新草稿成功",false)          //跳转界面,选false
             }
         }
         navigationController?.popViewController(animated: true)         //返回草稿总页面

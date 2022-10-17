@@ -197,7 +197,7 @@ extension SocialLoginVC{
             if let infoShareResponse = response.value{
                 let info = infoShareResponse.alipay_user_info_share_response            //alipay_user_info_share_response 用户信息model
                 print("用户信息: \(info.nick_name),\(info.avatar)")
-                self.showTextHUD("支付宝登录成功", in: self.parent!.view)
+                self.showTextHUD("支付宝登录成功", in: self.parent!.view)   //在父视图居中展示提示框
             }
         }
     }

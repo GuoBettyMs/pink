@@ -112,8 +112,8 @@ extension UIViewController{
              */
             group.notify(queue: .main) {
                 self.dismissAndShowMeVC()
-//                print("kNickNameCol: \(user.get(kNickNameCol)?.stringValue)")
-//                print("kAvatarCol: \((user.get(kAvatarCol) as! LCFile).name?.stringValue)")
+                print("kNickNameCol: \(user.get(kNickNameCol)?.stringValue)")
+                print("kAvatarCol: \((user.get(kAvatarCol) as! LCFile).name?.stringValue)")
             }
         }
     }

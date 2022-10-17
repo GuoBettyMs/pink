@@ -17,8 +17,8 @@ let kWaterfallVCID = "WaterfallVCID"
 let kNoteEditVCID = "NoteEditVCID"
 let kChannelTableVCID = "ChannelTableVCID"
 let kLoginNaviID = "LoginNaviID"
-let kLoginVCID = "loginVCID"
-let kMeVCID = "meVCID"
+let kLoginVCID = "LoginVCID"
+let kMeVCID = "MeVCID"
 let kDraftNotesNaviID = "DraftNotesNaviID"
 let kNoteDetailVCID = "NoteDetailVCID"
 
@@ -51,8 +51,9 @@ let screenRect = UIScreen.main.bounds
 
 // MARK: - 业务逻辑相关
 //瀑布流
-let kWaterfallPadding: CGFloat = 4      //瀑布流 layout间距
-let kDraftNoteWaterfallCellBottomViewH: CGFloat = 80        //StackView高度和上下边距(TitleLabel+DateLabel)
+let kWaterfallPadding: CGFloat = 4                          //瀑布流 layout间距
+let kDraftNoteWaterfallCellBottomViewH: CGFloat = 80        //本地草稿页面cell 底部StackView的总高度(含TitleLabel+DateLabel上下边距)
+let kWaterfallCellBottomViewH: CGFloat = 76                 //首页发现页面cell底部StackView的总高度(含TitleLabel+authorNickNameL上下边距)
 
 let kChannels = ["推荐","旅行","娱乐","才艺","美妆","白富美","美食","萌宠"]
 
@@ -80,7 +81,7 @@ let kAllSubChannels = [
 //高德
 let kAMapApiKey = "37e506cd59c2258797c6b4efe462d648"            //配置定位Key
 let kNoPOIPH = "未知地点"
-let kPOITypes = "医疗保健服务"                    //调试用
+let kPOITypes = "购物服务"                    //调试用
 //let kPOITypes = "汽车服务|汽车销售|汽车维修|摩托车服务|餐饮服务|购物服务|生活服务|体育休闲服务|医疗保健服务|住宿服务|风景名胜|商务住宅|政府机构及社会团体|科教文化服务|交通设施服务|金融保险服务|公司企业|道路附属设施|地名地址信息|公共设施"
 let kPOIsInitArr = [["不显示位置", ""]]          //完全同步copy周边的pois数组，用于简化逻辑
 let kPOIsOffset = 20                           //每页展示的搜索数量
@@ -99,40 +100,57 @@ let kAlipayPrivateKey = "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCNLQO
 let kPhoneRegEx = "^1\\d{10}$"       //^1表示以1开头，$表示结尾，\d表示数字，{10}表示前面的\d有10位,验证手机号码个数是否正确
 let kAuthCodeRegEx = "^\\d{6}$"      //^表示开头，$表示结尾，\d表示数字，{6}表示前面的\d有6位,验证验证码个数是否正确
 
+//云端
+let kNotesOffset = 10
+
 // MARK: - Leancloud
 //配置相关
 let kLCAppID = "4NLz9QdvBA1wlBsJIKNKVf01-gzGzoHsz"
 let kLCAppKey = "rrE6YI1D01Sqq4H8LyOjY2tg"
 let kLCServerURL = "https://4nlz9qdv.lc-cn-n1-shared.com"
 
-//User表
-let kNickNameCol = "nickName"
-let kAvatarCol = "avatar"
-let kGenderCol = "gender"               //在云端LeanCloud设置默认字段
-let kIntroCol = "intro"                 //在云端LeanCloud设置默认字段
+//LeanCloud 通用字段
+let kCreatedAtCol = "createdAt"
+let kUpdatedAtCol = "updatedAt"
 
-//Note表
-let kCoverPhotoCol = "coverPhoto"
-let kCoverPhotoRatioCol = "coverPhotoRatio"
-let kPhotosCol = "photos"
-let kVideoCol = "video"
-let kTitleCol = "title"
-let kTextCol = "text"
-let kChannelCol = "channel"
-let kSubChannelCol = "subChannel"
-let kPOINameCol = "poiName"
-let kIsVideoCol = "isVideo"
-let kLikeCountCol = "likeCount"
-let kFavCountCol = "favCount"
-let kCommentCountCol = "commentCount"
-let kAuthorCol = "author"
+//LeanCloud 表
+let kNoteTable = "Note"
+let kUserLikeTable = "UserLike"
+let kUserFavTable = "UserFav"
+let kCommentTable = "Comment"
+let kReplyTable = "Reply"
+let kUserInfoTable = "UserInfo"
+
+//LeanCloud User表
+let kNickNameCol = "nickName"           //登录用户的昵称字段
+let kAvatarCol = "avatar"               //在云端LeanCloud设置默认头像字段
+let kGenderCol = "gender"               //在云端LeanCloud设置默认性别字段
+let kIntroCol = "intro"                 //在云端LeanCloud设置默认个人简介字段
+
+//LeanCloud 笔记普通数据Note表
+let kCoverPhotoCol = "coverPhoto"               //封面图片
+let kCoverPhotoRatioCol = "coverPhotoRatio"     //封面图片宽高比字段
+let kPhotosCol = "photos"                       //图片
+let kVideoCol = "video"                         //视频
+let kTitleCol = "title"                         //标题
+let kTextCol = "text"                           //正文
+let kChannelCol = "channel"                     //话题
+let kSubChannelCol = "subChannel"               //副话题
+let kPOINameCol = "poiName"                     //地点
+let kIsVideoCol = "isVideo"                     //视频标识符
+let kLikeCountCol = "likeCount"                 //点赞数量
+let kFavCountCol = "favCount"                   //收藏数量
+let kCommentCountCol = "commentCount"           //评论数量
+let kAuthorCol = "author"                       //笔记作者
 let kHasEditCol = "hasEdit"
 
+//UserLike表
+let kUserCol = "user"
+let kNoteCol = "note"
 
-// MARK: - 全局函数
+// MARK: - 全局函数 - 设置系统图标
 func largeIcon(_ iconName: String, with color: UIColor = .label) -> UIImage{
     let config = UIImage.SymbolConfiguration(scale: .large)
     let icon = UIImage(systemName: iconName, withConfiguration: config)!
-    
     return icon.withTintColor(color)
 }

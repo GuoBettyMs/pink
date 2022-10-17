@@ -19,6 +19,9 @@ PODS:
   - ImageSlideshow (1.9.2):
     - ImageSlideshow/Core (= 1.9.2)
   - ImageSlideshow/Core (1.9.2)
+  - ImageSlideshow/Kingfisher (1.9.2):
+    - ImageSlideshow/Core
+    - Kingfisher (> 3.0)
   - JCore (3.2.5)
   - JVerification (2.9.3):
     - JCore (>= 2.1.6)
@@ -58,6 +61,7 @@ DEPENDENCIES:
   - GrowingTextView (= 0.7.2)
   - Hero
   - ImageSlideshow (~> 1.9.0)
+  - ImageSlideshow/Kingfisher
   - JVerification
   - Kingfisher (~> 6.0)
   - KMPlaceholderTextView (~> 1.4.0)
@@ -133,6 +137,6 @@ SPEC CHECKSUMS:
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
   YPImagePicker: f36043210c10b0783034eb1947d6e06e31c461e4
 
-PODFILE CHECKSUM: 4894e974f4f5bfbcd9ba1b4f39a3f686899fff4e
+PODFILE CHECKSUM: c56e226ea49c997c7c7fd20f5bc87d116543cb01
 
 COCOAPODS: 1.11.3

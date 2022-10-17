@@ -17,7 +17,7 @@ extension WaterfallVC{
         if isMyDraft{
             return draftNotes.count
         }else{
-            return 13
+            return notes.count
         }
     }
 
@@ -33,7 +33,7 @@ extension WaterfallVC{
         }else{
             // MARK: 瀑布流布局 - HomeVC 瀑布流
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kWaterfallCellID, for: indexPath) as! WaterfallCell
-            cell.imageview.image = UIImage(named: "Discovery-\(indexPath.item + 1)")
+            cell.note = notes[indexPath.item]           //把云端笔记的每个对象传到首页发现页面
             return cell
         }
     }
@@ -64,7 +64,7 @@ extension WaterfallVC{
                 }
              */
                 self.collectionView.reloadData()
-                self.showTextHUD("删除草稿成功")
+                self.showTextHUD("删除草稿成功")          //不跳转界面,默认选true
             }
         }
     }

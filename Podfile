@@ -22,9 +22,10 @@ target 'pink' do
   pod 'AlipaySDK-iOS'                                 #支付宝支付-客户端iOS集成SDK(包含APP登录和APP支付)
   pod 'LeanCloud'                                     #云端
   pod 'PopupDialog', '~> 1.1'                         #弹出对话框
-  pod 'FaveButton'
-  pod 'ImageSlideshow', '~> 1.9.0'
-  pod 'Kingfisher', '~> 6.0'
+  pod 'FaveButton'                                    #动画按钮
+  pod 'ImageSlideshow', '~> 1.9.0'                    #自动轮播图片
+  pod 'Kingfisher', '~> 6.0'                          #从 Web 下载和缓存图像
+  pod "ImageSlideshow/Kingfisher"                     #ImageSlideshow中包含对Kingfisher的封装
   pod 'GrowingTextView', '0.7.2'
   pod 'SegementSlide', '3.0.1'
   pod 'ActionSheetPicker-3.0'

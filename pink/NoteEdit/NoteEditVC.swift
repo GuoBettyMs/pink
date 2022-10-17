@@ -31,10 +31,11 @@ class NoteEditVC: UIViewController {
     //闭包: 更新草稿后的处理
     var updateDraftNoteFinished: (() -> ())?
     
+    //闭包: 发布草稿后的处理
+    var postDraftNoteFinished: (() -> ())?
+    
     //图片添加
-    var photos = [
-        UIImage(named: "Post-1")!, UIImage(named: "Post-2")!
-    ]
+    var photos: [UIImage] = []
 //    var videoURL: URL? = Bundle.main.url(forResource: "testVideo", withExtension: "mp4")!
     var videoURL: URL?
     var photoCount: Int{ photos.count }     //定义计算属性,无论数据是否有发生改变,都计算一遍数据,更新数据//
@@ -91,6 +92,14 @@ class NoteEditVC: UIViewController {
     @IBAction func postNote(_ sender: Any) {
         //发布笔记之前需判断当前用户输入的正文文本数量,看是否大于最大可输入数量)
         guard isValidateNote() else { return }
+
+        if let draftNote = draftNote{
+            //发布草稿笔记
+            postDraftNote(draftNote)
+        }else{
+            //发布新笔记
+            createNote()
+        }
     }
     
 

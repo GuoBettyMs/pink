@@ -87,7 +87,6 @@ extension NoteEditVC{
         print(NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, false)[0])
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0])
          */
-        print(NSHomeDirectory())
     }
 }
 // MARK: -

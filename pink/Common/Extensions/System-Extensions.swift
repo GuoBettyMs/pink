@@ -11,6 +11,26 @@
 import UIKit
 import DateToolsSwift
 import AVFoundation
+
+
+// MARK: -
+extension Int{
+    
+    //将Int数据转为String类型进行显示
+    var formattedStr: String{
+        let num = Double(self)
+        let tenThousand = num / 10_000                  //万
+        let hundredMillion = num / 100_000_000          //亿
+        
+        if tenThousand < 1{
+            return "\(self)"
+        }else if hundredMillion >= 1{           
+            return "\(round(hundredMillion * 10) / 10)亿"        //round函数 四舍五入
+        }else{
+            return "\(round(tenThousand * 10) / 10)万"
+        }
+    }
+}
 // MARK: -
 extension String{
     
@@ -35,6 +55,26 @@ extension String{
     static func randomString(_ length: Int) -> String{
         let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         return String((0..<length).map{ _ in letters.randomElement()! })        //随机从letters中取出一个,取length次
+    }
+    
+   
+    /// 富文本设置 字体大小 行间距 字间距
+    func attributedString(font: UIFont, textColor: UIColor, lineSpaceing: CGFloat, wordSpaceing: CGFloat) -> NSAttributedString {
+        
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = lineSpaceing
+        let attributes = [
+                NSAttributedString.Key.font             : font,
+                NSAttributedString.Key.foregroundColor  : textColor,
+                NSAttributedString.Key.paragraphStyle   : style,
+                NSAttributedString.Key.kern             : wordSpaceing]
+            
+            as [NSAttributedString.Key : Any]
+        let attrStr = NSMutableAttributedString.init(string: self, attributes: attributes)
+        
+        // 设置某一范围样式
+        // attrStr.addAttribute(<#T##name: NSAttributedString.Key##NSAttributedString.Key#>, value: <#T##Any#>, range: <#T##NSRange#>)
+        return attrStr
     }
 }
 
@@ -223,7 +263,8 @@ extension UIViewController{
     func showTextHUD(_ title: String, _ inCurrentView: Bool = true, _ subTitle: String? = nil){
         var viewToShow = view!
         
-        //若不在当前View(即界面发生跳转),将View锁定为当前最上层的View(即使用当前最上层的View来显示提示框)
+        //若不在当前View,将View锁定为当前最上层的View(即使用当前最上层的View来显示提示框)
+        //若界面需要发生跳转,选false
         if !inCurrentView{
             viewToShow = UIApplication.shared.windows.last!
         }

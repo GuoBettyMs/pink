@@ -12,9 +12,10 @@ import Foundation
 
 extension WaterfallVC{
     
-    // MARK: 遵守UICollectionViewDelegate - 跳转到编辑笔记界面
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
         if isMyDraft{
+            // MARK: 遵守UICollectionViewDelegate - 跳转-编辑笔记界面
             let draftNote = draftNotes[indexPath.item]
             
             //将图片Data数组 转为 image数组
@@ -31,7 +32,7 @@ extension WaterfallVC{
                  */
                 
                 let videoURL = FileManager.default.save(draftNote.video, to: "video", as: "\(UUID().uuidString).mp4")
-                let noteEditVC = storyboard!.instantiateViewController(identifier: kNoteEditVCID) as!NoteEditVC
+                let noteEditVC = storyboard!.instantiateViewController(identifier: kNoteEditVCID) as! NoteEditVC
                 noteEditVC.draftNote = draftNote
                 noteEditVC.photos = photos
                 noteEditVC.videoURL = videoURL
@@ -40,15 +41,26 @@ extension WaterfallVC{
                 noteEditVC.updateDraftNoteFinished = {
                     self.getDraftNotes()
                 }
-                navigationController?.pushViewController(noteEditVC, animated: true)
                 
+                //闭包: 发布草稿后获取新的草稿数据
+                noteEditVC.postDraftNoteFinished = {
+                    self.getDraftNotes()
+                }
+
+                navigationController?.pushViewController(noteEditVC, animated: true)
             }else{
-                showTextHUD("加载草稿失败")
+                showTextHUD("加载草稿失败")           //不跳转界面,默认选true
             }
-
-
         }else{
+            // MARK: 遵守UICollectionViewDelegate - 跳转-笔记详情页面
             
+            //依赖注入(Dependency Injection)
+            let detailVC = storyboard!.instantiateViewController(identifier: kNoteDetailVCID){ coder in
+                NoteDetailVC(coder: coder, note: self.notes[indexPath.item])
+            }
+            detailVC.modalPresentationStyle = .fullScreen
+            present(detailVC, animated: true)
+//            print("kTitleCol:  \(note.getExactStringVal(kTitleCol))")
         }
     }
 }

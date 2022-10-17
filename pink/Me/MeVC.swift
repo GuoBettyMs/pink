@@ -32,5 +32,12 @@ class MeVC: UIViewController {
         loginAndMeParentVC.add(child: loginVC)             //添加登录页面
         
     }
+    
+    @IBAction func showDraftNotes(_ sender: Any) {
+        let navi = storyboard!.instantiateViewController(withIdentifier: kDraftNotesNaviID)
+        navi.modalPresentationStyle = .fullScreen
+        present(navi, animated: true)
+    }
+    
 }
 
