@@ -5,7 +5,7 @@
 //  Created by isdt on 2022/10/13.
 //
 /*
-    NoteDetailVC 详细笔记界面
+    详细笔记页面 - UI
 
  */
 import Kingfisher

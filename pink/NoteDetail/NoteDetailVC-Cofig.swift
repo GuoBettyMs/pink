@@ -5,8 +5,7 @@
 //  Created by isdt on 2022/10/13.
 //
 /*
-    NoteDetailVC属性
- 
+    详细笔记页面 - 属性
  */
 import Foundation
 
