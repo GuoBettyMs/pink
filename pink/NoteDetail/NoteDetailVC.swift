@@ -12,13 +12,27 @@ import UIKit
 import FaveButton
 import ImageSlideshow
 import LeanCloud
+import GrowingTextView
 
 class NoteDetailVC: UIViewController {
     
     //自定义对象属性
     let note: LCObject
-    var isLikeFromWaterfallCell = false             //点赞动画
-
+    var isLikeFromWaterfallCell = false             //笔记首页的点赞状态传值到笔记详情页面,判断详情页的当前用户是否点赞
+    var delNoteFinished: (() -> ())?                //删除笔记闭包
+    
+    var comments: [LCObject] = []
+    
+    var isReply = false //用于判断用户按下textview的发送按钮时究竟是评论(comment)还是回复(reply)
+    var commentSection = 0 //用于找出用户是对哪个评论进行的回复
+    
+//    var replies: [ExpandableReplies] = []
+    var replyToUser: LCUser?
+    
+    var isFromMeVC = false
+    var fromMeVCUser: LCUser?
+    
+    
     //上方bar(作者信息)
     @IBOutlet weak var authorAvatarBtn: UIButton!
     @IBOutlet weak var authorNickNameBtn: UIButton!
@@ -42,10 +56,15 @@ class NoteDetailVC: UIViewController {
     
     //下方bar(点赞收藏评论)
     @IBOutlet weak var likeBtn: FaveButton!
-    @IBOutlet weak var likeCountL: UILabel!
+    @IBOutlet weak var likeCountL: UILabel!             //点赞
     @IBOutlet weak var favBtn: FaveButton!
-    @IBOutlet weak var favCountL: UILabel!
+    @IBOutlet weak var favCountL: UILabel!              //关注
     @IBOutlet weak var commentCountBtn: UIButton!
+    
+    @IBOutlet weak var textViewBarView: UIView!
+    @IBOutlet weak var textView: GrowingTextView!
+    @IBOutlet weak var textViewBarBottomConstraint: NSLayoutConstraint!
+    
     
     //点赞数量初始化
     var likeCount = 0 {
@@ -73,6 +92,8 @@ class NoteDetailVC: UIViewController {
     
     //计算属性
     var author: LCUser?{ note.get(kAuthorCol) as? LCUser }
+    var isLike: Bool { likeBtn.isSelected }
+    var isFav:Bool { favBtn.isSelected }
     
     //给note: LCObject 创建初始化构造器
     init?(coder: NSCoder, note: LCObject) {
@@ -88,15 +109,6 @@ class NoteDetailVC: UIViewController {
         super.viewDidLoad()
 
         config()
-        
-//        imageViewSlideshow.setImageInputs([ImageSource(image: UIImage(named: "Discovery-11")!),
-//                                           ImageSource(image: UIImage(named: "Discovery-12")!),
-//                                           ImageSource(image: UIImage(named: "Discovery-13")!)])
-//        //跟屏幕宽度等宽比地修改图片的高度约束,constant 相当于故事版设置的高度约束
-//        let imageSize = UIImage(named: "avatarPH1")!.size
-//        imageViewSlideshowH.constant = (imageSize.height / imageSize.width) * screenRect.width
-        
-        
         setUI()
 
     }
@@ -104,20 +116,19 @@ class NoteDetailVC: UIViewController {
     // MARK: tableHeaderView - 高度自适应
     //动态计算tableHeaderView的height(放在viewdidappear的话会触发多次),相当于手动实现了estimate size(目前cell已配备这种功能)
     override func viewDidLayoutSubviews() {
-
-        //计算出tableHeaderView里内容的总height--固定用法(开销较大,不可过度使用)
-        let height = tableHeaderView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-        var frame = tableHeaderView.frame         //取出初始frame值,待会把里面的height替换成上面计算的height,其余不替换
-        
-        //一旦tableHeaderView的height已经是实际height了,则不能也没必要继续赋值frame了.
-        //需判断,否则更改tableHeaderView的frame会再次触发viewDidLayoutSubviews,进而进入死循环
-        if frame.height != height{
-            frame.size.height = height           //替换成实际height
-            tableHeaderView.frame = frame        //重新赋值frame,即可改变tableHeaderView的布局(实际就是改变height)
-        }
-        
+        adjustTableHeaderViewHeight()
     }
 
+    @IBAction func back(_ sender: Any) {
+        dismiss(animated: true)
+    }
+    // MARK: 底下Bar - 点赞事件
+    @IBAction func like(_ sender: Any) { like() }
     
+    // MARK: 底下Bar - 关注事件
+    @IBAction func fav(_ sender: Any) { fav() }
+    
+    // MARK: 底下Bar - 评论事件
+    @IBAction func comment(_ sender: Any) { comment() }
     
 }

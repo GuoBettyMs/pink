@@ -78,4 +78,30 @@ extension LCObject{
             }
         }
     }
+    
+    //为userInfo表里面某个字段递增1
+    static func userInfoIncrease(where userObjectId: String, increase col: String){
+        let query = LCQuery(className: kUserInfoTable)
+        query.whereKey(kUserObjectIdCol, .equalTo(userObjectId))
+        query.getFirst { res in
+            if case let .success(object: userInfo) = res{
+                try? userInfo.increase(col)
+                userInfo.save{ _ in }
+            }
+        }
+    }
+    
+    //为userInfo表里面某个字段递减1--设为当前数量
+    static func userInfoDecrease(where userObjectId: String, decrease col: String, to: Int){
+        let query = LCQuery(className: kUserInfoTable)
+        query.whereKey(kUserObjectIdCol, .equalTo(userObjectId))
+        query.getFirst { res in
+            if case let .success(object: userInfo) = res{
+                try? userInfo.set(col, value: to)
+                userInfo.save{ _ in }
+            }
+        }
+    }
+    
+    
 }

@@ -6,7 +6,6 @@
 //
 /*
     详细笔记页面 - UI
-
  */
 import Kingfisher
 import LeanCloud
@@ -22,7 +21,7 @@ extension NoteDetailVC{
         followBtn.layer.borderColor = mainColor.cgColor
         
         showNote()          //关联云端笔记信息
-        showLike()          //点赞动画
+        showLike()          //关联笔记详情页面与首页笔记的点赞状态
     }
     
     // MARK: UI - 关联云端笔记信息
@@ -36,7 +35,7 @@ extension NoteDetailVC{
         //note图片
         //1.图片高度
         let coverPhotoHeight = CGFloat(note.getExactDoubelVal(kCoverPhotoRatioCol)) * screenRect.width
-        imageViewSlideshowH.constant = coverPhotoHeight
+        imageViewSlideshowH.constant = coverPhotoHeight         //跟屏幕宽度等宽比地修改图片的高度约束,constant 相当于故事版设置的高度约束
         
         //2.加载图片
         //第一次转场动画过来后,因加载网络图片需要时间,故会有空白一闪而过.后面再操作因为Kingfisher已经缓存了图片,故没有
@@ -97,9 +96,12 @@ extension NoteDetailVC{
         
     }
     
-    // MARK: UI - 点赞动画
+    // MARK: UI - 关联笔记详情页面与首页笔记的点赞状态
     private func showLike(){
-        //likeBtn.isSelected = isLikeFromWaterfallCell                                  //因点赞包点赞后有默认动画,故为了体验不使用此方法
+        //因点赞包点赞后有默认动画,故为了体验不使用此方法
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+//            self.likeBtn.isSelected = self.isLikeFromWaterfallCell
+//        }
         likeBtn.setSelected(selected: isLikeFromWaterfallCell, animated: false)         //点赞包的方法,可实现无动画
     }
     

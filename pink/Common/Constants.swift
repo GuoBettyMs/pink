@@ -65,6 +65,7 @@ let kSpacingBetweenItems: CGFloat = 2   //照片缩略图之间的间距
 //笔记
 let kMaxNoteTitleCount = 20             //笔记编辑 - 标题最大字符数
 let kMaxNoteTextCount = 1000            //笔记编辑 - 文本最大字符数
+let kNoteCommentPH = "精彩评论将被优先展示哦"
 
 //话题
 let kAllSubChannels = [
@@ -114,10 +115,10 @@ let kCreatedAtCol = "createdAt"
 let kUpdatedAtCol = "updatedAt"
 
 //LeanCloud 表
-let kNoteTable = "Note"
-let kUserLikeTable = "UserLike"
-let kUserFavTable = "UserFav"
-let kCommentTable = "Comment"
+let kNoteTable = "Note"                     //笔记云端表
+let kUserLikeTable = "UserLike"             //点赞笔记云端表
+let kUserFavTable = "UserFav"               //关注笔记云端表
+let kCommentTable = "Comment"               //评论笔记云端表
 let kReplyTable = "Reply"
 let kUserInfoTable = "UserInfo"
 
@@ -127,7 +128,7 @@ let kAvatarCol = "avatar"               //在云端LeanCloud设置默认头像�
 let kGenderCol = "gender"               //在云端LeanCloud设置默认性别字段
 let kIntroCol = "intro"                 //在云端LeanCloud设置默认个人简介字段
 
-//LeanCloud 笔记普通数据Note表
+//kNoteTable - 云端笔记普通数据的Note表
 let kCoverPhotoCol = "coverPhoto"               //封面图片
 let kCoverPhotoRatioCol = "coverPhotoRatio"     //封面图片宽高比字段
 let kPhotosCol = "photos"                       //图片
@@ -144,13 +145,40 @@ let kCommentCountCol = "commentCount"           //评论数量
 let kAuthorCol = "author"                       //笔记作者
 let kHasEditCol = "hasEdit"
 
-//UserLike表
-let kUserCol = "user"
-let kNoteCol = "note"
+//kUserLikeTable表包含的字段
+let kUserCol = "user"           //被点赞笔记的用户
+let kNoteCol = "note"           //被点赞笔记
+
+//Comment表
+let kHasReplyCol = "hasReply"
+
+//Reply表
+let kCommentCol = "comment"
+let kReplyToUserCol = "replyToUser"
+
+//UserInfo表
+let kUserObjectIdCol = "userObjectId"
 
 // MARK: - 全局函数 - 设置系统图标
+//全局图标
 func largeIcon(_ iconName: String, with color: UIColor = .label) -> UIImage{
     let config = UIImage.SymbolConfiguration(scale: .large)
     let icon = UIImage(systemName: iconName, withConfiguration: config)!
     return icon.withTintColor(color)
+}
+
+//全局字符图标
+func fontIcon(_ iconName: String, fontSize: CGFloat, with color: UIColor = .label) -> UIImage{
+    let config = UIImage.SymbolConfiguration(font: .systemFont(ofSize: fontSize))
+    let icon = UIImage(systemName: iconName, withConfiguration: config)!
+    return icon.withTintColor(color)
+}
+
+//全局提示框
+func showGlobalTextHUD(_ title: String){
+    let window = UIApplication.shared.windows.last!
+    let hud = MBProgressHUD.showAdded(to: window, animated: true)
+    hud.mode = .text            //不指定的话显示菊花和配置的文本
+    hud.label.text = title
+    hud.hide(animated: true, afterDelay: 2)
 }

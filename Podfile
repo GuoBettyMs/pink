@@ -26,7 +26,7 @@ target 'pink' do
   pod 'ImageSlideshow', '~> 1.9.0'                    #自动轮播图片
   pod 'Kingfisher', '~> 6.0'                          #从 Web 下载和缓存图像
   pod "ImageSlideshow/Kingfisher"                     #ImageSlideshow中包含对Kingfisher的封装
-  pod 'GrowingTextView', '0.7.2'
+  pod 'GrowingTextView', '0.7.2'                      #增长的文本视图
   pod 'SegementSlide', '3.0.1'
   pod 'ActionSheetPicker-3.0'
   pod 'Hero'

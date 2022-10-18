@@ -56,6 +56,10 @@
 		6A6C09C028E19919000A8327 /* POIVC-Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6C09BF28E19919000A8327 /* POIVC-Location.swift */; };
 		6A6C09C228E1CC1E000A8327 /* POICell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6C09C128E1CC1E000A8327 /* POICell.swift */; };
 		6A6C09C428E3047F000A8327 /* POIVC-KeywordsSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6C09C328E3047F000A8327 /* POIVC-KeywordsSearch.swift */; };
+		6A77ADFB28FE3694005FB05D /* NoteDetailVC-Like.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A77ADFA28FE3694005FB05D /* NoteDetailVC-Like.swift */; };
+		6A77ADFD28FE3BE9005FB05D /* NoteDetailVC-Fav.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A77ADFC28FE3BE9005FB05D /* NoteDetailVC-Fav.swift */; };
+		6A77ADFF28FE4EF8005FB05D /* WaterfallVCCell-Like.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A77ADFE28FE4EF8005FB05D /* WaterfallVCCell-Like.swift */; };
+		6A77AE0128FE8A4E005FB05D /* NoteDetailVC-Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A77AE0028FE8A4E005FB05D /* NoteDetailVC-Comment.swift */; };
 		6A99410528F15135009E56A3 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A99410428F15135009E56A3 /* LoginVC.swift */; };
 		6A99410828F152B5009E56A3 /* LocalLogin-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A99410728F152B5009E56A3 /* LocalLogin-Extensions.swift */; };
 		6A99410B28F15897009E56A3 /* LoginAndMeParentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A99410A28F15897009E56A3 /* LoginAndMeParentVC.swift */; };
@@ -140,6 +144,10 @@
 		6A6C09BF28E19919000A8327 /* POIVC-Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "POIVC-Location.swift"; sourceTree = "<group>"; };
 		6A6C09C128E1CC1E000A8327 /* POICell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POICell.swift; sourceTree = "<group>"; };
 		6A6C09C328E3047F000A8327 /* POIVC-KeywordsSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "POIVC-KeywordsSearch.swift"; sourceTree = "<group>"; };
+		6A77ADFA28FE3694005FB05D /* NoteDetailVC-Like.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteDetailVC-Like.swift"; sourceTree = "<group>"; };
+		6A77ADFC28FE3BE9005FB05D /* NoteDetailVC-Fav.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteDetailVC-Fav.swift"; sourceTree = "<group>"; };
+		6A77ADFE28FE4EF8005FB05D /* WaterfallVCCell-Like.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WaterfallVCCell-Like.swift"; sourceTree = "<group>"; };
+		6A77AE0028FE8A4E005FB05D /* NoteDetailVC-Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteDetailVC-Comment.swift"; sourceTree = "<group>"; };
 		6A99410428F15135009E56A3 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		6A99410728F152B5009E56A3 /* LocalLogin-Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalLogin-Extensions.swift"; sourceTree = "<group>"; };
 		6A99410A28F15897009E56A3 /* LoginAndMeParentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAndMeParentVC.swift; sourceTree = "<group>"; };
@@ -277,13 +285,14 @@
 			isa = PBXGroup;
 			children = (
 				6A33F51F28DAE2A200865D58 /* WaterfallVC.swift */,
+				6AEEBAA628F954590027A9DC /* WaterfallVC-Layout.swift */,
 				6A3A2A6028E53D420007E97C /* WaterfallVC-Config.swift */,
 				6A3A2A6628E53F340007E97C /* WaterfallVC-LoadData.swift */,
 				6A3A2A6228E53DBE0007E97C /* WaterfallVC-DataSource.swift */,
 				6A3A2A6428E53EAB0007E97C /* WaterfallVC-Delegate.swift */,
 				6A33F52128DAE2BA00865D58 /* WaterfallCell.swift */,
+				6A77ADFE28FE4EF8005FB05D /* WaterfallVCCell-Like.swift */,
 				6A3A2A5E28E5384A0007E97C /* DraftNoteWaterfallCell.swift */,
-				6AEEBAA628F954590027A9DC /* WaterfallVC-Layout.swift */,
 			);
 			path = WaterFall;
 			sourceTree = "<group>";
@@ -555,6 +564,9 @@
 				6AEEBA9A28F7B36B0027A9DC /* NoteDetailVC.swift */,
 				6AEEBA9C28F7B3FA0027A9DC /* NoteDetailVC-UI.swift */,
 				6AEEBA9E28F7B4080027A9DC /* NoteDetailVC-Cofig.swift */,
+				6A77ADFA28FE3694005FB05D /* NoteDetailVC-Like.swift */,
+				6A77ADFC28FE3BE9005FB05D /* NoteDetailVC-Fav.swift */,
+				6A77AE0028FE8A4E005FB05D /* NoteDetailVC-Comment.swift */,
 			);
 			path = NoteDetail;
 			sourceTree = "<group>";
@@ -739,6 +751,7 @@
 				6A33F51728DAC7A000865D58 /* HomeVC.swift in Sources */,
 				6A3A2A5228E435C70007E97C /* pink.xcdatamodeld in Sources */,
 				6AEA519828F3C16600E0A986 /* AfterLogin-Extensions.swift in Sources */,
+				6A77ADFF28FE4EF8005FB05D /* WaterfallVCCell-Like.swift in Sources */,
 				6AEA513828F2A00600E0A986 /* PasswordLoginVC.swift in Sources */,
 				6A3A2A5928E4545D0007E97C /* NoteEditVC-UI.swift in Sources */,
 				6A6C09B628E147CE000A8327 /* ChannelVC.swift in Sources */,
@@ -753,12 +766,14 @@
 				6A6C09BA28E15AB7000A8327 /* Protocols.swift in Sources */,
 				6A33F54928DC6E1100865D58 /* NoteEditVC-DragDrop.swift in Sources */,
 				6A33F52028DAE2A200865D58 /* WaterfallVC.swift in Sources */,
+				6A77ADFB28FE3694005FB05D /* NoteDetailVC-Like.swift in Sources */,
 				6A6C09C428E3047F000A8327 /* POIVC-KeywordsSearch.swift in Sources */,
 				6A99410828F152B5009E56A3 /* LocalLogin-Extensions.swift in Sources */,
 				6AEEBAA128F7B7120027A9DC /* CustomViews.swift in Sources */,
 				6AEA519F28F65CF400E0A986 /* NoteEditVC-Note.swift in Sources */,
 				6AEEBA9B28F7B36B0027A9DC /* NoteDetailVC.swift in Sources */,
 				6A42263728D9DE7D009B0F4E /* ViewController.swift in Sources */,
+				6A77AE0128FE8A4E005FB05D /* NoteDetailVC-Comment.swift in Sources */,
 				6AEEBA9F28F7B4080027A9DC /* NoteDetailVC-Cofig.swift in Sources */,
 				6AEA519D28F64EC800E0A986 /* LocalizationTableVCDemo.swift in Sources */,
 				6A33F54B28DD4FAE00865D58 /* NoteEditVC-CollectionView.swift in Sources */,
@@ -776,6 +791,7 @@
 				6A6C09C228E1CC1E000A8327 /* POICell.swift in Sources */,
 				6AEA519A28F3C6CB00E0A986 /* LC-Extensions.swift in Sources */,
 				6A33F53728DB1A9F00865D58 /* Enum.swift in Sources */,
+				6A77ADFD28FE3BE9005FB05D /* NoteDetailVC-Fav.swift in Sources */,
 				6AEA513A28F2ACB300E0A986 /* SocialLoginVC.swift in Sources */,
 				6A3A2A6328E53DBE0007E97C /* WaterfallVC-DataSource.swift in Sources */,
 			);

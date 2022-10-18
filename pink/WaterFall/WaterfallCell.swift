@@ -6,6 +6,8 @@
 //
 /*
     视图控制器 HomeVC Container View 的子视图控制器 瀑布流布局Cell
+    1.首页笔记页面cell,WaterfallCell
+    2.本地草稿页面cell,DraftNoteWaterfallCell
  
  */
 
@@ -21,6 +23,7 @@ class WaterfallCell: UICollectionViewCell {
     @IBOutlet weak var likeBtn: UIButton!
     
     var isMyselfLike = false                //是否自己个人页面的点赞
+    var isLikeFromNoteDetail = false             //笔记详情页面的点赞状态传值到笔记首页,判断笔记首页的当前用户是否点赞
     
     //点赞数量初始化
     var likeCount = 0{
@@ -29,7 +32,7 @@ class WaterfallCell: UICollectionViewCell {
         }
     }
     var currentLikeCount = 0                        //用于判断用户在规定时间内,对点赞按钮奇数次点击还是偶数次点击
-    var isLike: Bool{ likeBtn.isSelected }          //点赞按钮是否被点击
+    var isLike: Bool{ likeBtn.isSelected }          //判断首页笔记页面的点赞按钮是否被点击
     
     //定义云程笔记
     var note: LCObject?{
@@ -75,7 +78,37 @@ class WaterfallCell: UICollectionViewCell {
                 }
             }
         }
+    } 
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        //当点击了点赞按钮,改变填充颜色
+        //likeBtn的默认渲染模式是以模版为准,会随着父视图的变化而变化;为了点赞按钮被点击时渲染模式不会变化,设置renderingMode为 alwaysOriginal
+        let icon = UIImage(systemName: "heart.fill")?.withTintColor(mainColor, renderingMode: .alwaysOriginal)
+        likeBtn.setImage(icon, for: .selected)
     }
     
+    
+    // MARK: 监听 - 首页点赞
+    @IBAction func like(_ sender: Any) {
+        if let _ = LCApplication.default.currentUser{
+            //UI
+            //首页点赞,或者取消点赞,相当于 likeBtn.isSelected = !likeBtn.isSelected
+            likeBtn.isSelected.toggle()
+            isLike ? (likeCount += 1) : (likeCount -= 1)
+            
+            //数据
+            //优化1:防暴力点击
+            //首次点击cancelPreviousPerformRequests,若1秒内再次点击,取消上一次请求likeBtnTappedWhenLogin;1秒后再次点击,执行请求likeBtnTappedWhenLogin
+            NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(likeBtnTappedWhenLogin), object: nil)
+            perform(#selector(likeBtnTappedWhenLogin), with: nil, afterDelay: 1)
+            
+            //优化3:简化业务逻辑,如点赞后不可取消等(将else 的代码删除)--个人开发者初版推荐
+            
+        }else{
+            showGlobalTextHUD("请先登录")
+        }
+    }
     
 }

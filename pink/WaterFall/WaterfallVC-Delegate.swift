@@ -54,10 +54,30 @@ extension WaterfallVC{
         }else{
             // MARK: 遵守UICollectionViewDelegate - 跳转-笔记详情页面
             
+            let offset = isMyDraft ? 1 : 0
+            let item = indexPath.item - offset
+            
             //依赖注入(Dependency Injection)
             let detailVC = storyboard!.instantiateViewController(identifier: kNoteDetailVCID){ coder in
                 NoteDetailVC(coder: coder, note: self.notes[indexPath.item])
             }
+            
+            //通过isLikeFromWaterfallCell 将笔记首页的点赞状态传值到笔记详情页面,判断详情页的当前用户是否点赞
+            if let cell = collectionView.cellForItem(at: indexPath) as? WaterfallCell{
+                detailVC.isLikeFromWaterfallCell = cell.isLike          //isLikeFromWaterfallCell 详情页的点赞状态;isLike 笔记首页的点赞状态
+            }
+
+            //删除笔记后回到首页后刷新首页(此处为节省资源,用删除指定cell的方法)
+//            detailVC.delNoteFinished = {
+//                self.notes.remove(at: item)
+//                collectionView.performBatchUpdates {
+//                    collectionView.deleteItems(at: [indexPath])
+//                }
+//            }
+//            detailVC.isFromMeVC = isFromMeVC
+//            detailVC.fromMeVCUser = fromMeVCUser
+            
+            
             detailVC.modalPresentationStyle = .fullScreen
             present(detailVC, animated: true)
 //            print("kTitleCol:  \(note.getExactStringVal(kTitleCol))")
