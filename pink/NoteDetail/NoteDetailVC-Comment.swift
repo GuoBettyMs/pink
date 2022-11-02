@@ -5,7 +5,7 @@
 //  Created by isdt on 2022/10/18.
 //
 /*
-    详细笔记页面的评论事件 //
+    详细笔记页面的评论事件
  */
 
 import LeanCloud
