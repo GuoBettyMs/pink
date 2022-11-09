@@ -17,7 +17,7 @@ import GrowingTextView
 class NoteDetailVC: UIViewController {
     
     //自定义对象属性
-    let note: LCObject
+    var note: LCObject
     var isLikeFromWaterfallCell = false             //笔记首页的点赞状态传值到笔记详情页面,判断详情页的当前用户是否点赞
     var delNoteFinished: (() -> ())?                //删除笔记闭包
     
@@ -37,7 +37,7 @@ class NoteDetailVC: UIViewController {
     @IBOutlet weak var authorAvatarBtn: UIButton!
     @IBOutlet weak var authorNickNameBtn: UIButton!
     @IBOutlet weak var followBtn: UIButton!
-    @IBOutlet weak var shareBtn: UIButton!
+    @IBOutlet weak var shareOrMoreBtn: UIButton!
     
     //整个tableHeaderView
     @IBOutlet weak var tableHeaderView: UIView!
@@ -65,6 +65,14 @@ class NoteDetailVC: UIViewController {
     @IBOutlet weak var textView: GrowingTextView!
     @IBOutlet weak var textViewBarBottomConstraint: NSLayoutConstraint!
     
+    //用户评论时,给评论背景增加一个黑色遮罩
+    lazy var overlayView: UIView = {
+        let overlayView = UIView(frame: view.frame)
+        overlayView.backgroundColor = UIColor(white: 0, alpha: 0.1)//backgroundColor、alpha不能分开写,不然第一次显示View时,透明度不会起效,只起效backgroundColor
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        overlayView.addGestureRecognizer(tap)//添加手势用于关闭软键盘
+        return overlayView
+    }()
     
     //点赞数量初始化
     var likeCount = 0 {
@@ -94,6 +102,13 @@ class NoteDetailVC: UIViewController {
     var author: LCUser?{ note.get(kAuthorCol) as? LCUser }
     var isLike: Bool { likeBtn.isSelected }
     var isFav:Bool { favBtn.isSelected }
+    var isReadMyDraft: Bool{
+        if let user = LCApplication.default.currentUser, let author = author , user == author {
+            return true
+        }else{
+            return false
+        }
+    }
     
     //给note: LCObject 创建初始化构造器
     init?(coder: NSCoder, note: LCObject) {
@@ -110,25 +125,48 @@ class NoteDetailVC: UIViewController {
 
         config()
         setUI()
-
+        getCommentsAndReplies()
     }
     
     // MARK: tableHeaderView - 高度自适应
     //动态计算tableHeaderView的height(放在viewdidappear的话会触发多次),相当于手动实现了estimate size(目前cell已配备这种功能)
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         adjustTableHeaderViewHeight()
+        
     }
 
-    @IBAction func back(_ sender: Any) {
-        dismiss(animated: true)
-    }
+    @IBAction func back(_ sender: Any) { dismiss(animated: true)}
+    
+    // MARK: 顶部Bar - 分享或者其他操作事件
+    @IBAction func shareOrMore(_ sender: Any) { shareOrMore() }
+    
     // MARK: 底下Bar - 点赞事件
     @IBAction func like(_ sender: Any) { like() }
     
     // MARK: 底下Bar - 关注事件
     @IBAction func fav(_ sender: Any) { fav() }
     
-    // MARK: 底下Bar - 评论事件
+    // MARK: 底下Bar - 填写评论事件
     @IBAction func comment(_ sender: Any) { comment() }
+    
+    // MARK: 发送评论事件
+    @IBAction func postCommentOrReply(_ sender: Any) {
+        //此处省略1.button的动态enable处理,2.字数限制的提示,3.按下键盘return键的处理
+        //若用户输入一段空格,判断用户没有输入
+        if !textView.isBlank{
+            //用户输入
+            if !isReply{
+                //发送评论
+                //note-comment一对多;user-comment一对多,故创建/取出comment表,在里面放入note和user字段
+                postComment()
+            }else{
+                //发送回复
+                //comment-reply一对多;user-reply一对多,和comment表类似
+//                postReply()
+            }
+            hideAndResetTextView()
+        }    
+    }
     
 }

@@ -29,6 +29,10 @@ let kPhotoFooterID = "PhotoFooterID"
 let kSubChannelCellID = "SubChannelCellID"
 let kPOICellID = "POICellID"
 let kDraftNoteWaterfallCellID = "DraftNoteWaterfallCellID"
+let kMyDraftNoteWaterfallCellID = "MyDraftNoteWaterfallCellID"
+let kCommentViewID = "CommentViewID"
+let kReplyCellID = "ReplyCellID"
+let kCommentSectionFooterViewID = "CommentSectionFooterViewID"
 
 // MARK: - 资源文件相关
 let mainColor = UIColor(named: "main")!
@@ -47,7 +51,7 @@ let context = persistentContainer.viewContext                           //主队
 let backgroundContext = persistentContainer.newBackgroundContext()      //后台队列
 
 // MARK: - UI布局
-let screenRect = UIScreen.main.bounds
+let screenRect = UIScreen.main.bounds   //屏幕宽高
 
 // MARK: - 业务逻辑相关
 //瀑布流
@@ -67,23 +71,28 @@ let kMaxNoteTitleCount = 20             //笔记编辑 - 标题最大字符数
 let kMaxNoteTextCount = 1000            //笔记编辑 - 文本最大字符数
 let kNoteCommentPH = "精彩评论将被优先展示哦"
 
+//用户
+let kMaxIntroCount = 100
+let kIntroPH = "填写个人简介更容易获得关注哦,点击此处填写"
+let kNoCachePH = "无缓存"
+
 //话题
 let kAllSubChannels = [
     ["穿神马是神马", "就快瘦到50斤啦", "花5个小时修的靓图", "网红店入坑记"],
-    ["魔都名媛会会长", "爬行西藏", "无边泳池只要9块9"],
-    ["小鲜肉的魔幻剧", "国产动画雄起"],
+    ["魔幻景点", "爬行西藏", "年度最佳旅游胜地"],
+    ["玛丽苏的魔幻剧", "国产动画雄起"],
     ["练舞20年", "还在玩小提琴吗,我已经尤克里里了哦", "巴西柔术", "听说拳击能减肥", "乖乖交智商税吧"],
     ["粉底没有最厚,只有更厚", "最近很火的法属xx岛的面霜"],
     ["我是白富美你是吗", "康一康瞧一瞧啦"],
-    ["装x西餐厅", "网红店打卡"],
-    ["我的猫儿子", "我的猫女儿", "我的兔兔"]
+    ["装x西餐厅", "地方美食打卡"],
+    ["我的猫儿子", "我的皮卡丘", "我的兔兔"]
 ]
 
 //高德
 let kAMapApiKey = "37e506cd59c2258797c6b4efe462d648"            //配置定位Key
 let kNoPOIPH = "未知地点"
-let kPOITypes = "购物服务"                    //调试用
-//let kPOITypes = "汽车服务|汽车销售|汽车维修|摩托车服务|餐饮服务|购物服务|生活服务|体育休闲服务|医疗保健服务|住宿服务|风景名胜|商务住宅|政府机构及社会团体|科教文化服务|交通设施服务|金融保险服务|公司企业|道路附属设施|地名地址信息|公共设施"
+//let kPOITypes = "购物服务"                     //调试用
+let kPOITypes = "汽车服务|汽车销售|汽车维修|摩托车服务|餐饮服务|购物服务|生活服务|体育休闲服务|医疗保健服务|住宿服务|风景名胜|商务住宅|政府机构及社会团体|科教文化服务|交通设施服务|金融保险服务|公司企业|道路附属设施|地名地址信息|公共设施"
 let kPOIsInitArr = [["不显示位置", ""]]          //完全同步copy周边的pois数组，用于简化逻辑
 let kPOIsOffset = 20                           //每页展示的搜索数量
 
@@ -102,7 +111,8 @@ let kPhoneRegEx = "^1\\d{10}$"       //^1表示以1开头，$表示结尾，\d�
 let kAuthCodeRegEx = "^\\d{6}$"      //^表示开头，$表示结尾，\d表示数字，{6}表示前面的\d有6位,验证验证码个数是否正确
 
 //云端
-let kNotesOffset = 10
+let kNotesOffset = 10                //10条笔记
+let kCommentsOffset = 10             //10条评论
 
 // MARK: - Leancloud
 //配置相关
@@ -122,13 +132,13 @@ let kCommentTable = "Comment"               //评论笔记云端表
 let kReplyTable = "Reply"
 let kUserInfoTable = "UserInfo"
 
-//LeanCloud User表
-let kNickNameCol = "nickName"           //登录用户的昵称字段
-let kAvatarCol = "avatar"               //在云端LeanCloud设置默认头像字段
-let kGenderCol = "gender"               //在云端LeanCloud设置默认性别字段
-let kIntroCol = "intro"                 //在云端LeanCloud设置默认个人简介字段
+//LeanCloud User表字段
+let kNickNameCol = "nickName"               //登录用户的昵称字段
+let kAvatarCol = "avatar"                   //在云端LeanCloud设置默认头像字段
+let kGenderCol = "gender"                   //在云端LeanCloud设置默认性别字段
+let kIntroCol = "intro"                     //在云端LeanCloud设置默认个人简介字段
 
-//kNoteTable - 云端笔记普通数据的Note表
+//kNoteTable - 云端笔记普通数据的Note表字段
 let kCoverPhotoCol = "coverPhoto"               //封面图片
 let kCoverPhotoRatioCol = "coverPhotoRatio"     //封面图片宽高比字段
 let kPhotosCol = "photos"                       //图片
@@ -146,13 +156,13 @@ let kAuthorCol = "author"                       //笔记作者
 let kHasEditCol = "hasEdit"
 
 //kUserLikeTable表包含的字段
-let kUserCol = "user"           //被点赞笔记的用户
-let kNoteCol = "note"           //被点赞笔记
+let kUserCol = "user"                           //被点赞笔记的用户
+let kNoteCol = "note"                           //被点赞笔记
 
-//Comment表
+//Comment表字段
 let kHasReplyCol = "hasReply"
 
-//Reply表
+//Reply表字段
 let kCommentCol = "comment"
 let kReplyToUserCol = "replyToUser"
 

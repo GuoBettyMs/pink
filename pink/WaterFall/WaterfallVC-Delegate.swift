@@ -31,7 +31,9 @@ extension WaterfallVC{
                  }
                  */
                 
+                //编辑或取消编辑后需删除,防止temp文件夹容量过大
                 let videoURL = FileManager.default.save(draftNote.video, to: "video", as: "\(UUID().uuidString).mp4")
+                
                 let noteEditVC = storyboard!.instantiateViewController(identifier: kNoteEditVCID) as! NoteEditVC
                 noteEditVC.draftNote = draftNote
                 noteEditVC.photos = photos
@@ -59,7 +61,7 @@ extension WaterfallVC{
             
             //依赖注入(Dependency Injection)
             let detailVC = storyboard!.instantiateViewController(identifier: kNoteDetailVCID){ coder in
-                NoteDetailVC(coder: coder, note: self.notes[indexPath.item])
+                NoteDetailVC(coder: coder, note: self.notes[item])
             }
             
             //通过isLikeFromWaterfallCell 将笔记首页的点赞状态传值到笔记详情页面,判断详情页的当前用户是否点赞
@@ -68,12 +70,12 @@ extension WaterfallVC{
             }
 
             //删除笔记后回到首页后刷新首页(此处为节省资源,用删除指定cell的方法)
-//            detailVC.delNoteFinished = {
-//                self.notes.remove(at: item)
-//                collectionView.performBatchUpdates {
-//                    collectionView.deleteItems(at: [indexPath])
-//                }
-//            }
+            detailVC.delNoteFinished = {
+                self.notes.remove(at: item)
+                collectionView.performBatchUpdates {
+                    collectionView.deleteItems(at: [indexPath])
+                }
+            }
 //            detailVC.isFromMeVC = isFromMeVC
 //            detailVC.fromMeVCUser = fromMeVCUser
             

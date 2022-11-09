@@ -20,17 +20,27 @@ extension NoteDetailVC{
         followBtn.layer.borderWidth = 1
         followBtn.layer.borderColor = mainColor.cgColor
         
+        //判断是否是用户自己的笔记
+        if isReadMyDraft{
+            followBtn.isHidden = true
+            shareOrMoreBtn.setImage(UIImage(systemName: "ellipsis"), for: .normal)
+        }
+        
         showNote()          //关联云端笔记信息
         showLike()          //关联笔记详情页面与首页笔记的点赞状态
     }
     
     // MARK: UI - 关联云端笔记信息
-    private func showNote(){
-        
-        //上方bar作者信息
-        let authorAvatarURL = author?.getImageURL(from: kAvatarCol, .avatar)
-        authorAvatarBtn.kf.setImage(with: authorAvatarURL, for: .normal)
-        authorNickNameBtn.setTitle(author?.getExactStringVal(kNickNameCol), for: .normal)
+    func showNote(_ isUpdatingNote: Bool = false){
+        //笔记和笔记作者是多对一关系,更新笔记时并没有重新上传笔记作者信息,因此在NoteDetailVC.swift 中的author计算属性,获取到的作者信息是空值
+        //为防止更新笔记后,作者信息为空,增加判断值: 如果不是在更新编辑过的笔记,再来获取作者信息
+        if !isUpdatingNote{
+            //上方bar作者信息
+            let authorAvatarURL = author?.getImageURL(from: kAvatarCol, .avatar)
+            authorAvatarBtn.kf.setImage(with: authorAvatarURL, for: .normal)
+            authorNickNameBtn.setTitle(author?.getExactStringVal(kNickNameCol), for: .normal)
+        }
+
         
         //note图片
         //1.图片高度

@@ -57,6 +57,22 @@ extension String{
         return String((0..<length).map{ _ in letters.randomElement()! })        //随机从letters中取出一个,取length次
     }
     
+    //拼接富文本
+    func spliceAttrStr(_ dateStr: String) -> NSMutableAttributedString{
+        let attrText = toAttrStr()
+        let attrDate = " \(dateStr)".toAttrStr(12, .secondaryLabel)
+        attrText.append(attrDate)
+        return attrText
+    }
+    
+    //普通字符串转化为富文本
+    func toAttrStr(_ fontSize: CGFloat = 14, _ color: UIColor = .label) -> NSMutableAttributedString{
+        let attr: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: fontSize),
+            .foregroundColor: color
+        ]
+        return NSMutableAttributedString(string: self, attributes: attr)
+    }
    
     /// 富文本设置 字体大小 行间距 字间距
     func attributedString(font: UIFont, textColor: UIColor, lineSpaceing: CGFloat, wordSpaceing: CGFloat) -> NSAttributedString {
@@ -197,6 +213,9 @@ extension UITextField{
     var exactText: String {
         unwrappedText.isBlank ? "" : unwrappedText
     }
+    
+    //对空字符串进行判断:将空格去掉后,是否有其他字符
+    var isBlank: Bool { unwrappedText.isBlank }
 }
     // MARK: -
 extension UITextView{
@@ -206,6 +225,9 @@ extension UITextView{
     var exactText: String {
         unwrappedText.isBlank ? "" : unwrappedText
     }
+    
+    //对空字符串进行判断:将空格去掉后,是否有其他字符
+    var isBlank: Bool { unwrappedText.isBlank }
 }
 
     // MARK: -
@@ -218,10 +240,32 @@ extension UIView{
             layer.cornerRadius
         }
         set{
+            clipsToBounds = true
             layer.cornerRadius = newValue
         }
     }
 }
+
+    //MARK: -
+extension UIAlertAction{
+    
+    //通过函数来设置UIAlertAction文本颜色
+    func setTitleColor(_ color: UIColor){
+        setValue(color, forKey: "titleTextColor")
+    }
+    
+    //通过计算属性来设置UIAlertAction文本颜色
+    var titleTextColor: UIColor?{
+        get{
+            value(forKey: "titleTextColor") as? UIColor
+        }
+        set{
+            setValue(newValue, forKey: "titleTextColor")
+        }
+    }
+}
+
+
 
     // MARK: -
 extension UIViewController{

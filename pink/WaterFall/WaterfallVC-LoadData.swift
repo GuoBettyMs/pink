@@ -71,7 +71,7 @@ extension WaterfallVC{
 
     }
     
-    // MARK: 获取云端笔记
+    // MARK: 首页 - 从云端取出<所有>用户发布的笔记
     func getNotes(){
         
         //基础查询

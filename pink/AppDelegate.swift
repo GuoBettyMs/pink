@@ -102,13 +102,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate{
     
     private func config(){
-        //高德Key
+        // MARK: config - 高德Key
         AMapServices.shared().enableHTTPS = true    //开启HTTPS功能
         AMapServices.shared().apiKey = kAMapApiKey       //配置定位Key
         
+        // MARK: config - navigationItem
         //UI - 设置所有的navigationItem的返回按钮颜色
         UINavigationBar.appearance().tintColor = .label
   
+        // MARK: config - LeanCloud
         //初始化LeanCloud,在LeanCloud控制台找到id、key、serverURL
         LCApplication.logLevel = .off           //不开启 SDK 的调试日志（debug log）
         do {
@@ -118,6 +120,12 @@ extension AppDelegate{
                 serverURL: kLCServerURL)
         } catch {
             print(error)
+        }
+        
+        // MARK: config - tableView SectionHeader
+        //去除tableView SectionHeader上方多出来的一块空隙
+        if #available(iOS 15.0, *) {
+            UITableView.appearance().sectionHeaderTopPadding = 0
         }
         
     }

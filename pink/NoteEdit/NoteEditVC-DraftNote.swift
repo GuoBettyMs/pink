@@ -25,7 +25,7 @@ extension NoteEditVC{
             
             draftNote.isVideo = self.isVideo
             self.handleOthers(draftNote)                  //处理其他数据
-            //UI操作,在主线程执行
+            //UI操作,在主线程执行,若不在主线程完成,后台执行showTextHUD时会出现卡顿
             DispatchQueue.main.async {
                 self.showTextHUD("保存草稿成功",false)      //跳转界面,选false
             }
@@ -43,7 +43,7 @@ extension NoteEditVC{
             }
             self.handleOthers(draftNote)                  //处理其他数据
             
-            //UI操作,在主线程执行
+            //UI操作,在主线程执行,若不在主线程完成,后台执行showTextHUD时会出现卡顿
             DispatchQueue.main.async {
                 
                 //更新草稿后获取新的草稿数据, WaterfallVC-Delegate.swift-40,因获取草稿数据时采用了菊花加载动画,故不再使用showTextHUD

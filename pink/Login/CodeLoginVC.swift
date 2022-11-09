@@ -116,12 +116,14 @@ class CodeLoginVC: UIViewController {
             case let .success(object: user):
                 let randomNickName = "小粉薯\(String.randomString(6))"
                 self.configAfterLogin(user, randomNickName)             //LeanCloud数据存储
+                //UI操作,在主线程执行,若不在主线程完成,后台执行showTextHUD时会出现卡顿
                 DispatchQueue.main.async {
                     self.showTextHUD("验证码登录成功", false)      //若界面需要发生跳转,选false
                 }
 //                print(user, randomNickName)
             case let .failure(error: error):
                 self.hideLoadHUD()
+                //UI操作,在主线程执行,若不在主线程完成,后台执行showTextHUD时会出现卡顿
                 DispatchQueue.main.async {
                     self.showTextHUD("验证码登录失败", true, error.reason)     //若界面不需要发生跳转,选true
                 }

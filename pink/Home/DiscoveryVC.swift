@@ -30,8 +30,7 @@ class DiscoveryVC: ButtonBarPagerTabStripViewController {
         settings.style.selectedBarHeight = 0
         settings.style.buttonBarItemBackgroundColor = .clear
         settings.style.buttonBarItemFont = .systemFont(ofSize: 14)
-        
-        
+
         super.viewDidLoad()
 
         containerView.bounces = false
@@ -51,6 +50,7 @@ class DiscoveryVC: ButtonBarPagerTabStripViewController {
         for channel in kChannels {
             let vc = storyboard!.instantiateViewController(identifier: kWaterfallVCID) as! WaterfallVC
             vc.channel = channel
+            vc.view.backgroundColor = .blue
             vcs.append(vc)
         }
         return vcs

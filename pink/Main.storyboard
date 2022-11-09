@@ -1346,7 +1346,7 @@
                                     <constraint firstItem="zz1-9I-9RS" firstAttribute="centerY" secondItem="nuM-JA-2rF" secondAttribute="centerY" id="gKc-j4-Xc1"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ZoT-9F-oKy">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="44" sectionFooterHeight="1" estimatedSectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="ZoT-9F-oKy">
                                 <rect key="frame" x="0.0" y="91" width="390" height="674"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="3xE-DU-EcY">
@@ -1452,6 +1452,9 @@
                                                                     <real key="value" value="18"/>
                                                                 </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
+                                                            <connections>
+                                                                <action selector="comment:" destination="F0O-ZS-JJY" eventType="touchUpInside" id="WFg-Im-1CJ"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                 </stackView>
@@ -1481,15 +1484,20 @@
                                     </constraints>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Swf-Fc-HUO">
-                                        <rect key="frame" x="0.0" y="456" width="390" height="43.666667938232422"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ReplyCellID" rowHeight="108" id="Swf-Fc-HUO" customClass="ReplyCell" customModule="pink" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="456" width="390" height="108"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Swf-Fc-HUO" id="wTh-Bo-fQ3">
-                                            <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="390" height="108"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <sections/>
+                                <connections>
+                                    <outlet property="dataSource" destination="F0O-ZS-JJY" id="ibc-lV-OMm"/>
+                                    <outlet property="delegate" destination="F0O-ZS-JJY" id="STJ-5v-Bip"/>
+                                </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cfS-3H-o8I">
                                 <rect key="frame" x="0.0" y="765" width="390" height="45"/>
@@ -1520,6 +1528,9 @@
                                                         <real key="value" value="18"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="comment:" destination="F0O-ZS-JJY" eventType="touchUpInside" id="rWX-jL-qaP"/>
+                                                </connections>
                                             </button>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="KT3-3a-19C">
                                                 <rect key="frame" x="163.33333333333334" y="0.0" width="136.00000000000003" height="36"/>
@@ -1592,7 +1603,7 @@
                                                     </stackView>
                                                 </subviews>
                                             </stackView>
-                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FxT-5X-9zh">
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FxT-5X-9zh">
                                                 <rect key="frame" x="303.33333333333331" y="0.0" width="56.666666666666686" height="36"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="tintColor" red="0.55294117647058827" green="0.61176470588235299" blue="0.65098039215686276" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -1619,10 +1630,10 @@
                                     <constraint firstAttribute="trailing" secondItem="BHl-fc-SCx" secondAttribute="trailing" id="mPU-C3-rkb"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SyK-8L-gqz">
+                            <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SyK-8L-gqz">
                                 <rect key="frame" x="0.0" y="798" width="390" height="46"/>
                                 <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="qux-f0-tlW" customClass="GrowingTextView" customModule="GrowingTextView">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="qux-f0-tlW" customClass="GrowingTextView" customModule="GrowingTextView">
                                         <rect key="frame" x="15" y="8" width="289" height="30"/>
                                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                         <color key="textColor" systemColor="labelColor"/>
@@ -1644,7 +1655,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </textView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VV9-6J-gmM">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VV9-6J-gmM">
                                         <rect key="frame" x="312" y="3" width="63" height="40"/>
                                         <color key="backgroundColor" name="main"/>
                                         <constraints>
@@ -1661,14 +1672,16 @@
                                                 <real key="value" value="20"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="postCommentOrReply:" destination="F0O-ZS-JJY" eventType="touchUpInside" id="V70-Ad-eZa"/>
+                                        </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemTealColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="qux-f0-tlW" secondAttribute="bottom" constant="8" id="2Cx-wM-zRf"/>
-                                    <constraint firstItem="VV9-6J-gmM" firstAttribute="centerY" secondItem="SyK-8L-gqz" secondAttribute="centerY" id="488-Fk-y9J"/>
-                                    <constraint firstAttribute="height" constant="46" id="70O-CA-iKT"/>
                                     <constraint firstAttribute="trailing" secondItem="VV9-6J-gmM" secondAttribute="trailing" constant="15" id="DcX-r3-rpt"/>
+                                    <constraint firstItem="VV9-6J-gmM" firstAttribute="centerY" secondItem="SyK-8L-gqz" secondAttribute="centerY" id="Ewp-CO-xKr"/>
                                     <constraint firstItem="qux-f0-tlW" firstAttribute="top" secondItem="SyK-8L-gqz" secondAttribute="top" constant="8" id="J9y-tF-2FS"/>
                                     <constraint firstItem="VV9-6J-gmM" firstAttribute="leading" secondItem="qux-f0-tlW" secondAttribute="trailing" constant="8" id="RyZ-gH-1g6"/>
                                     <constraint firstItem="qux-f0-tlW" firstAttribute="leading" secondItem="SyK-8L-gqz" secondAttribute="leading" constant="15" id="XtD-jB-IHi"/>
@@ -1678,17 +1691,17 @@
                         <viewLayoutGuide key="safeArea" id="CXq-0K-yk2"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="SyK-8L-gqz" secondAttribute="bottom" id="2i4-wb-zsa"/>
                             <constraint firstItem="ZoT-9F-oKy" firstAttribute="top" secondItem="nuM-JA-2rF" secondAttribute="bottom" id="3Xe-u5-FGi"/>
                             <constraint firstItem="nuM-JA-2rF" firstAttribute="top" secondItem="CXq-0K-yk2" secondAttribute="top" id="3rH-9O-Tza"/>
+                            <constraint firstItem="SyK-8L-gqz" firstAttribute="bottom" secondItem="qq7-3m-aBo" secondAttribute="bottom" id="4bU-uJ-bdA"/>
                             <constraint firstItem="nuM-JA-2rF" firstAttribute="leading" secondItem="CXq-0K-yk2" secondAttribute="leading" id="8Lg-vN-M0B"/>
                             <constraint firstItem="cfS-3H-o8I" firstAttribute="trailing" secondItem="CXq-0K-yk2" secondAttribute="trailing" id="EcK-1o-4va"/>
                             <constraint firstItem="cfS-3H-o8I" firstAttribute="top" secondItem="ZoT-9F-oKy" secondAttribute="bottom" id="FZP-z5-5N7"/>
-                            <constraint firstItem="SyK-8L-gqz" firstAttribute="leading" secondItem="CXq-0K-yk2" secondAttribute="leading" id="V6s-wI-SQE"/>
+                            <constraint firstItem="SyK-8L-gqz" firstAttribute="leading" secondItem="CXq-0K-yk2" secondAttribute="leading" id="UbG-W9-ggJ"/>
                             <constraint firstItem="ZoT-9F-oKy" firstAttribute="trailing" secondItem="CXq-0K-yk2" secondAttribute="trailing" id="fI9-Er-49f"/>
                             <constraint firstItem="cfS-3H-o8I" firstAttribute="leading" secondItem="CXq-0K-yk2" secondAttribute="leading" id="hUC-sB-5Gf"/>
                             <constraint firstItem="nuM-JA-2rF" firstAttribute="trailing" secondItem="CXq-0K-yk2" secondAttribute="trailing" id="jBJ-6M-4ap"/>
-                            <constraint firstItem="CXq-0K-yk2" firstAttribute="trailing" secondItem="SyK-8L-gqz" secondAttribute="trailing" id="lwe-NI-q55"/>
+                            <constraint firstItem="SyK-8L-gqz" firstAttribute="trailing" secondItem="CXq-0K-yk2" secondAttribute="trailing" id="mNF-pi-LG3"/>
                             <constraint firstItem="cfS-3H-o8I" firstAttribute="bottom" secondItem="CXq-0K-yk2" secondAttribute="bottom" id="tY1-Ra-Xjt"/>
                             <constraint firstItem="ZoT-9F-oKy" firstAttribute="leading" secondItem="CXq-0K-yk2" secondAttribute="leading" id="vTr-LX-paS"/>
                         </constraints>
@@ -1713,7 +1726,7 @@
                         <outlet property="tableView" destination="ZoT-9F-oKy" id="wdg-RK-tVu"/>
                         <outlet property="textLabel" destination="flJ-Rb-WD6" id="8kj-3S-pfV"/>
                         <outlet property="textView" destination="qux-f0-tlW" id="pXO-2K-r7c"/>
-                        <outlet property="textViewBarBottomConstraint" destination="2i4-wb-zsa" id="9gz-9q-Rmq"/>
+                        <outlet property="textViewBarBottomConstraint" destination="4bU-uJ-bdA" id="hLl-PY-stD"/>
                         <outlet property="textViewBarView" destination="SyK-8L-gqz" id="rN5-aq-Q8z"/>
                         <outlet property="titleL" destination="53g-py-Nf2" id="Mpz-6f-Z8d"/>
                     </connections>
@@ -2100,8 +2113,8 @@
         <image name="cart.fill" catalog="system" width="128" height="102"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="chevron.right" catalog="system" width="97" height="128"/>
-        <image name="heart" width="128" height="128"/>
         <image name="heart" catalog="system" width="128" height="107"/>
+        <image name="heart" width="128" height="128"/>
         <image name="house.fill" catalog="system" width="128" height="104"/>
         <image name="message.fill" catalog="system" width="128" height="114"/>
         <image name="number.circle.fill" catalog="system" width="128" height="123"/>
@@ -2153,9 +2166,6 @@
         </systemColor>
         <systemColor name="systemPinkColor">
             <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemTealColor">
-            <color red="0.18823529411764706" green="0.69019607843137254" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

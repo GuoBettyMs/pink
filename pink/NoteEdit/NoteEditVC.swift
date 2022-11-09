@@ -13,6 +13,7 @@
  */
 
 import UIKit
+import LeanCloud
 
 class NoteEditVC: UIViewController {
  
@@ -26,11 +27,14 @@ class NoteEditVC: UIViewController {
     @IBOutlet weak var poiNameIcon: UIImageView!
     @IBOutlet weak var poiNameLabel: UILabel!
     
-    var draftNote: DraftNote?           //草稿笔记
+
+    var editMyNote: LCObject?           //编辑用户自己的笔记
+    //闭包: 更新笔记后的处理
+    var updateNoteFinished: ((String) -> ())?
     
+    var draftNote: DraftNote?           //草稿笔记
     //闭包: 更新草稿后的处理
     var updateDraftNoteFinished: (() -> ())?
-    
     //闭包: 发布草稿后的处理
     var postDraftNoteFinished: (() -> ())?
     
@@ -96,6 +100,9 @@ class NoteEditVC: UIViewController {
         if let draftNote = draftNote{
             //发布草稿笔记
             postDraftNote(draftNote)
+        }else if let note = editMyNote{
+            //更新笔记(用户发布的是自己之前写过的笔记)
+            updateNote(note)
         }else{
             //发布新笔记
             createNote()

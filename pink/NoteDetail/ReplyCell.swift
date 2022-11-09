@@ -4,7 +4,9 @@
 //
 //  Created by gbt on 2022/11/8.
 //
-
+/*
+    笔记详情页的评论tableview cell
+ */
 import UIKit
 
 class ReplyCell: UITableViewCell {

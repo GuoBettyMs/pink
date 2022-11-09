@@ -20,6 +20,7 @@ extension NoteEditVC{
 
         addPopup()                      //右上角加按钮并展示popup弹框
         setDraftNoteEditUI()            //编辑草稿笔记
+        setNoteEditUI()                 // 编辑用户自己的笔记
     }
     
     @objc private func dismissUpdate(){
@@ -28,7 +29,7 @@ extension NoteEditVC{
     
 }
 
-    // MARK: -
+    // MARK: - 编辑草稿笔记/用户自己的笔记
 extension NoteEditVC{
     
     // MARK: 编辑草稿笔记
@@ -45,16 +46,34 @@ extension NoteEditVC{
         if !poiName.isEmpty { updatePOINameUI()}
         
     }
-    
-    // MARK: 编辑草稿笔记 - 更新话题UI
+
+    // MARK: 编辑用户自己的笔记
+    private func setNoteEditUI(){
+        if let MyNote = editMyNote {
+            titleTextField.text = MyNote.getExactStringVal(kTitleCol)
+            textView.text = MyNote.getExactStringVal(kTextCol)
+            channel = MyNote.getExactStringVal(kChannelCol)
+            subChannel = MyNote.getExactStringVal(kSubChannelCol)
+            poiName = MyNote.getExactStringVal(kPOINameCol)
+        }
+        
+        if !subChannel.isEmpty { updateChannelUI()}
+        if !poiName.isEmpty { updatePOINameUI()}
+        
+    }
+}
+
+    //MARK: - 编辑草稿笔记/笔记时的统一处理
+extension NoteEditVC{
+    // MARK: 编辑笔记 - 更新话题UI
     func updateChannelUI(){
         channelIcon.tintColor = blueColor
         channelLabel.text = subChannel
         channelLabel.textColor = blueColor
         channelPlaceholderLabel.isHidden = true
     }
-    
-    // MARK: 编辑草稿笔记 - 更新地点UI
+
+    // MARK: 编辑笔记 - 更新地点UI
     func updatePOINameUI(){
         if poiName == ""{
             poiNameIcon.tintColor = .label
@@ -66,9 +85,10 @@ extension NoteEditVC{
             poiNameLabel.textColor = blueColor
         }
     }
-    
 }
 
+
+    //MARK: -
 extension NoteEditVC{
     // MARK: 右上角加弹框按钮
     private func addPopup(){
@@ -92,11 +112,7 @@ extension NoteEditVC{
         pcv.backgroundColor = .secondarySystemBackground
         pcv.cornerRadius = 10
     }
-    
-    
-}
 
-extension NoteEditVC{
     // MARK: 监听弹框按钮 - 展示popup弹框
     @objc private func showPopup(){
         let title = "发布小贴士"
@@ -114,4 +130,6 @@ extension NoteEditVC{
         popup.addButton(btn)                    //添加popup弹框按钮
         present(popup, animated: true)          //展示popup弹框
     }
+    
 }
+
