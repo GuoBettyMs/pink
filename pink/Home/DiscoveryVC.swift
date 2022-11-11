@@ -50,7 +50,6 @@ class DiscoveryVC: ButtonBarPagerTabStripViewController {
         for channel in kChannels {
             let vc = storyboard!.instantiateViewController(identifier: kWaterfallVCID) as! WaterfallVC
             vc.channel = channel
-            vc.view.backgroundColor = .blue
             vcs.append(vc)
         }
         return vcs

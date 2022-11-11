@@ -16,12 +16,8 @@ extension NoteDetailVC{
         self.showDelAlert(for: "评论") { _ in
             //云端数据
             comment.delete { _ in }
-            try? self.note.increase(kCommentCountCol, by: -1)
-            comment.save { _ in }
-            //UI
-            self.commentCount -= 1
-            
-            
+            self.updateCommentCount(by: -1)//包含页面上的评论数变化的UI
+    
             //内存数据
             self.comments.remove(at: section)
 

@@ -5,12 +5,12 @@
 //  Created by isdt on 2022/10/18.
 //
 /*
-    详细笔记页面的关注Fav事件
+    详细笔记页面的收藏Fav事件
  */
 import LeanCloud
 
 extension NoteDetailVC{
-    // MARK: 监听 - 关注事件
+    // MARK: 获取详情页收藏数量
     func fav(){
         //判断用户是否登录
         if let _ = LCApplication.default.currentUser{
@@ -26,6 +26,7 @@ extension NoteDetailVC{
         }
     }
     
+    // MARK: 监听 - 收藏点击事件
     @objc private func favBtnTappedWhenLogin(){
         //优化2:暴力点击时间内仅奇数次生效
         //只有当前点赞数量和最早时不一样时才进行云端操作(点偶数次不触发,奇数次才触发)
@@ -33,7 +34,7 @@ extension NoteDetailVC{
         //currentFavCount-存储当前真正的值--隔1秒后经过判断才变化(偶数次不变化,奇数次才变)
         if favCount != currentFavCount{
             let user = LCApplication.default.currentUser!
-            let authorObjectId = author?.objectId?.stringValue ?? ""
+            let authorObjectId = author?.objectId?.stringValue ?? ""          //获取云端笔记作者的id标识符
             
             //currentFavCount在实际点赞/取消点赞后也需要更新,为下一轮操作做准备,形成一个'闭环'(保持数据的统一性)
             //如(只讨论非暴力点击时):
@@ -51,9 +52,11 @@ extension NoteDetailVC{
                 
                 //点赞数量递增1
                 try? note.increase(kFavCountCol)
+                note.save { _ in }
+                
                 //不能修改别人的user表字段,故里面不能放xxxCount这种,因为非这个用户本人是存不进去的(下同)
                 //https://leancloud.cn/docs/leanstorage_guide-swift.html#hash1736273740
-                LCObject.userInfoIncrease(where: authorObjectId, increase: kFavCountCol)
+                LCObject.userInfoIncrease(where: authorObjectId, increase: kFavCountCol)    //为userInfo表里面某个字段递增1
                 
             }else{
                 let query = LCQuery(className: kUserFavTable)
@@ -69,9 +72,10 @@ extension NoteDetailVC{
                 //点赞数量递减1
                 try? note.set(kFavCountCol, value: favCount)
                 note.save{ _ in }
+                
                 //不能修改别人的user表字段,故里面不能放xxxCount这种,因为非这个用户本人是存不进去的(下同)
                 //https://leancloud.cn/docs/leanstorage_guide-swift.html#hash1736273740
-                LCObject.userInfoDecrease(where: authorObjectId, decrease: kFavCountCol, to: favCount)
+                LCObject.userInfoDecrease(where: authorObjectId, decrease: kFavCountCol, to: favCount)  //为userInfo表里面某个字段递减1
             }
         }
 

@@ -18,8 +18,11 @@ class LoginAndMeParentVC: UIViewController {
         super.viewDidLoad()
         
         //检查用户是否已经本地登录过
-        if LCApplication.default.currentUser != nil {
-            let meVC = storyboard!.instantiateViewController(identifier: kMeVCID)
+        if let user = LCApplication.default.currentUser{
+            //因为初始化了自定义的user,要使用构造方法来获取 MeVC
+            let meVC = storyboard!.instantiateViewController(identifier: kMeVCID) { coder in
+                MeVC(coder: coder, user: user)
+            }
             add(child: meVC)                //跳转到“个人”界面
         } else {
             let loginVC = storyboard!.instantiateViewController(identifier: kLoginVCID)

@@ -9,6 +9,7 @@
  */
 import ImageSlideshow
 import GrowingTextView
+import LeanCloud
 
 extension NoteDetailVC{
     
@@ -25,6 +26,11 @@ extension NoteDetailVC{
         pageControl.currentPageIndicatorTintColor = mainColor
         pageControl.pageIndicatorTintColor = .systemGray
         
+        //因FaveButton的封装,用户未登录时点击按钮也会变色,故需提前拦截
+        if LCApplication.default.currentUser == nil{
+            likeBtn.setToNormal()
+            favBtn.setToNormal()
+        }
         
         //评论的textView
         //GrowingTextView默认高度30时placeholder垂直居中,现高度变为40,需上下各补上5才行,加上原有的8,为13
@@ -36,6 +42,9 @@ extension NoteDetailVC{
         
         //注册可重用的section header(评论view)
         tableView.register(UINib(nibName: "CommentView", bundle: nil), forHeaderFooterViewReuseIdentifier: kCommentViewID)
+        
+        //注册可重用的section footer(评论view与评论view之间的分隔线)
+        tableView.register(CommentSectionFooterView.self, forHeaderFooterViewReuseIdentifier: kCommentSectionFooterViewID)
     }
     
     // MARK: 一般函数 - 计算tableHeaderView里内容的总height

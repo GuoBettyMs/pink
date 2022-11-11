@@ -40,6 +40,12 @@ protocol ChannelVCDelegate {
     
 }
 
+//自定义-发布笔记的地点协议
 protocol POIVCDelegate{
     func updatePOIName(_ poiName: String)
+}
+
+//自定义-个人页面的简介协议
+protocol IntroVCDelegate {
+    func updateIntro(_ intro: String)
 }

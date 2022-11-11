@@ -15,10 +15,11 @@ extension NoteDetailVC{
     
     // MARK: UI
     func setUI(){
-        
-        //详细笔记界面上方bar的关注按钮, 注意在故事版上勾选 clips to bounds,不然可能圆角不明显
-        followBtn.layer.borderWidth = 1
-        followBtn.layer.borderColor = mainColor.cgColor
+     
+//        //详细笔记界面上方bar的收藏按钮, 注意在故事版上勾选 clips to bounds,不然可能圆角不明显
+//        followBtn.layer.borderWidth = 1
+//        followBtn.layer.borderColor = mainColor.cgColor
+        followBtn.makeCapsule(mainColor) //详细笔记界面上方bar的收藏按钮,设置成胶囊形状
         
         //判断是否是用户自己的笔记
         if isReadMyDraft{
@@ -61,7 +62,7 @@ extension NoteDetailVC{
         
         //note标题
         let noteTitle = note.getExactStringVal(kTitleCol)
-        print("noteTitle: \(noteTitle)")
+//        print("noteTitle: \(noteTitle)")
         if noteTitle.isEmpty{
             titleL.isHidden = true
         }else{

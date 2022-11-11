@@ -93,7 +93,7 @@ extension NoteEditVC{
             try note.set(kSubChannelCol, value: subChannel)
             try note.set(kPOINameCol, value: poiName)
             try note.set(kLikeCountCol, value: 0)           //点赞字段
-            try note.set(kFavCountCol, value: 0)            //关注字段
+            try note.set(kFavCountCol, value: 0)            //收藏字段
             try note.set(kCommentCountCol, value: 0)
 
             //存储笔记的作者进云端

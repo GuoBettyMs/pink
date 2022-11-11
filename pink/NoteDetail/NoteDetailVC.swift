@@ -16,18 +16,18 @@ import GrowingTextView
 
 class NoteDetailVC: UIViewController {
     
-    //自定义对象属性
-    var note: LCObject
+
+    var note: LCObject//笔记对象属性
     var isLikeFromWaterfallCell = false             //笔记首页的点赞状态传值到笔记详情页面,判断详情页的当前用户是否点赞
     var delNoteFinished: (() -> ())?                //删除笔记闭包
-    
-    var comments: [LCObject] = []
-    
+
     var isReply = false //用于判断用户按下textview的发送按钮时究竟是评论(comment)还是回复(reply)
     var commentSection = 0 //用于找出用户是对哪个评论进行的回复
+    var comments: [LCObject] = []//评论对象属性
     
-//    var replies: [ExpandableReplies] = []
-    var replyToUser: LCUser?
+// 等同于 var replies: [[LCObject]] = [], 但是二维数组无法增加新属性,故使用结构体
+    var replies: [ExpandableReplies] = []
+    var replyToUser: LCUser?       //评论view->回复view->再回复view,再回复view中的被回复人
     
     var isFromMeVC = false
     var fromMeVCUser: LCUser?
@@ -58,7 +58,7 @@ class NoteDetailVC: UIViewController {
     @IBOutlet weak var likeBtn: FaveButton!
     @IBOutlet weak var likeCountL: UILabel!             //点赞
     @IBOutlet weak var favBtn: FaveButton!
-    @IBOutlet weak var favCountL: UILabel!              //关注
+    @IBOutlet weak var favCountL: UILabel!              //收藏
     @IBOutlet weak var commentCountBtn: UIButton!
     
     @IBOutlet weak var textViewBarView: UIView!
@@ -88,7 +88,7 @@ class NoteDetailVC: UIViewController {
             favCountL.text = favCount == 0 ? "收藏" : favCount.formattedStr
         }
     }
-    var currentFavCount = 0                 //当前关注数量
+    var currentFavCount = 0                 //当前收藏数量
     
     //评论数量初始化
     var commentCount = 0{
@@ -126,6 +126,7 @@ class NoteDetailVC: UIViewController {
         config()
         setUI()
         getCommentsAndReplies()
+        getFav()
     }
     
     // MARK: tableHeaderView - 高度自适应
@@ -136,7 +137,11 @@ class NoteDetailVC: UIViewController {
         
     }
 
+    // MARK: 返回上一页
     @IBAction func back(_ sender: Any) { dismiss(animated: true)}
+    
+    // MARK: 顶部Bar - 点击作者头像或昵称跳转到个人页面
+    @IBAction func goToAuthorMeVC(_ sender: Any) { noteToMeVC(author) }
     
     // MARK: 顶部Bar - 分享或者其他操作事件
     @IBAction func shareOrMore(_ sender: Any) { shareOrMore() }
@@ -144,7 +149,7 @@ class NoteDetailVC: UIViewController {
     // MARK: 底下Bar - 点赞事件
     @IBAction func like(_ sender: Any) { like() }
     
-    // MARK: 底下Bar - 关注事件
+    // MARK: 底下Bar - 收藏事件
     @IBAction func fav(_ sender: Any) { fav() }
     
     // MARK: 底下Bar - 填写评论事件
@@ -163,7 +168,7 @@ class NoteDetailVC: UIViewController {
             }else{
                 //发送回复
                 //comment-reply一对多;user-reply一对多,和comment表类似
-//                postReply()
+                postReply()
             }
             hideAndResetTextView()
         }    

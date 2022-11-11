@@ -17,7 +17,7 @@ extension UIViewController{
         
         //判断是否首次登录
         if let _ = user.get(kNickNameCol){
-            dismissAndShowMeVC()
+            dismissAndShowMeVC(user)
         }else{
             //首次登录(即注册)
             //enter和leave成对出现,全部配对成功后再执行notify中内容,整个过程不会阻塞主线程(同时拥有同步和异步的好处)
@@ -110,20 +110,33 @@ extension UIViewController{
                 return
             }
              */
+            
+
+            //注册时同时给UserInfo表写入一行数据,方便之后取xxCount数据
+            group.enter()
+            let userInfo = LCObject(className: kUserInfoTable)
+            try? userInfo.set(kUserObjectIdCol, value: user.objectId)    //设置登录用户的id标识符
+            userInfo.save{ _ in group.leave()}
+            
             group.notify(queue: .main) {
-                self.dismissAndShowMeVC()
-                print("kNickNameCol: \(user.get(kNickNameCol)?.stringValue)")
-                print("kAvatarCol: \((user.get(kAvatarCol) as! LCFile).name?.stringValue)")
+                self.dismissAndShowMeVC(user)
+//                print("kNickNameCol: \(user.get(kNickNameCol)?.stringValue)")
+//                print("kAvatarCol: \((user.get(kAvatarCol) as! LCFile).name?.stringValue)")
             }
         }
     }
     
     // MARK: 退出登录界面
-    func dismissAndShowMeVC(){
+    func dismissAndShowMeVC(_ user: LCUser){
         hideLoadHUD()
         DispatchQueue.main.async {
             let mainSB = UIStoryboard(name: "Main", bundle: nil)
-            let meVC = mainSB.instantiateViewController(identifier: kMeVCID)
+
+            //因为初始化了自定义的user,要使用构造方法来获取 MeVC
+            let meVC = mainSB.instantiateViewController(identifier: kMeVCID) { coder in
+                MeVC(coder: coder, user: user)
+            }
+            
             loginAndMeParentVC.removeAllChildren()            //移除所有子视图控制器
             loginAndMeParentVC.add(child: meVC)               //添加个人页面
             self.dismiss(animated: true)

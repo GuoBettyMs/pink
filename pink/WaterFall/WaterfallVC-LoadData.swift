@@ -13,7 +13,7 @@ import LeanCloud
 
 extension WaterfallVC{
     
-    // MARK: 获取草稿 - 数据的处理(分页、筛选、排序)
+    // MARK: 从本地取出我的草稿
     func getDraftNotes(){
         
         let request = DraftNote.fetchRequest() as NSFetchRequest<DraftNote>
@@ -72,7 +72,7 @@ extension WaterfallVC{
     }
     
     // MARK: 首页 - 从云端取出<所有>用户发布的笔记
-    func getNotes(){
+    @objc func getNotes(){
         
         //基础查询
         let query = LCQuery(className: kNoteTable)
@@ -85,7 +85,7 @@ extension WaterfallVC{
             case .success(objects: let notes):
                 // notes 是包含满足条件的 objects 对象的数组
                 self.notes = notes
-//                print("notes : \(notes)")           //需要把AppDelegate的LCApplication.logLevel改为 .debug
+                print("notes : \(notes)")           //需要把AppDelegate的LCApplication.logLevel改为 .debug
                 self.collectionView.reloadData()
                 break
             case .failure(error: let error):
@@ -97,7 +97,9 @@ extension WaterfallVC{
                  self.collectionView.reloadData()
              }
              */
-            
+            DispatchQueue.main.async {
+                self.header.endRefreshing()
+            }
         }
     }
 }

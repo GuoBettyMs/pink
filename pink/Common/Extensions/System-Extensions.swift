@@ -57,7 +57,7 @@ extension String{
         return String((0..<length).map{ _ in letters.randomElement()! })        //随机从letters中取出一个,取length次
     }
     
-    //拼接富文本
+    //拼接富文本,NSMutableAttributedString可修改String类型
     func spliceAttrStr(_ dateStr: String) -> NSMutableAttributedString{
         let attrText = toAttrStr()
         let attrDate = " \(dateStr)".toAttrStr(12, .secondaryLabel)
@@ -173,6 +173,13 @@ extension UIButton{
     func setToDisabled(){
         isEnabled = false
         backgroundColor = mainLightColor
+    }
+    
+    //变成胶囊按钮
+    func makeCapsule(_ color: UIColor = .label){
+        layer.cornerRadius = frame.height / 2
+        layer.borderWidth = 1
+        layer.borderColor = color.cgColor
     }
 }
 // MARK: -

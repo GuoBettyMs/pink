@@ -21,6 +21,9 @@ let kLoginVCID = "LoginVCID"
 let kMeVCID = "MeVCID"
 let kDraftNotesNaviID = "DraftNotesNaviID"
 let kNoteDetailVCID = "NoteDetailVCID"
+let kIntroVCID = "IntroVCID"
+let kEditProfileNaviID = "EditProfileNaviID"
+let kSettingTableVCID = "SettingTableVCID"
 
 // MARK: Cell相关ID
 let kWaterfallCellID = "WaterfallCellID"
@@ -127,16 +130,17 @@ let kUpdatedAtCol = "updatedAt"
 //LeanCloud 表
 let kNoteTable = "Note"                     //笔记云端表
 let kUserLikeTable = "UserLike"             //点赞笔记云端表
-let kUserFavTable = "UserFav"               //关注笔记云端表
-let kCommentTable = "Comment"               //评论笔记云端表
-let kReplyTable = "Reply"
-let kUserInfoTable = "UserInfo"
+let kUserFavTable = "UserFav"               //收藏笔记云端表
+let kCommentTable = "Comment"               //笔记的评论云端表
+let kReplyTable = "Reply"                   //笔记的评论回复云端表
+let kUserInfoTable = "UserInfo"             //用户个人社交信息的云端表
 
 //LeanCloud User表字段
 let kNickNameCol = "nickName"               //登录用户的昵称字段
 let kAvatarCol = "avatar"                   //在云端LeanCloud设置默认头像字段
 let kGenderCol = "gender"                   //在云端LeanCloud设置默认性别字段
 let kIntroCol = "intro"                     //在云端LeanCloud设置默认个人简介字段
+let kIDCol = "id"                           //在云端LeanCloud设置默认个人的小粉书号
 
 //kNoteTable - 云端笔记普通数据的Note表字段
 let kCoverPhotoCol = "coverPhoto"               //封面图片
@@ -160,14 +164,14 @@ let kUserCol = "user"                           //被点赞笔记的用户
 let kNoteCol = "note"                           //被点赞笔记
 
 //Comment表字段
-let kHasReplyCol = "hasReply"
+let kHasReplyCol = "hasReply"                   //是否有回复字段,默认评论下没有回复
 
 //Reply表字段
 let kCommentCol = "comment"
-let kReplyToUserCol = "replyToUser"
+let kReplyToUserCol = "replyToUser"             //子回复,评论view->回复view->再回复view,再回复view中的被回复人字段
 
 //UserInfo表
-let kUserObjectIdCol = "userObjectId"
+let kUserObjectIdCol = "userObjectId"           //用户ID标记符
 
 // MARK: - 全局函数 - 设置系统图标
 //全局图标

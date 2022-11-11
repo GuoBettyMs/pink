@@ -19,6 +19,7 @@ extension WaterfallCell{
         //currentLikedCount-存储当前真正的值--隔1秒后经过判断才变化(偶数次不变化,奇数次才变)
         if likeCount != currentLikeCount{
 
+            //authorObjectId 获取云端笔记作者的id标识符
             guard let note = note, let authorObjectId = (note.get(kAuthorCol) as? LCUser)?.objectId?.stringValue else { return }
             let user = LCApplication.default.currentUser!
             
@@ -37,9 +38,12 @@ extension WaterfallCell{
                 userLike.save { _ in }
                 //点赞数
                 try? note.increase(kLikeCountCol)
+                note.save{ _ in }
+                
                 //不能修改别人的user表字段,故里面不能放xxxCount这种,因为非这个用户本人是存不进去的(下同)
                 //https://leancloud.cn/docs/leanstorage_guide-swift.html#hash1736273740
-                LCObject.userInfoIncrease(where: authorObjectId, increase: kLikeCountCol)
+                LCObject.userInfoIncrease(where: authorObjectId, increase: kLikeCountCol)   //为userInfo表里面某个字段递增1
+                
             }else{
                 //userLike中间表
                 let query = LCQuery(className: kUserLikeTable)
@@ -54,7 +58,10 @@ extension WaterfallCell{
                 //点赞数
                 try? note.set(kLikeCountCol, value: likeCount)
                 note.save{ _ in }
-                LCObject.userInfoDecrease(where: authorObjectId, decrease: kLikeCountCol, to: likeCount)
+                
+                //不能修改别人的user表字段,故里面不能放xxxCount这种,因为非这个用户本人是存不进去的(下同)
+                //https://leancloud.cn/docs/leanstorage_guide-swift.html#hash1736273740
+                LCObject.userInfoDecrease(where: authorObjectId, decrease: kLikeCountCol, to: likeCount)    //为userInfo表里面某个字段递减1
             }
         }
         

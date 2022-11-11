@@ -14,7 +14,13 @@ extension WaterfallVC{
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if isMyDraft{
+        // MARK: 遵守UICollectionViewDelegate - 跳转-个人草稿界面
+        if isMyDraft, indexPath.item == 0{
+            let navi = storyboard!.instantiateViewController(identifier: kDraftNotesNaviID) as! UINavigationController
+            navi.modalPresentationStyle = .fullScreen
+            ((navi.topViewController) as! WaterfallVC).isDraft = true
+            present(navi, animated: true)
+        }else if isDraft{
             // MARK: 遵守UICollectionViewDelegate - 跳转-编辑笔记界面
             let draftNote = draftNotes[indexPath.item]
             

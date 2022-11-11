@@ -27,7 +27,7 @@ target 'pink' do
   pod 'Kingfisher', '~> 6.0'                          #从 Web 下载和缓存图像
   pod "ImageSlideshow/Kingfisher"                     #ImageSlideshow中包含对Kingfisher的封装
   pod 'GrowingTextView', '0.7.2'                      #增长的文本视图
-  pod 'SegementSlide', '3.0.1'
-  pod 'ActionSheetPicker-3.0'
+  pod 'SegementSlide', '3.0.1'                        #多层 UIScrollView 嵌套滚动
+  pod 'ActionSheetPicker-3.0'                         #iPhone/iPod(选择器 + UIActionSheet)或者iPad(一个选择器 + UIPopoverController)
   pod 'Hero'
 end

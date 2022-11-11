@@ -52,8 +52,8 @@ extension LCObject{
     func getExactStringVal(_ col: String) -> String { get(col)?.stringValue ?? "" }
     func getExactIntVal(_ col: String) -> Int { get(col)?.intValue ?? 0 }
     func getExactDoubelVal(_ col: String) -> Double { get(col)?.doubleValue ?? 1 }  //这里取1,方便大多数情况使用
-    func getExactBoolValDefaultF(_ col: String) -> Bool { get(col)?.boolValue ?? false }            //查询不到则返回false(如性别)
-    func getExactBoolValDefaultT(_ col: String) -> Bool { get(col)?.boolValue ?? true }     //查询不到则返回true(如查hasReply字段)
+    func getExactBoolValDefaultF(_ col: String) -> Bool { get(col)?.boolValue ?? false }            //查询不到字段则返回false(如性别)
+    func getExactBoolValDefaultT(_ col: String) -> Bool { get(col)?.boolValue ?? true }     //查询不到字段则返回true(如查hasReply字段)
     
     enum imageType {
         case avatar
@@ -79,25 +79,25 @@ extension LCObject{
         }
     }
     
-    //为userInfo表里面某个字段递增1
+    // MARK: 为userInfo表里面某个字段递增1
     static func userInfoIncrease(where userObjectId: String, increase col: String){
         let query = LCQuery(className: kUserInfoTable)
-        query.whereKey(kUserObjectIdCol, .equalTo(userObjectId))
+        query.whereKey(kUserObjectIdCol, .equalTo(userObjectId))        //笔记作者的id标记符
         query.getFirst { res in
-            if case let .success(object: userInfo) = res{
-                try? userInfo.increase(col)
+            if case let .success(object: userInfo) = res{               //得到个人信息表
+                try? userInfo.increase(col)                             //某个字段递增1
                 userInfo.save{ _ in }
             }
         }
     }
     
-    //为userInfo表里面某个字段递减1--设为当前数量
+    // MARK: 为userInfo表里面某个字段递减1--设为当前数量
     static func userInfoDecrease(where userObjectId: String, decrease col: String, to: Int){
         let query = LCQuery(className: kUserInfoTable)
-        query.whereKey(kUserObjectIdCol, .equalTo(userObjectId))
+        query.whereKey(kUserObjectIdCol, .equalTo(userObjectId))        //笔记作者的id标记符
         query.getFirst { res in
-            if case let .success(object: userInfo) = res{
-                try? userInfo.set(col, value: to)
+            if case let .success(object: userInfo) = res{               //得到个人信息表
+                try? userInfo.set(col, value: to)                       //递减1--某个字段设为当前数量
                 userInfo.save{ _ in }
             }
         }

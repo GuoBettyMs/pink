@@ -21,21 +21,17 @@ extension NoteDetailVC{
             try comment.set(kTextCol, value: textView.unwrappedText)
             try comment.set(kUserCol, value: user)
             try comment.set(kNoteCol, value: note)
-            
-            /* 发表评论后,即时显示,故无需再添加提示
+            comment.save { _ in }
+            /* 发表评论后,即时显示,故无需再添加弹窗提示
             comment.save { res in
                 if case .success = res{
                     self.showTextHUD("评论已发布")
                 }
             }
              */
-            comment.save { _ in }
 
             //2.note表
-            //云端数据
-            try? self.note.increase(kCommentCountCol, by: 1)
-            //UI
-            self.commentCount += 1
+            self.updateCommentCount(by: 1)//包含页面上的评论数变化的UI
 
             //内存数据
             comments.insert(comment, at: 0)         //最新评论放在第一条
