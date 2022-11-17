@@ -13,19 +13,25 @@ import Foundation
     // MARK: - 遵守UICollectionViewDataSource
 extension WaterfallVC{
 
+    //笔记数量,每一个笔记对应一个collectionView item
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if isMyDraft{
+            //个人页面collectionView item('笔记'数量) = 首页笔记数 + 草稿cell(1)
             return notes.count + 1
         }else if isDraft{
+            //笔记草稿
             return draftNotes.count
         }else{
+            //主页
             return notes.count
         }
     }
 
+    //每一个笔记的UI
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        // MARK: 瀑布流布局 - 个人草稿瀑布流
+        // MARK: 瀑布流布局 - 个人页面'笔记'瀑布流
+        //个人页面‘笔记’中草稿cell显示条件: isMyDraft 为true并且横滑tab为第一个
         if isMyDraft, indexPath.item == 0{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kMyDraftNoteWaterfallCellID, for: indexPath)
             return cell
@@ -39,12 +45,14 @@ extension WaterfallVC{
         }else{
             // MARK: 瀑布流布局 - HomeVC 瀑布流
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kWaterfallCellID, for: indexPath) as! WaterfallCell
+
+            //需在给cell.note赋值前赋值,因note的didset里面需要用到这个变量
+            cell.isMyselfLike = isMyselfLike            //isMyselfLike判断已登录用户是否在看自己的'赞过'tab页
             
-            //需在给note赋值前赋值,因note的didset里面需要用到这个变量
-            cell.isMyselfLike = isMyselfLike
-            
+            //情况1: 个人页面'笔记'中没有草稿cell, 首页的笔记数 = 个人页面'笔记'数量;
+            //情况2: 个人页面'笔记'中有草稿cell, 首页的笔记数 = 个人页面'笔记'数量 - 1
             let offset = isMyDraft ? 1 : 0
-            cell.note = notes[indexPath.item - offset]           //把云端笔记的每个对象传到首页发现页面
+            cell.note = notes[indexPath.item - offset]  //把云端笔记的每个对象传到首页“发现”页面
             return cell
         }
     }
@@ -66,6 +74,8 @@ extension WaterfallVC{
             appDelegate.saveBackgroundContext()
             //数据2:内存中的
             self.draftNotes.remove(at: index)
+            
+            UserDefaults.decrease(kDraftNoteCount)       //草稿笔记数递减1
 
             //UI操作,在主线程执行,若不在主线程完成,后台执行showTextHUD时会出现卡顿
             DispatchQueue.main.async {

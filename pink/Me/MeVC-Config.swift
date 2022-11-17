@@ -16,8 +16,11 @@ extension MeVC{
         //2.代码:上一个vc(此页)navigationItem.backButtonTitle = ""
         navigationItem.backButtonDisplayMode = .minimal
 
+        //判断:1.用户是否已登录 2.当前用户currentUser是笔记作者user
         if let user = LCApplication.default.currentUser, user == self.user{
             isMySelf = true
         }
+        
+        
     }
 }

@@ -14,12 +14,14 @@ extension WaterfallVC{
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        // MARK: 遵守UICollectionViewDelegate - 跳转-个人草稿界面
+        // MARK: 遵守UICollectionViewDelegate - 跳转-个人页面的草稿
         if isMyDraft, indexPath.item == 0{
+            
             let navi = storyboard!.instantiateViewController(identifier: kDraftNotesNaviID) as! UINavigationController
             navi.modalPresentationStyle = .fullScreen
             ((navi.topViewController) as! WaterfallVC).isDraft = true
             present(navi, animated: true)
+            
         }else if isDraft{
             // MARK: 遵守UICollectionViewDelegate - 跳转-编辑笔记界面
             let draftNote = draftNotes[indexPath.item]
@@ -82,8 +84,9 @@ extension WaterfallVC{
                     collectionView.deleteItems(at: [indexPath])
                 }
             }
-//            detailVC.isFromMeVC = isFromMeVC
-//            detailVC.fromMeVCUser = fromMeVCUser
+            
+            detailVC.isFromMeVC = isFromMeVC          //从个人页面跳转到笔记详情页,传值bool状态
+            detailVC.fromMeVCUser = fromMeVCUser      //从个人页面跳转到笔记详情页,传值用户对象
             
             
             detailVC.modalPresentationStyle = .fullScreen
@@ -92,31 +95,3 @@ extension WaterfallVC{
         }
     }
 }
-/*
-// Uncomment this method to specify if the specified item should be highlighted during tracking
-override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-    return true
-}
-*/
-
-/*
-// Uncomment this method to specify if the specified item should be selected
-override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-    return true
-}
-*/
-
-/*
-// Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-    return false
-}
-
-override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-    return false
-}
-
-override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-
-}
-*/

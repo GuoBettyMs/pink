@@ -67,6 +67,27 @@ extension NoteDetailVC{
                 let cell = tableView.cellForRow(at: IndexPath(row: 0, section: commentSection)) as! ReplyCell
                 cell.showAllReplyBtn.setTitle("展示 \(replies[commentSection].replies.count - 1) 条回复", for: .normal)
             }
+            
+            
+//            let cell = tableView.dequeueReusableCell(withIdentifier: kReplyCellID) as! ReplyCell
+            
+//            let replyCount = replies[commentSection].replies.count
+//            if replyCount > 1, !replies[commentSection].isExpanded{
+//                let cell = tableView.cellForRow(at: IndexPath(row: 0, section: commentSection)) as! ReplyCell
+//                cell.showAllReplyBtn.setTitle("展示 \(replies[commentSection].replies.count - 1) 条回复", for: .normal)
+//                
+//            }else{
+//                tableView.performBatchUpdates {
+//                    //row:先利用commentSection找到当前section中一共就几个回复,减去1之后就得出插入的新row的索引
+//                    tableView.insertRows(
+//                        at: [IndexPath(row: replies[commentSection].replies.count - 1, section: commentSection)],
+//                        with: .automatic
+//                    )
+//                }
+//            }
+            
+            
+
         }catch{
             print("给Reply表的字段赋值失败: \(error)")
         }

@@ -22,7 +22,7 @@ class WaterfallCell: UICollectionViewCell {
     @IBOutlet weak var nickNameL: UILabel!
     @IBOutlet weak var likeBtn: UIButton!
     
-    var isMyselfLike = false                //是否自己个人页面的点赞
+    var isMyselfLike = false                     //是否自己个人页面的点赞
     var isLikeFromNoteDetail = false             //笔记详情页面的点赞状态传值到笔记首页,判断笔记首页的当前用户是否点赞
     
     //点赞数量初始化
@@ -60,6 +60,16 @@ class WaterfallCell: UICollectionViewCell {
             likeCount = note.getExactIntVal(kLikeCountCol)
             currentLikeCount = likeCount
             
+            /*
+                 若‘if isMyselfLike{ likeBtn.isSelected = true } 放在awakeFromNib()中, 根据cell的执行顺序,
+                 UICollectionViewCell执行顺序:
+                 1. 加载出cell: let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kWaterfallCellID, for: indexPath) as! WaterfallCell
+                 2.配置cell的属性: override func awakeFromNib()
+                 3.传值: cell... return cell
+                 4.override func awakeFromNib()
+                 5.传值...
+             likeBtn.isSelected默认为false,尽管跳转到个人页面传值isMyselfLike 为true,但是cell已经加载完毕,likeBtn.isSelected 不会更改
+             */
             //判断是否已点赞
             if isMyselfLike{                    //若已登录用户正在看自己个人页面的点赞时,无需云端查询,直接设图标为选中状态即可
                 likeBtn.isSelected = true
@@ -77,6 +87,8 @@ class WaterfallCell: UICollectionViewCell {
                     }
                 }
             }
+
+
         }
     } 
     
@@ -87,6 +99,7 @@ class WaterfallCell: UICollectionViewCell {
         //likeBtn的默认渲染模式是以模版为准,会随着父视图的变化而变化;为了点赞按钮被点击时渲染模式不会变化,设置renderingMode为 alwaysOriginal
         let icon = UIImage(systemName: "heart.fill")?.withTintColor(mainColor, renderingMode: .alwaysOriginal)
         likeBtn.setImage(icon, for: .selected)
+
     }
     
     

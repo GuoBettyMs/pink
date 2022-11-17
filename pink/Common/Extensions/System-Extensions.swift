@@ -51,6 +51,9 @@ extension String{
         Int(self) != nil && NSRegularExpression(kAuthCodeRegEx).matches(self)
     }
     
+    //验证密码规范性
+    var isPassword: Bool{ NSRegularExpression(kPasswordRegEX).matches(self)}
+    
     //随机字符串
     static func randomString(_ length: Int) -> String{
         let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
@@ -160,6 +163,16 @@ extension URL{
         }
     }
 }
+
+// MARK: -
+extension UILabel{
+    //更改label文本颜色
+    func setToLight(_ text: String){
+        self.text = text
+        textColor = .label
+    }
+}
+
 // MARK: -
 extension UIButton{
     
@@ -226,9 +239,10 @@ extension UITextField{
 }
     // MARK: -
 extension UITextView{
+    //unwrappedText 解包字符串
     var unwrappedText: String { text ?? "" }
     
-    //若为空字符串,缩减为""(防止用户输入大量空字符串)
+    //若为空字符串,缩减为""(防止用户输入大量空字符串),与empty 搭配用
     var exactText: String {
         unwrappedText.isBlank ? "" : unwrappedText
     }
@@ -417,4 +431,17 @@ extension FileManager{
         return fileURL
         
     }
+}
+
+extension UserDefaults{
+    //草稿笔记递增1
+    static func increase(_ key: String, by val:Int = 1){
+        standard.set(standard.integer(forKey: key) + val, forKey: key)
+    }
+    
+    //草稿笔记递减1
+    static func decrease(_ key: String, by val:Int = 1){
+        standard.set(standard.integer(forKey: key) - val, forKey: key)
+    }
+    
 }

@@ -12,6 +12,63 @@ import CoreData
 import LeanCloud
 
 extension WaterfallVC{
+    // MARK: 从云端取出<当前用户>发布的笔记
+    @objc func getMyNotes(){
+        let query = LCQuery(className: kNoteTable)
+        query.whereKey(kAuthorCol, .equalTo(user!))//条件查询
+        query.whereKey(kAuthorCol, .included)//同时查询出作者对象
+        query.whereKey(kUpdatedAtCol, .descending)//排序,获取最新发布的
+        query.limit = kNotesOffset//上拉加载的分页
+        
+        query.find { result in
+            if case let .success(objects: notes) = result{
+                self.notes = notes
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            }
+            DispatchQueue.main.async {
+                self.header.endRefreshing()
+            }
+        }
+    }
+    
+    // MARK: 从云端取出当前用户收藏的笔记
+    @objc func getMyFavNotes(){
+        getFavOrLike(kUserFavTable)
+    }
+    
+    // MARK:  从云端取出当前用户赞过的笔记
+    @objc func getMyLikeNotes(){
+        getFavOrLike(kUserLikeTable)
+    }
+    
+    private func getFavOrLike(_ className: String){
+        let query = LCQuery(className: className)   //查询云端表
+        query.whereKey(kUserCol, .equalTo(user!))   //查询条件: 字段kUserCol与当前登录用户相等
+        //只获取 className中 kNoteCol 字段
+        query.whereKey(kNoteCol, .selected)
+        
+        //同时查询出笔记,included 一对多数据的链式调用,一个表可以有多条笔记
+        query.whereKey(kNoteCol, .included)
+
+        //同时查询出笔记的作者,iincluded 一对多数据的链式调用,一个作者可以有多条笔记
+        query.whereKey("\(kNoteCol).\(kAuthorCol)", .included)
+        query.whereKey(kUpdatedAtCol, .descending)  //按字段 kUpdatedAtCol 降序排列,即获取最新发布的
+        query.limit = kNotesOffset                  // 只获取 kNotesOffset 条
+        query.find { res in
+            if case let .success(objects: userFavOrLikes) = res{
+                self.notes = userFavOrLikes.compactMap{ $0.get(kNoteCol) as? LCObject } //compactMap 过滤掉空的kNoteCol
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            }
+            DispatchQueue.main.async {
+                self.header.endRefreshing()
+            }
+        }
+    }
+    
     
     // MARK: 从本地取出我的草稿
     func getDraftNotes(){
@@ -27,8 +84,7 @@ extension WaterfallVC{
         //筛选出标题为"iOS"的数据
         request.predicate = NSPredicate(format: "title = %@", "iOS")
         */
-        
-        
+
         //按照key排序(ascending: false 从早到晚; ascending: true 从晚到早)
         let sortDescriptor1 = NSSortDescriptor(key: "updatedAt", ascending: false)
         //let sortDescriptor2 = NSSortDescriptor(key: "title", ascending: true) //文本的话按汉字的UNICODE编码或英文字母
@@ -47,7 +103,6 @@ extension WaterfallVC{
          
         //一开始只加载draftNotes的metadata(放入内存)
         //等实际访问到某个draftNote下面的某个属性的时候才加载此draftNote所有属性到内存--触发Fault
-        
          */
         
         //指定字段--提高性能
@@ -102,4 +157,7 @@ extension WaterfallVC{
             }
         }
     }
+    
+    
+    
 }

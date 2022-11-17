@@ -101,7 +101,7 @@ extension NoteEditVC{
             
             //保存
             noteGroup.enter()
-            note.save { res in
+            note.save { _ in
 //                print("存储一般数据进云端成功")
                 noteGroup.leave()
                 
@@ -216,7 +216,7 @@ extension NoteEditVC{
             try editMyNote.set(kHasEditCol, value: true)
             //保存
             noteGroup.enter()
-            editMyNote.save { res in
+            editMyNote.save { _ in
 //                print("存储一般数据进云端成功")
                 noteGroup.leave()
                 

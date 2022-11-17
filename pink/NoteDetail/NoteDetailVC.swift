@@ -29,8 +29,8 @@ class NoteDetailVC: UIViewController {
     var replies: [ExpandableReplies] = []
     var replyToUser: LCUser?       //评论view->回复view->再回复view,再回复view中的被回复人
     
-    var isFromMeVC = false
-    var fromMeVCUser: LCUser?
+    var isFromMeVC = false          //判断是否从个人页面跳转到详情面
+    var fromMeVCUser: LCUser?       //从个人页面跳转到详情面的用户
     
     
     //上方bar(作者信息)

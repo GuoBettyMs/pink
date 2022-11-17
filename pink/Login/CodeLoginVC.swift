@@ -22,6 +22,8 @@ class CodeLoginVC: UIViewController {
     @IBOutlet weak var loginBtn: UIButton!
     
     private var timeRemain = totalTime
+    
+    //转为string类型
     private var phoneNumStr: String { phoneNumTF.unwrappedText }
     private var authCodeStr: String { autoCodeTF.unwrappedText }
     
@@ -135,7 +137,7 @@ class CodeLoginVC: UIViewController {
 
 extension CodeLoginVC: UITextFieldDelegate{
     
-    // MARK: 限制手机号码\验证码数量
+    // MARK: 遵守UITextFieldDelegate  - 限制手机号码\验证码数量
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         //range.location--当前输入的字符或粘贴文本的第一个字符的索引
         //string--当前输入的字符或粘贴的文本
@@ -147,7 +149,7 @@ extension CodeLoginVC: UITextFieldDelegate{
         return !isExceed
     }
     
-    // MARK: 当软键盘为默认键盘时,对returnKey的处理
+    // MARK: 遵守UITextFieldDelegate - 当软键盘为默认键盘时,对returnKey的处理
     //点击returnKey后对UITextField的字母简单判断
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == phoneNumTF{

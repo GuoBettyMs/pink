@@ -31,8 +31,13 @@ extension NoteDetailVC{
              */
 
             //2.note表
-            self.updateCommentCount(by: 1)//包含页面上的评论数变化的UI
+//            self.updateCommentCount(by: 1)//包含页面上的评论数变化的UI
+            try? self.note.increase(kCommentCountCol, by: 1)
 
+            //UI
+            self.commentCount += 1
+            
+            
             //内存数据
             comments.insert(comment, at: 0)         //最新评论放在第一条
 

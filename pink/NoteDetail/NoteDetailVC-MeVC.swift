@@ -14,6 +14,7 @@ extension NoteDetailVC{
     func noteToMeVC(_ user: LCUser?){
         guard let user = user else { return }
         
+        //从个人页面的cell跳转到笔记详情页后,若作者相同,从笔记详情页跳转到个人页面时,应dismiss笔记详情页
         if isFromMeVC, let fromMeVCUser = fromMeVCUser, fromMeVCUser == user{
             dismiss(animated: true)
         }else{

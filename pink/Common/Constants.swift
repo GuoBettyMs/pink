@@ -25,6 +25,7 @@ let kIntroVCID = "IntroVCID"
 let kEditProfileNaviID = "EditProfileNaviID"
 let kSettingTableVCID = "SettingTableVCID"
 
+
 // MARK: Cell相关ID
 let kWaterfallCellID = "WaterfallCellID"
 let kPhotoCellID = "PhotoCellID"
@@ -46,6 +47,8 @@ let imagePH = UIImage(named: "imagePH")!
 // MARK: - UserDefaults的key
 let kNameFromAppleID = "nameFromAppleID"
 let kEmailFromAppleID = "emailFromAppleID"
+let kDraftNoteCount = "draftNoteCount"      //个人的草稿笔记数
+let kUserInterfaceStyle = "userInterfaceStyle"  //模仿UIUserInterfaceStyle枚举,0指跟随系统,1和2对应浅色和深色模式
 
 // MARK: - CoreData
 let appDelegate = UIApplication.shared.delegate as! AppDelegate       //单例模式对象: UIApplication.shared
@@ -112,6 +115,7 @@ let kAlipayPrivateKey = "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCNLQO
 //正则表达式
 let kPhoneRegEx = "^1\\d{10}$"       //^1表示以1开头，$表示结尾，\d表示数字，{10}表示前面的\d有10位,验证手机号码个数是否正确
 let kAuthCodeRegEx = "^\\d{6}$"      //^表示开头，$表示结尾，\d表示数字，{6}表示前面的\d有6位,验证验证码个数是否正确
+let kPasswordRegEX = "^[0-9a-zA-Z]{6,16}$"  //密码验证
 
 //云端
 let kNotesOffset = 10                //10条笔记
@@ -141,6 +145,8 @@ let kAvatarCol = "avatar"                   //在云端LeanCloud设置默认头�
 let kGenderCol = "gender"                   //在云端LeanCloud设置默认性别字段
 let kIntroCol = "intro"                     //在云端LeanCloud设置默认个人简介字段
 let kIDCol = "id"                           //在云端LeanCloud设置默认个人的小粉书号
+let kBirthCol = "birth"
+let KIsSetPasswordCol = "isSetPassword"
 
 //kNoteTable - 云端笔记普通数据的Note表字段
 let kCoverPhotoCol = "coverPhoto"               //封面图片

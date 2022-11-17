@@ -19,7 +19,7 @@ extension NoteDetailVC: UITableViewDataSource{
     // MARK: 显示回复个数
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //首次添加评论时没有回复信息,故会报错“replies[section].replies.count 为空”
-        //        return 0
+//                return 0
 
 
         //可展开回复对象=ExpandableReplies,内置两个属性,1:回复是否已展开-isExpanded;2.这段里的所有回复-replies

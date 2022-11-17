@@ -50,9 +50,8 @@ extension NoteDetailVC{
                 try? userFav.set(kNoteCol, value: note)                //将当前用户赋给点赞笔记云端表kUserFavTable的笔记字段
                 userFav.save{ _ in }
                 
-                //点赞数量递增1
+                //收藏数量递增1
                 try? note.increase(kFavCountCol)
-                note.save { _ in }
                 
                 //不能修改别人的user表字段,故里面不能放xxxCount这种,因为非这个用户本人是存不进去的(下同)
                 //https://leancloud.cn/docs/leanstorage_guide-swift.html#hash1736273740
@@ -69,7 +68,7 @@ extension NoteDetailVC{
                     }
                 }
                 
-                //点赞数量递减1
+                //收藏数量递减1
                 try? note.set(kFavCountCol, value: favCount)
                 note.save{ _ in }
                 

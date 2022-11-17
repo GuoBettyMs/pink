@@ -34,7 +34,7 @@ class MeHeaderView: UIView {
             //头像和昵称
             avatarImgView.kf.setImage(with: user.getImageURL(from: kAvatarCol, .avatar))
             nickNameL.text = user.getExactStringVal(kNickNameCol)
-            
+
             //性别
             let gender = user.getExactBoolValDefaultF(kGenderCol)
             genderL.text = gender ? "♂︎" : "♀︎"
@@ -64,7 +64,6 @@ class MeHeaderView: UIView {
         }
     }
  
-    
-    
+
     
 }

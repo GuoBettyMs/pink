@@ -18,6 +18,7 @@ extension WaterfallVC{
        
         var inset: UIEdgeInsets = .zero
         if let _ = user{
+            //个人页面横滑scollview的headerview 和 contenView 的间距
             inset = UIEdgeInsets(top: 10, left: kWaterfallPadding, bottom: kWaterfallPadding, right: kWaterfallPadding)
         }else{
             inset = UIEdgeInsets(top: 0, left: kWaterfallPadding, bottom: kWaterfallPadding, right: kWaterfallPadding)
@@ -28,6 +29,9 @@ extension WaterfallVC{
             navigationItem.title = "本地草稿"
         }
         
+        //注册个人界面的tab子控制器'笔记'中表示草稿笔记的cell
+        collectionView.register(UINib(nibName: "MyDraftNoteWaterfallCell", bundle: nil), forCellWithReuseIdentifier: kMyDraftNoteWaterfallCellID)
+        collectionView.mj_header = header   //下拉刷新加载
     }
     
 }

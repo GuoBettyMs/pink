@@ -22,6 +22,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         kStatusBarH = windowScene.statusBarManager?.statusBarFrame.height ?? 0  //获取当前机型状态栏的高度
         
+        let userInterfaceStyleInt = UserDefaults.standard.integer(forKey: kUserInterfaceStyle)
+        if userInterfaceStyleInt == 1{
+            window?.overrideUserInterfaceStyle = .light
+        }else if userInterfaceStyleInt == 2{
+            window?.overrideUserInterfaceStyle = .dark
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
