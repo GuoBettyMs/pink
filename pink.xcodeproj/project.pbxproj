@@ -69,7 +69,6 @@
 		6A422D03291E47E100C13619 /* MeVC-EditOrFollow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A422D02291E47E100C13619 /* MeVC-EditOrFollow.swift */; };
 		6A422D05291E482000C13619 /* MeVc-SettingOrChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A422D04291E482000C13619 /* MeVc-SettingOrChat.swift */; };
 		6A422D07291E4C1F00C13619 /* NoteDetailVC-MeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A422D06291E4C1F00C13619 /* NoteDetailVC-MeVC.swift */; };
-		6A6BD6272921D0AC0030C5DE /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6BD6262921D0AC0030C5DE /* Protocols.swift */; };
 		6A6BD62A2921E58B0030C5DE /* MyDraftNoteWaterfallCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6BD6282921E58B0030C5DE /* MyDraftNoteWaterfallCell.swift */; };
 		6A6BD62B2921E58B0030C5DE /* MyDraftNoteWaterfallCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6A6BD6292921E58B0030C5DE /* MyDraftNoteWaterfallCell.xib */; };
 		6A6C09B628E147CE000A8327 /* ChannelVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6C09B528E147CE000A8327 /* ChannelVC.swift */; };
@@ -81,6 +80,7 @@
 		6A6C09C428E3047F000A8327 /* POIVC-KeywordsSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6C09C328E3047F000A8327 /* POIVC-KeywordsSearch.swift */; };
 		6A75BF8A29271C7B00154807 /* AppDelegate-Push.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A75BF8929271C7B00154807 /* AppDelegate-Push.swift */; };
 		6A75BF8C29275D3D00154807 /* Global-Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A75BF8B29275D3D00154807 /* Global-Functions.swift */; };
+		6A75BF8E2927974A00154807 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A75BF8D2927974A00154807 /* Protocols.swift */; };
 		6A77ADFB28FE3694005FB05D /* NoteDetailVC-Like.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A77ADFA28FE3694005FB05D /* NoteDetailVC-Like.swift */; };
 		6A77ADFD28FE3BE9005FB05D /* NoteDetailVC-Fav.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A77ADFC28FE3BE9005FB05D /* NoteDetailVC-Fav.swift */; };
 		6A77ADFF28FE4EF8005FB05D /* WaterfallVCCell-Like.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A77ADFE28FE4EF8005FB05D /* WaterfallVCCell-Like.swift */; };
@@ -201,7 +201,6 @@
 		6A422D02291E47E100C13619 /* MeVC-EditOrFollow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeVC-EditOrFollow.swift"; sourceTree = "<group>"; };
 		6A422D04291E482000C13619 /* MeVc-SettingOrChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeVc-SettingOrChat.swift"; sourceTree = "<group>"; };
 		6A422D06291E4C1F00C13619 /* NoteDetailVC-MeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteDetailVC-MeVC.swift"; sourceTree = "<group>"; };
-		6A6BD6262921D0AC0030C5DE /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		6A6BD6282921E58B0030C5DE /* MyDraftNoteWaterfallCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDraftNoteWaterfallCell.swift; sourceTree = "<group>"; };
 		6A6BD6292921E58B0030C5DE /* MyDraftNoteWaterfallCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyDraftNoteWaterfallCell.xib; sourceTree = "<group>"; };
 		6A6C09B528E147CE000A8327 /* ChannelVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelVC.swift; sourceTree = "<group>"; };
@@ -213,6 +212,7 @@
 		6A6C09C328E3047F000A8327 /* POIVC-KeywordsSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "POIVC-KeywordsSearch.swift"; sourceTree = "<group>"; };
 		6A75BF8929271C7B00154807 /* AppDelegate-Push.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate-Push.swift"; sourceTree = "<group>"; };
 		6A75BF8B29275D3D00154807 /* Global-Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Global-Functions.swift"; sourceTree = "<group>"; };
+		6A75BF8D2927974A00154807 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		6A77ADFA28FE3694005FB05D /* NoteDetailVC-Like.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteDetailVC-Like.swift"; sourceTree = "<group>"; };
 		6A77ADFC28FE3BE9005FB05D /* NoteDetailVC-Fav.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteDetailVC-Fav.swift"; sourceTree = "<group>"; };
 		6A77ADFE28FE4EF8005FB05D /* WaterfallVCCell-Like.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WaterfallVCCell-Like.swift"; sourceTree = "<group>"; };
@@ -522,8 +522,8 @@
 				6AEA513128F16D3B00E0A986 /* Constants.swift */,
 				6AEEBAA028F7B7120027A9DC /* CustomViews.swift */,
 				6A9A23FB291B812100B67C72 /* CustomClasses.swift */,
-				6A6BD6262921D0AC0030C5DE /* Protocols.swift */,
 				6A75BF8B29275D3D00154807 /* Global-Functions.swift */,
+				6A75BF8D2927974A00154807 /* Protocols.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -936,6 +936,7 @@
 				6AEA519828F3C16600E0A986 /* AfterLogin-Extensions.swift in Sources */,
 				6A77ADFF28FE4EF8005FB05D /* WaterfallVCCell-Like.swift in Sources */,
 				6AEA513828F2A00600E0A986 /* PasswordLoginVC.swift in Sources */,
+				6A75BF8E2927974A00154807 /* Protocols.swift in Sources */,
 				6A3A2A5928E4545D0007E97C /* NoteEditVC-UI.swift in Sources */,
 				6A6C09B628E147CE000A8327 /* ChannelVC.swift in Sources */,
 				6AEA519428F2CA3000E0A986 /* openssl_wrapper.m in Sources */,
@@ -951,7 +952,6 @@
 				6A75BF8A29271C7B00154807 /* AppDelegate-Push.swift in Sources */,
 				6AB47AF62924749E007A934A /* EditProfileTableVC-Delegate.swift in Sources */,
 				6A33F55128DD5B2A00865D58 /* NoteEditVC-Config.swift in Sources */,
-				6A6BD6272921D0AC0030C5DE /* Protocols.swift in Sources */,
 				6AEA513E28F2BAD000E0A986 /* SocialLoginVC-Apple.swift in Sources */,
 				6A33F54928DC6E1100865D58 /* NoteEditVC-DragDrop.swift in Sources */,
 				6A33F52028DAE2A200865D58 /* WaterfallVC.swift in Sources */,
