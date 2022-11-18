@@ -52,4 +52,31 @@ extension NoteEditVC{
         titleCountL.text = "\(kMaxNoteTitleCount - titleTextField.unwrappedText.count)"
         
     }
+    
+    // MARK: 自定义请求授权弹框(首次询问有效,不允许授权后无效)
+    func showAllowPushAlert(){
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            switch settings.authorizationStatus{
+            //未请求过授权(notDetermined)需再次请求授权,此处省略
+
+            //未授权(不允许通知)时引导用户去设置App里授权(无效)
+            case .denied:
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: #""小粉书"想给您发送通知"#, message: "收到评论后第一时间就知道哦~", preferredStyle: .alert)
+                    let notAllowAction = UIAlertAction(title: "不允许", style: .cancel)
+                    let allowAction = UIAlertAction(title: "允许", style: .default) { _ in
+                        //自动开启推送通知设置,但是不会跳转到手机自带的‘设置’页面
+                        jumpToSetting()
+                    }
+                    alert.addAction(notAllowAction)
+                    alert.addAction(allowAction)
+                    
+                    //展示全局的弹框
+                    self.view.window?.rootViewController?.present(alert, animated: true)
+                }
+            default:
+                break
+            }
+        }
+    }
 }

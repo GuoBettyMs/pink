@@ -16,7 +16,7 @@ class AccountTableVC: UITableViewController {
     
     var user: LCUser!       //接收‘设置’页面的数据
     var phoneNumStr: String? { user.mobilePhoneNumber?.value }//mobilePhoneNumber是LC的内置属性
-    var isSetPassword: Bool? { user.get(KIsSetPasswordCol)?.boolValue }
+    var isSetPassword: Bool? { user.get(kIsSetPasswordCol)?.boolValue }
     
     @IBOutlet weak var phoneNumberL: UILabel!
     @IBOutlet weak var passwordL: UILabel!

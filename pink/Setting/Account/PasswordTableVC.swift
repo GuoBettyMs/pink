@@ -35,7 +35,7 @@ class PasswordTableVC: UITableViewController {
             if passwordStr == confirmPasswordStr{//两次密码一致
                 //保存密码到云端
                 user.password = LCString(passwordStr)
-                try? user.set(KIsSetPasswordCol, value: true)
+                try? user.set(kIsSetPasswordCol, value: true)
                 user.save{ _ in }
                 
                 //UI

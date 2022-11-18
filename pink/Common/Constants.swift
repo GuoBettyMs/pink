@@ -146,7 +146,9 @@ let kGenderCol = "gender"                   //在云端LeanCloud设置默认性�
 let kIntroCol = "intro"                     //在云端LeanCloud设置默认个人简介字段
 let kIDCol = "id"                           //在云端LeanCloud设置默认个人的小粉书号
 let kBirthCol = "birth"
-let KIsSetPasswordCol = "isSetPassword"
+let kIsSetPasswordCol = "isSetPassword"     //用户是否设置了登录密码
+let kNoteCountCol = "noteCount"
+
 
 //kNoteTable - 云端笔记普通数据的Note表字段
 let kCoverPhotoCol = "coverPhoto"               //封面图片
@@ -179,26 +181,4 @@ let kReplyToUserCol = "replyToUser"             //子回复,评论view->回复vi
 //UserInfo表
 let kUserObjectIdCol = "userObjectId"           //用户ID标记符
 
-// MARK: - 全局函数 - 设置系统图标
-//全局图标
-func largeIcon(_ iconName: String, with color: UIColor = .label) -> UIImage{
-    let config = UIImage.SymbolConfiguration(scale: .large)
-    let icon = UIImage(systemName: iconName, withConfiguration: config)!
-    return icon.withTintColor(color)
-}
 
-//全局字符图标
-func fontIcon(_ iconName: String, fontSize: CGFloat, with color: UIColor = .label) -> UIImage{
-    let config = UIImage.SymbolConfiguration(font: .systemFont(ofSize: fontSize))
-    let icon = UIImage(systemName: iconName, withConfiguration: config)!
-    return icon.withTintColor(color)
-}
-
-//全局提示框
-func showGlobalTextHUD(_ title: String){
-    let window = UIApplication.shared.windows.last!
-    let hud = MBProgressHUD.showAdded(to: window, animated: true)
-    hud.mode = .text            //不指定的话显示菊花和配置的文本
-    hud.label.text = title
-    hud.hide(animated: true, afterDelay: 2)
-}

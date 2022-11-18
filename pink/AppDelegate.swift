@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
+
         config()
         return true
     }
@@ -102,30 +102,63 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate{
     
     private func config(){
-        // MARK: config - 高德Key
-        AMapServices.shared().enableHTTPS = true    //开启HTTPS功能
-        AMapServices.shared().apiKey = kAMapApiKey       //配置定位Key
-        
-        // MARK: config - navigationItem
-        //UI - 设置所有的navigationItem的返回按钮颜色
-        UINavigationBar.appearance().tintColor = .label
-  
-        // MARK: config - LeanCloud
-        //初始化LeanCloud,在LeanCloud控制台找到id、key、serverURL
-        LCApplication.logLevel = .off           //不开启 SDK 的调试日志（debug log）
-        do {
-            try LCApplication.default.set(
-                id: kLCAppID,
-                key: kLCAppKey,
-                serverURL: kLCServerURL)
-        } catch {
-            print(error)
-        }
         
         // MARK: config - tableView SectionHeader
         //去除tableView SectionHeader上方多出来的一块空隙
         if #available(iOS 15.0, *) {
             UITableView.appearance().sectionHeaderTopPadding = 0
+        
+            // MARK: config - navigationItem
+            //UI - 设置所有的navigationItem的返回按钮颜色
+            UINavigationBar.appearance().tintColor = .label
+                
+            // MARK: config - 高德Key
+            AMapServices.shared().enableHTTPS = true    //开启HTTPS功能
+            AMapServices.shared().apiKey = kAMapApiKey       //配置定位Key
+                
+            // MARK: config - LeanCloud初始化
+            //初始化LeanCloud,在LeanCloud控制台找到id、key、serverURL
+            LCApplication.logLevel = .off           //不开启 SDK 的调试日志（debug log）
+                do {
+                    //发推送往测试环境的App(通过Xcode安装的)时需加此设置.上架时需去掉.
+                    let environment: LCApplication.Environment = [.pushDevelopment]
+                    let configuration = LCApplication.Configuration(environment: environment)
+                    
+                    try LCApplication.default.set(
+                        id: kLCAppID,
+                        key: kLCAppKey,
+                        serverURL: kLCServerURL,
+                        configuration: configuration)
+                } catch {
+                    print(error)
+                }
+
+            // MARK: app开通推送通知 - 1.注册 APNs 获取推送所需的 token
+            //由于是在LC上处理推送功能的相关设置,需要在LC初始化之后注册
+            /* 源码:
+             UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+                 switch settings.authorizationStatus {
+                 case .authorized:
+                     DispatchQueue.main.async {
+                         UIApplication.shared.registerForRemoteNotifications()
+                     }
+                 case .notDetermined:
+                     UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { (granted, error) in
+                         if granted {
+                             DispatchQueue.main.async {
+                                 UIApplication.shared.registerForRemoteNotifications()
+                             }
+                         }
+                     }
+                 default:
+                     break
+                 }
+             }
+             */
+
+            UIApplication.shared.registerForRemoteNotifications()
+//            UNUserNotificationCenter.current().delegate = self
+
         }
         
     }

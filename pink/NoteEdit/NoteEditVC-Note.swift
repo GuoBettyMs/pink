@@ -97,19 +97,38 @@ extension NoteEditVC{
             try note.set(kCommentCountCol, value: 0)
 
             //存储笔记的作者进云端
-            try note.set(kAuthorCol, value: LCApplication.default.currentUser!)
+            let author = LCApplication.default.currentUser!
+            try note.set(kAuthorCol, value: author)
             
             //保存
             noteGroup.enter()
             note.save { _ in
 //                print("存储一般数据进云端成功")
                 noteGroup.leave()
-                
             }
             
             //UI操作,在主线程执行,若不在主线程完成,后台执行showTextHUD时会出现卡顿
             noteGroup.notify(queue: .main) {
 //                print("笔记内容全部存储到云端结束")
+                
+                //请求通知权限.可根据实际业务逻辑灵活放置
+                UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
+                    if let error = error{ print("请求通知授权出错: \(error)") }
+                }
+                
+                //当用户发表过较多笔记时,判断用户对通知的授权状态
+                //若notDetermined(从来未授权过)则请求权限,若denied(拒绝授权)则弹出自定义请求权限框引导用户授权(因系统弹框只弹一次)
+                let noteCount = author.getExactIntVal(kNoteCountCol)
+                if noteCount != 0{
+                    self.showAllowPushAlert()
+                }
+                //笔记是3的倍数时,弹出自定义请求权限框
+//                if noteCount != 0, noteCount % 3 == 0{ self.showAllowPushAlert() }
+
+                //用户表的noteCount增1
+                try? author.increase(kNoteCountCol)
+                author.save{ _ in }
+                
                 self.showTextHUD("发布笔记成功", false)           //跳转界面,选false
             }
             
