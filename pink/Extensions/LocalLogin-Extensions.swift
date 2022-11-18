@@ -140,7 +140,7 @@ extension UIViewController{
         
         //logo 约束
         //logoConstraintY 指top 参照super的bottom 是 (1/7倍)的约束关系
-        let logoConstraintY = JVLayoutConstraint(attribute: NSLayoutConstraint.Attribute.top, relatedBy: NSLayoutConstraint.Relation.equal, to: JVLayoutItem.super, attribute: NSLayoutConstraint.Attribute.bottom, multiplier: 2/7, constant: 0)!
+        let logoConstraintY = JVLayoutConstraint(attribute: NSLayoutConstraint.Attribute.top, relatedBy: NSLayoutConstraint.Relation.equal, to: JVLayoutItem.super, attribute: NSLayoutConstraint.Attribute.bottom, multiplier: 1/7, constant: 0)!
         config.logoConstraints = [constraintX, logoConstraintY]
         
         //手机号码
