@@ -57,3 +57,7 @@ protocol EditProfileTableVCDelegate {
     func updateUser(_ avatar: UIImage?, _ nickName: String, _ gender: Bool, _ birth: Date?, _ intro: String)
 }
 
+//推送通知横幅跳转到笔记详情页后,返回首页瀑布流时的点赞去重
+protocol NoteDetailVCDelegate {
+    func updateLikeBtn(cellItem: Int, isLike: Bool, likeCount: Int)
+}

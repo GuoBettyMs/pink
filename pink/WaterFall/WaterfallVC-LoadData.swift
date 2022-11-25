@@ -14,6 +14,10 @@ import LeanCloud
 extension WaterfallVC{
     // MARK: 从云端取出<当前用户>发布的笔记
     @objc func getMyNotes(){
+        isMyDraft = (UserDefaults.standard.integer(forKey: kDraftNoteCount) > 0)
+        print("user:  \(isMyDraft)")
+        
+        
         let query = LCQuery(className: kNoteTable)
         query.whereKey(kAuthorCol, .equalTo(user!))//条件查询
         query.whereKey(kAuthorCol, .included)//同时查询出作者对象
@@ -39,7 +43,7 @@ extension WaterfallVC{
     }
     
     // MARK:  从云端取出当前用户赞过的笔记
-    @objc func getMyLikeNotes(){
+    @objc func getMyLikeNotes(){   
         getFavOrLike(kUserLikeTable)
     }
     
@@ -68,7 +72,6 @@ extension WaterfallVC{
             }
         }
     }
-    
     
     // MARK: 从本地取出我的草稿
     func getDraftNotes(){
@@ -140,7 +143,7 @@ extension WaterfallVC{
             case .success(objects: let notes):
                 // notes 是包含满足条件的 objects 对象的数组
                 self.notes = notes
-                print("notes : \(notes)")           //需要把AppDelegate的LCApplication.logLevel改为 .debug
+//                print("notes : \(notes)")           //需要把AppDelegate的LCApplication.logLevel改为 .debug
                 self.collectionView.reloadData()
                 break
             case .failure(error: let error):

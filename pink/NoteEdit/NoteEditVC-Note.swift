@@ -119,11 +119,8 @@ extension NoteEditVC{
                 //当用户发表过较多笔记时,判断用户对通知的授权状态
                 //若notDetermined(从来未授权过)则请求权限,若denied(拒绝授权)则弹出自定义请求权限框引导用户授权(因系统弹框只弹一次)
                 let noteCount = author.getExactIntVal(kNoteCountCol)
-                if noteCount != 0{
-                    self.showAllowPushAlert()
-                }
                 //笔记是3的倍数时,弹出自定义请求权限框
-//                if noteCount != 0, noteCount % 3 == 0{ self.showAllowPushAlert() }
+                if noteCount != 0, noteCount % 3 == 0{ self.showAllowPushAlert() }
 
                 //用户表的noteCount增1
                 try? author.increase(kNoteCountCol)

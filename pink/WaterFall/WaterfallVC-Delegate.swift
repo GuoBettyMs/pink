@@ -16,12 +16,13 @@ extension WaterfallVC{
         
         // MARK: 遵守UICollectionViewDelegate - 跳转-个人页面的草稿
         if isMyDraft, indexPath.item == 0{
-            
+
             let navi = storyboard!.instantiateViewController(identifier: kDraftNotesNaviID) as! UINavigationController
             navi.modalPresentationStyle = .fullScreen
             ((navi.topViewController) as! WaterfallVC).isDraft = true
+            navi.navigationBar.barTintColor = .red
             present(navi, animated: true)
-            
+
         }else if isDraft{
             // MARK: 遵守UICollectionViewDelegate - 跳转-编辑笔记界面
             let draftNote = draftNotes[indexPath.item]
@@ -77,6 +78,9 @@ extension WaterfallVC{
                 detailVC.isLikeFromWaterfallCell = cell.isLike          //isLikeFromWaterfallCell 详情页的点赞状态;isLike 笔记首页的点赞状态
             }
 
+            detailVC.modalPresentationStyle = .fullScreen
+            detailVC.delegate = self //遵守自定义NoteDetailVCDelegate,正向传值likeBtn状态和likeCount、currentLikeCount
+            
             //删除笔记后回到首页后刷新首页(此处为节省资源,用删除指定cell的方法)
             detailVC.delNoteFinished = {
                 self.notes.remove(at: item)
@@ -87,11 +91,25 @@ extension WaterfallVC{
             
             detailVC.isFromMeVC = isFromMeVC          //从个人页面跳转到笔记详情页,传值bool状态
             detailVC.fromMeVCUser = fromMeVCUser      //从个人页面跳转到笔记详情页,传值用户对象
+            detailVC.cellItem = indexPath.item
+            detailVC.noteHeroID = "noteHeroID\(indexPath.item)"  //配置cell的heroID,与首页瀑布流cell的heroID一样
             
-            
-            detailVC.modalPresentationStyle = .fullScreen
             present(detailVC, animated: true)
 //            print("kTitleCol:  \(note.getExactStringVal(kTitleCol))")
         }
     }
+}
+
+
+extension WaterfallVC: NoteDetailVCDelegate{
+    // MARK: 遵守NoteDetailVCDelegate - 更新主页瀑布流cell
+    //获取笔记详情页的likeBtn状态和likeCount、currentLikeCount,更新到主页瀑布流cell
+    func updateLikeBtn(cellItem: Int, isLike: Bool, likeCount: Int) {
+        if let cell = collectionView.cellForItem(at: IndexPath(item: cellItem, section: 0)) as? WaterfallCell{
+            cell.likeBtn.isSelected = isLike
+            cell.likeCount = likeCount
+            cell.currentLikeCount = likeCount
+        }
+    }
+
 }

@@ -30,6 +30,7 @@ extension MeVC{
         }
         meHeaderView.backOrDrawerBtn.addTarget(self, action: #selector(backOrDrawer), for: .touchUpInside)
 
+        
         //个人简介的右下角按钮UI
         //情况1.登录用户查看自己的个人页面:编辑资料-设置 情况2.登录用户查看别人的个人页面:关注-聊天 情况3.未登录,看别的用户或自己的个人页面:关注-聊天
         if isMySelf{//登录后自己看自己(情况1)
@@ -60,6 +61,8 @@ extension MeVC{
 
         return meHeaderView
     }
+
+    
 }
 
 

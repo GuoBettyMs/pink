@@ -36,14 +36,15 @@ class MeVC: SegementSlideDefaultViewController {
     var isMySelf = false            //true指登录用户本身已经登录,并查看自己的笔记
     
     var user: LCUser                //自定义user对象属性
-
+    
+    var isMyDraft = false
+    
     //初始化自定义的user
     init?(coder: NSCoder, user: LCUser) {
         self.user = user
         super.init(coder: coder)
     }
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,11 +54,37 @@ class MeVC: SegementSlideDefaultViewController {
 
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        //更新个人信息的显示草稿cell条件: 2.个人页面当前用户为登录用户 3. 个人页面当前用户的草稿笔记大于0
+//        isMyDraft = isMySelf && (UserDefaults.standard.integer(forKey: kDraftNoteCount) > 0)
+//        print("viewWillAppear:  \(isMyDraft)")
+        
+        // MARK: 从主页面切换到个人页面时,更新个人信息的‘获赞与收藏’
+        guard let userObjectId =  user.objectId?.stringValue else { return }
+        let query = LCQuery(className: kUserInfoTable)
+        query.whereKey(kUserObjectIdCol, .equalTo(userObjectId))        //查询云端上的用户标记符kUserObjectIdCol是否与userObjectId相等
+        query.getFirst { res in
+            if case let .success(object: userInfo) = res{
+                let likeCount = userInfo.getExactIntVal(kLikeCountCol)      //获取云端个人信息表的点赞数
+                let favCount = userInfo.getExactIntVal(kFavCountCol)        //获取云端个人信息表的收藏数
+                DispatchQueue.main.async {
+                    self.meHeaderView.likedAndFavedL.text = "\(likeCount + favCount)"
+                }
+            }
+        }
+
+    }
+
+
     //默认是外层大scrollview刷新(小红书是这样,同时刷新'笔记','收藏','赞过'),但本项目如果这样的话需要传值过去,不太方便,还是希望在瀑布collectionview中统一搞,故改成里面的每个瀑布collectionview单独可刷新
     override var bouncesType: BouncesType { .child }
     
     // MARK: UIScrollView 嵌套的headerView
-    override func segementSlideHeaderView() -> UIView? { setHeaderView() }
+    override func segementSlideHeaderView() -> UIView? {
+        setHeaderView()
+    }
     
     // MARK: 横滑tab - 标题label
     override var titlesInSwitcher: [String] { ["笔记", "收藏", "赞过"] }
@@ -74,10 +101,11 @@ class MeVC: SegementSlideDefaultViewController {
     //根据横滑tab跳转到对应的子视图控制器:'笔记','收藏','赞过'
     override func segementSlideContentViewController(at index: Int) -> SegementSlideContentScrollViewDelegate? {
         //显示草稿cell条件:1.横滑tab为第0个 2.个人页面当前用户为登录用户 3. 个人页面当前用户的草稿笔记大于0
-        let isMyDraft = (index == 0) && isMySelf && (UserDefaults.standard.integer(forKey: kDraftNoteCount) > 0)
-        
+        //由于segementSlideContentViewController()只执行一次,条件2、3在个人页面显示时就刷新
+//        isMyDraft = (index == 0) && isMyDraft
+//        print("segementSlideContentViewController:  \(isMyDraft)")
         let vc = storyboard!.instantiateViewController(withIdentifier: kWaterfallVCID)  as! WaterfallVC
-        vc.isMyDraft = isMyDraft
+//        vc.isMyDraft = isMyDraft
         vc.user = user
         vc.isMyNote = index == 0    //若当前用户在第0个横滑tab,表明子视图控制器是'笔记',显示对应瀑布流
         vc.isMyFav = index == 1     //若当前用户在第1个横滑tab,表明子视图控制器是'收藏',显示对应瀑布流

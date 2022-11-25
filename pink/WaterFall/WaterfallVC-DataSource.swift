@@ -30,10 +30,11 @@ extension WaterfallVC{
     //每一个笔记的UI
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        // MARK: 瀑布流布局 - 个人页面'笔记'瀑布流
+        // MARK: 瀑布流布局 - 个人页面'笔记'瀑布流中的‘草稿’
         //个人页面‘笔记’中草稿cell显示条件: isMyDraft 为true并且横滑tab为第一个
         if isMyDraft, indexPath.item == 0{
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kMyDraftNoteWaterfallCellID, for: indexPath)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kMyDraftNoteWaterfallCellID, for: indexPath)  as! MyDraftNoteWaterfallCell
+            cell.countL.text = "\(UserDefaults.standard.integer(forKey: kDraftNoteCount))" //更新草稿数量
             return cell
         }else if isDraft{
             // MARK: 瀑布流布局 - 笔记草稿瀑布流
@@ -53,6 +54,10 @@ extension WaterfallVC{
             //情况2: 个人页面'笔记'中有草稿cell, 首页的笔记数 = 个人页面'笔记'数量 - 1
             let offset = isMyDraft ? 1 : 0
             cell.note = notes[indexPath.item - offset]  //把云端笔记的每个对象传到首页“发现”页面
+            
+            //配置cell的heroID,id与笔记详情页的heroID一样
+            cell.hero.id = "noteHeroID\(indexPath.item)"
+            
             return cell
         }
     }

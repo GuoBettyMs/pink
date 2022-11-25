@@ -13,10 +13,9 @@ import SegementSlide
 extension MeVC{
     func setUI(){
         //改变基类属性-适配深色模式
-        scrollView.backgroundColor = .systemBackground      //外层scrollView 背景色
-        contentView.backgroundColor = .systemBackground     //内层scrollView背景色
+        scrollView.backgroundColor = .systemBackground      //外层scrollView(headerView + '笔记','收藏','赞过') 背景色
+        contentView.backgroundColor = .systemBackground     //内层scrollView('笔记','收藏','赞过')背景色
         switcherView.backgroundColor = .systemBackground    //横滑tab switcherView 背景色
-
         /*
          获取当前机型状态栏的高度,
          1.方法一
@@ -30,5 +29,6 @@ extension MeVC{
 
         defaultSelectedIndex = 0
         reloadData()
+
     }
 }

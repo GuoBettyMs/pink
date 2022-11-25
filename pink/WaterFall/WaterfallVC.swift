@@ -25,7 +25,7 @@ import SegementSlide
 class WaterfallVC: UICollectionViewController, SegementSlideContentScrollViewDelegate {
     //笔记话题
     var channel = ""
-    
+
     lazy var header = MJRefreshNormalHeader()       //下拉刷新加载
     
     //遵守SegementSlideContentScrollViewDelegate,需要设置属性
@@ -51,13 +51,14 @@ class WaterfallVC: UICollectionViewController, SegementSlideContentScrollViewDel
     var isMyselfLike = false    //在上面user的基础上,用于判断已登录用户是否在看自己的'赞过'tab页
     var isFromMeVC = false
     var fromMeVCUser: LCUser?
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         config()
 
+        
         if let _ = user{//个人页面
             if isMyNote{
                 //个人页面 - ‘笔记’
@@ -79,7 +80,8 @@ class WaterfallVC: UICollectionViewController, SegementSlideContentScrollViewDel
         }
         
     }
-
+    
+    
     @IBAction func dismissDraftNotesVC(_ sender: Any) {
         dismiss(animated: true)
     }

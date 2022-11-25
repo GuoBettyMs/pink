@@ -31,13 +31,10 @@ class TabBarC: UITabBarController {
 extension TabBarC: UITabBarControllerDelegate{
 
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        
         // MARK: 遵守 UITabBarControllerDelegate - 发布功能
         if viewController is PostVC{
-
             //判断是否登录
             if let _ = LCApplication.default.currentUser{
-                
                 // MARK: 选择器属性
                 //属性 - 通用配置
                 var config = YPImagePickerConfiguration()
@@ -112,7 +109,7 @@ extension TabBarC: UITabBarControllerDelegate{
                     // MARK: 选择器 - 上传照片&视频(无法拍摄视频,上传视频后退出再多次上传才能进入剪辑视频界面)
                     //选完或按取消按钮后的异步回调处理（依据配置处理单个或多个）
                     if cancelled{
-                        //                    print("用户按了左上角的取消按钮")
+                        //print("用户按了左上角的取消按钮")
                         picker.dismiss(animated: true)
                     }else{
                         // MARK: 选择器 - 笔记编辑界面
@@ -122,17 +119,16 @@ extension TabBarC: UITabBarControllerDelegate{
                             switch item{
                             case .photo(let photo):
                                 photos.append(photo.image)
-                                //                        case .video:
-                                //                            //从沙盒的tmp文件夹中找到原视频
-                                //                            let url = URL(fileURLWithPath: "recordedVideoRAW.mov", relativeTo: FileManager.default.temporaryDirectory)
-                                //                            photos.append(url.thumbnail)         //无法修改封面图片,添加后的视频无法播放
-                                //                            videoURL = url
-                            case .video(let video):
-                                //从沙盒的tmp文件夹中找到原视频
+                            case .video:
+                                /* 从沙盒的tmp文件夹中找到原视频:
+                                1.Xcode的window -> devices and Simulators, 选择app -> 设置中的download Container, 下载一个.xcappdata的包,右键选择‘显示包内容’
+                                2.AppData -> tmp,发送成功的视频
+                                 */
                                 let url = URL(fileURLWithPath: "recordedVideoRAW.mov", relativeTo: FileManager.default.temporaryDirectory)
-                                photos.append(video.thumbnail)         //给视频提供封面图片
-                                videoURL = video.url
+                                photos.append(url.thumbnail)         //无法修改封面图片,添加后的视频无法播放
+                                videoURL = url
                             }
+                                 
                         }
                         
                         //跳转到笔记编辑界面
@@ -180,9 +176,10 @@ extension TabBarC: UITabBarControllerDelegate{
             }
             return false
         }
-
         return true
 
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {  }
 }
 

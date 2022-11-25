@@ -55,7 +55,7 @@ class MeHeaderView: UIView {
                 if case let .success(object: userInfo) = res{
                     let likeCount = userInfo.getExactIntVal(kLikeCountCol)      //获取云端个人信息表的点赞数
                     let favCount = userInfo.getExactIntVal(kFavCountCol)        //获取云端个人信息表的收藏数
-//                    print("\(likeCount) + \(favCount)")
+//                    print("MeHeaderView: \(likeCount) + \(favCount)")
                     DispatchQueue.main.async {
                         self.likedAndFavedL.text = "\(likeCount + favCount)"
                     }

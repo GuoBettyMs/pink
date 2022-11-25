@@ -21,7 +21,7 @@ extension NoteDetailVC{
             self.replies[indexPath.section].replies.remove(at: indexPath.row)
             
             //UI
-            self.tableView.reloadData()
+            self.noteTableView.reloadData()
         }
     }
 }

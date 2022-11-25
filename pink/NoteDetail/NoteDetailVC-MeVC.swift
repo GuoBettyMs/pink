@@ -8,6 +8,8 @@
     笔记详情页 跳转到 个人页面
  */
 import LeanCloud
+import Hero
+
 extension NoteDetailVC{
     
     // MARK: 笔记详情页 跳转到 个人页面
@@ -22,8 +24,29 @@ extension NoteDetailVC{
                 MeVC(coder: coder, user: user)
             }
             meVC.isFromNote = true  //实现左上角按钮的新UI和新action
+
+           //更新个人信息的‘获赞与收藏’
+            guard let userObjectId =  user.objectId?.stringValue else { return }
+            let query = LCQuery(className: kUserInfoTable)
+            query.whereKey(kUserObjectIdCol, .equalTo(userObjectId))        //查询云端上的用户标记符kUserObjectIdCol是否与userObjectId相等
+            query.getFirst { res in
+                if case let .success(object: userInfo) = res{
+                    let likeCount = userInfo.getExactIntVal(kLikeCountCol)      //获取云端个人信息表的点赞数
+                    let favCount = userInfo.getExactIntVal(kFavCountCol)        //获取云端个人信息表的收藏数
+                    DispatchQueue.main.async {
+                        meVC.meHeaderView.likedAndFavedL.text = "\(likeCount + favCount)"
+                    }
+                }
+            }
+            
+            
             meVC.modalPresentationStyle = .fullScreen
+            
+            //把系统转场动画present、dismiss转换为push\pop动画
+            //在故事版的MeVC ‘is hero enable’改为true,或者 meVC.isHeroEnabled = true
+            meVC.heroModalAnimationType = .selectBy(presenting: .push(direction: .left), dismissing: .pull(direction: .right))
             present(meVC, animated: true)
+            
         }
     }
     

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import LeanCloud
 
 var kStatusBarH: CGFloat = 0    //获取当前机型状态栏的高度
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -37,9 +38,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
     }
 
+    // MARK: app进入前台后清除推送通知的角标
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        
+        //云端数据
+        LCApplication.default.currentInstallation.badge = 0
+        LCApplication.default.currentInstallation.save { (result) in
+            switch result {
+            case .success:
+                break
+            case .failure(error: let error):
+                print(error)
+            }
+        }
+        
+        //UI
+        UIApplication.shared.applicationIconBadgeNumber = 0
     }
 
     func sceneWillResignActive(_ scene: UIScene) {

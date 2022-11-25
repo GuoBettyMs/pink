@@ -70,8 +70,9 @@ class WaterfallCell: UICollectionViewCell {
                  5.传值...
              likeBtn.isSelected默认为false,尽管跳转到个人页面传值isMyselfLike 为true,但是cell已经加载完毕,likeBtn.isSelected 不会更改
              */
-            //判断是否已点赞
-            if isMyselfLike{                    //若已登录用户正在看自己个人页面的点赞时,无需云端查询,直接设图标为选中状态即可
+            
+            //若已登录用户正在看自己个人页面的点赞时,无需云端查询,直接设图标为选中状态即可
+            if isMyselfLike{
                 likeBtn.isSelected = true
             }else{
                 if let user = LCApplication.default.currentUser{

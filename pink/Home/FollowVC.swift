@@ -11,27 +11,15 @@
 
 import UIKit
 import XLPagerTabStrip
-import CHTCollectionViewWaterfallLayout
-
-private let kFollowCellID = "FollowCellID"
 
 class FollowVC: UIViewController, IndicatorInfoProvider {
 
-    
-    @IBOutlet weak var collectionView: UICollectionView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 //        let btn = ColorBtn(frame: CGRect(x: 100, y: 100, width: 100, height: 100), color: .green)
 //        btn.setTitle("便利构造器测试按钮", for: .normal)
 //        view.addSubview(btn)
-        
-//        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        let layout = collectionView.collectionViewLayout as! CHTCollectionViewWaterfallLayout
-        layout.columnCount = 2
-        layout.minimumColumnSpacing = kWaterfallPadding
-        layout.minimumInteritemSpacing = kWaterfallPadding
-        layout.sectionInset = UIEdgeInsets(top: 0, left: kWaterfallPadding, bottom: kWaterfallPadding, right: kWaterfallPadding)
+
     }
     
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
@@ -39,28 +27,6 @@ class FollowVC: UIViewController, IndicatorInfoProvider {
     }
 
 }
-
-extension FollowVC: UICollectionViewDataSource{
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 13
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kFollowCellID, for: indexPath) as! FollowCell
-        cell.imgView.image = UIImage(named: "Post-\(indexPath.item + 1)")!
-        return cell
-    }
-
-}
-
-// MARK: xx - 遵守CHTCollectionViewDelegateWaterfallLayout
-extension FollowVC: CHTCollectionViewDelegateWaterfallLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        UIImage(named: "Post-\(indexPath.item + 1)")!.size
-    
-    }
-}
-
 
 // MARK: - 子类里的初始化构造器(3种)
 //1.子类没有'无初始值的自有属性'时,直接重写父类的init--如下

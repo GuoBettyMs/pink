@@ -32,6 +32,11 @@ class NoteDetailVC: UIViewController {
     var isFromMeVC = false          //判断是否从个人页面跳转到详情面
     var fromMeVCUser: LCUser?       //从个人页面跳转到详情面的用户
     
+    var isFromPush = false          //判断是否从推送通知横幅跳转到详情面
+    var delegate: NoteDetailVCDelegate? //推送通知横幅跳转到笔记详情页后,返回首页瀑布流时的点赞去重
+    var cellItem: Int?     //被更新的首页瀑布流cell
+     
+    var noteHeroID: String? //指定需要转场动画的viewID,接收首页瀑布流cell传过来的heroID
     
     //上方bar(作者信息)
     @IBOutlet weak var authorAvatarBtn: UIButton!
@@ -52,7 +57,7 @@ class NoteDetailVC: UIViewController {
     @IBOutlet weak var avatarImageView: UIImageView!
     
     //整个tableView
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var noteTableView: UITableView!
     
     //下方bar(点赞收藏评论)
     @IBOutlet weak var likeBtn: FaveButton!
@@ -138,7 +143,7 @@ class NoteDetailVC: UIViewController {
     }
 
     // MARK: 返回上一页
-    @IBAction func back(_ sender: Any) { dismiss(animated: true)}
+    @IBAction func back(_ sender: Any) { backToCell() }
     
     // MARK: 顶部Bar - 点击作者头像或昵称跳转到个人页面
     @IBAction func goToAuthorMeVC(_ sender: Any) { noteToMeVC(author) }

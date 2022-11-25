@@ -120,7 +120,7 @@ extension NoteDetailVC{
 
             //刷新列表
             DispatchQueue.main.async {
-                self.tableView.reloadData()
+                self.noteTableView.reloadData()
             }
         }
     }

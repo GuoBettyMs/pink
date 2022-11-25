@@ -25,7 +25,7 @@ extension NoteDetailVC{
         //                        self.tableView.performBatchUpdates {
         //                            self.tableView.deleteSections(IndexSet(integer: section), with: .automatic)
         //                        }
-            self.tableView.reloadData()
+            self.noteTableView.reloadData()
         }
     }
 }

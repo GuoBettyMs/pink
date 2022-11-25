@@ -18,10 +18,6 @@ extension NoteDetailVC: UITableViewDataSource{
     
     // MARK: 显示回复个数
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //首次添加评论时没有回复信息,故会报错“replies[section].replies.count 为空”
-//                return 0
-
-
         //可展开回复对象=ExpandableReplies,内置两个属性,1:回复是否已展开-isExpanded;2.这段里的所有回复-replies
         //这个可展开回复对象代表的就是每一段里的回复信息(包括isExpanded的flag和这段的所有回复),可通过replies[section]找到
         //默认isExpanded为false,即replies[section].isExpanded为false(也就是到详情页时回复为不展开状态)
@@ -49,7 +45,7 @@ extension NoteDetailVC: UITableViewDataSource{
         cell.reply = reply  //传到回复cell里去,用于展示评论下面的回复
         
         //判断回复人是否是笔记作者
-        if let replyAuthor = reply.get(kUserCol) as? LCUser, let noteAuthor = author, replyAuthor == noteAuthor{
+        if let replyAuthor = replyAuthor, let noteAuthor = author, replyAuthor == noteAuthor{
             cell.authorL.isHidden = false
         }else{
             cell.authorL.isHidden = true
@@ -93,8 +89,8 @@ extension NoteDetailVC{
         //把这一段里的回复信息的isExpanded变为true,表明这些回复已展开
         replies[section].isExpanded = true
         //reloadSections后进numberOfRowsInSection判断,返回真正的行数,从而展示这段的所有回复
-        tableView.performBatchUpdates {
-            tableView.reloadSections(IndexSet(integer: section), with: .automatic)
+        noteTableView.performBatchUpdates {
+            noteTableView.reloadSections(IndexSet(integer: section), with: .automatic)
         }
 
     }

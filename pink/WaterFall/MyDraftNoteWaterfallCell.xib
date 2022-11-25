@@ -21,7 +21,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HHH-Uk-ZUn">
                         <rect key="frame" x="0.0" y="0.0" width="178" height="100"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Discovery-1" translatesAutoresizingMaskIntoConstraints="NO" id="WYl-YH-s5N">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imagePH" translatesAutoresizingMaskIntoConstraints="NO" id="WYl-YH-s5N">
                                 <rect key="frame" x="0.0" y="0.0" width="178" height="100"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VJ8-fX-l3j">
@@ -97,15 +97,15 @@
             </constraints>
             <size key="customSize" width="178" height="161"/>
             <connections>
-                <outlet property="countL" destination="25K-QU-RVy" id="MAV-gG-hzW"/>
-                <outlet property="imageView" destination="WYl-YH-s5N" id="PF5-8j-hVG"/>
+                <outlet property="countL" destination="25K-QU-RVy" id="tXc-rc-xhU"/>
+                <outlet property="imageView" destination="WYl-YH-s5N" id="e12-cO-0q9"/>
             </connections>
             <point key="canvasLocation" x="52.307692307692307" y="27.72511848341232"/>
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="Discovery-1" width="1080" height="1439"/>
         <image name="archivebox" catalog="system" width="128" height="107"/>
+        <image name="imagePH" width="889" height="500"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

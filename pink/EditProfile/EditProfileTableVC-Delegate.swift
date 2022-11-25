@@ -16,6 +16,7 @@ extension EditProfileTableVC{
     // MARK: 遵守tableView Delegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
         let cell = tableView.cellForRow(at: indexPath)
         switch indexPath.row{
         case 0 ://不需要增加break,只会执行case 0 内容

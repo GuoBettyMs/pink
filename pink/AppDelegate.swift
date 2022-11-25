@@ -107,35 +107,38 @@ extension AppDelegate{
         //去除tableView SectionHeader上方多出来的一块空隙
         if #available(iOS 15.0, *) {
             UITableView.appearance().sectionHeaderTopPadding = 0
-        
-            // MARK: config - navigationItem
-            //UI - 设置所有的navigationItem的返回按钮颜色
-            UINavigationBar.appearance().tintColor = .label
+        }
+      
+        // MARK: config - navigationItem
+        //UI - 设置所有的navigationItem的返回按钮颜色
+        UINavigationBar.appearance().tintColor = .label
                 
-            // MARK: config - 高德Key
-            AMapServices.shared().enableHTTPS = true    //开启HTTPS功能
-            AMapServices.shared().apiKey = kAMapApiKey       //配置定位Key
+        // MARK: config - 高德Key
+        AMapServices.shared().enableHTTPS = true    //开启HTTPS功能
+        AMapServices.shared().apiKey = kAMapApiKey       //配置定位Key
                 
-            // MARK: config - LeanCloud初始化
-            //初始化LeanCloud,在LeanCloud控制台找到id、key、serverURL
-            LCApplication.logLevel = .off           //不开启 SDK 的调试日志（debug log）
-                do {
-                    //发推送往测试环境的App(通过Xcode安装的)时需加此设置.上架时需去掉.
-                    let environment: LCApplication.Environment = [.pushDevelopment]
-                    let configuration = LCApplication.Configuration(environment: environment)
-                    
-                    try LCApplication.default.set(
-                        id: kLCAppID,
-                        key: kLCAppKey,
-                        serverURL: kLCServerURL,
-                        configuration: configuration)
-                } catch {
-                    print(error)
-                }
+        // MARK: config - LeanCloud初始化
+        //初始化LeanCloud,在LeanCloud控制台找到id、key、serverURL
+//            LCApplication.logLevel = .off           //不开启 SDK 的调试日志（debug log）
+            do {
+                //发推送往测试环境的App(通过Xcode安装的)时需加此设置.上架时需去掉.
+                let environment: LCApplication.Environment = [.pushDevelopment]
+                let configuration = LCApplication.Configuration(environment: environment)
+                
+                try LCApplication.default.set(
+                    id: kLCAppID,
+                    key: kLCAppKey,
+                    serverURL: kLCServerURL,
+                    configuration: configuration)
+            } catch {
+                print(error)
+            }
 
             // MARK: app开通推送通知 - 1.注册 APNs 获取推送所需的 token
             //由于是在LC上处理推送功能的相关设置,需要在LC初始化之后注册
-            /* 源码:
+            /* 可简写为
+             UIApplication.shared.registerForRemoteNotifications()
+             源码:
              UNUserNotificationCenter.current().getNotificationSettings { (settings) in
                  switch settings.authorizationStatus {
                  case .authorized:
@@ -155,11 +158,11 @@ extension AppDelegate{
                  }
              }
              */
+            UIApplication.shared.registerForRemoteNotifications()//若未收到推送,检查app是否处于后台,app推送设置是否打开,手机勿扰模式是否关闭
+            
+            //遵守UNUserNotificationCenterDelegate,响应通知数据,点击通知跳转到对应的笔记
+            UNUserNotificationCenter.current().delegate = self
 
-            UIApplication.shared.registerForRemoteNotifications()
-//            UNUserNotificationCenter.current().delegate = self
-
-        }
         
     }
 }

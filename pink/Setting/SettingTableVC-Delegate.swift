@@ -41,7 +41,6 @@ extension SettingTableVC{
             
         }else if section == 4{
             //退出登录
-
             dismiss(animated: true)
             LCUser.logOut()
             let loginVC = storyboard!.instantiateViewController(identifier: kLoginVCID)

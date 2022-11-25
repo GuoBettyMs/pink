@@ -6,6 +6,9 @@
 //
 /*
     个人页面的‘设置’页面 - ‘通知设置’功能
+    <#注#> 使用LeanCloud 在线发送通知时,真机要关闭勿扰模式
+ 使用 JSON 负载向用户设备发送通知。
+ https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/generating_a_remote_notification
  */
 import UIKit
 

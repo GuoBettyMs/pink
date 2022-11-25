@@ -126,9 +126,15 @@ extension UIViewController{
         }
     }
     
-    // MARK: 退出登录界面
+    // MARK: 退出登录界面,显示个人页面
     func dismissAndShowMeVC(_ user: LCUser){
         hideLoadHUD()
+        
+        //把当前设备关联上当前登录的user,以便之后通过查询过滤Installation表给这个user的设备发送推送
+        let installation = LCApplication.default.currentInstallation
+        try? installation.set(kUserCol, value: user)
+        installation.save{_ in}//有存入失败的可能性,若那样则此用户再也没机会收到推送了,故在appdelegate中继续处理
+        
         DispatchQueue.main.async {
             let mainSB = UIStoryboard(name: "Main", bundle: nil)
 
@@ -138,7 +144,8 @@ extension UIViewController{
             }
             
             loginAndMeParentVC.removeAllChildren()            //移除所有子视图控制器
-            loginAndMeParentVC.add(child: meVC)               //添加个人页面
+            loginAndMeParentVC.add(child: meVC)               //添加个人页面     
+            
             self.dismiss(animated: true)
         }
     }

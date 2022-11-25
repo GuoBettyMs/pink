@@ -109,11 +109,27 @@ extension NoteDetailVC{
     
     // MARK: UI - 关联笔记详情页面与首页笔记的点赞状态
     private func showLike(){
-        //因点赞包点赞后有默认动画,故为了体验不使用此方法
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-//            self.likeBtn.isSelected = self.isLikeFromWaterfallCell
-//        }
-        likeBtn.setSelected(selected: isLikeFromWaterfallCell, animated: false)         //点赞包的方法,可实现无动画
+        //如果用户是从推送横幅进来的话,需重新查询云端数据,用于点赞的去重
+        if isFromPush{
+            if let user = LCApplication.default.currentUser{
+                let query = LCQuery(className: kUserLikeTable)
+                query.whereKey(kUserCol, .equalTo(user))
+                query.whereKey(kNoteCol, .equalTo(note))
+                query.getFirst { res in
+                    if case .success = res{
+                        DispatchQueue.main.async {
+                            self.likeBtn.setSelected(selected: true, animated: false)
+                        }
+                    }
+                }
+            }
+        }else{
+            //因点赞包点赞后有默认动画,故为了体验不使用此方法
+            //        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            //            self.likeBtn.isSelected = self.isLikeFromWaterfallCell
+            //        }
+            likeBtn.setSelected(selected: isLikeFromWaterfallCell, animated: false)//点赞包的方法,可实现无动画
+        }
     }
     
 }

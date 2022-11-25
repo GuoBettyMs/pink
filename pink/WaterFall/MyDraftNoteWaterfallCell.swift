@@ -20,4 +20,5 @@ class MyDraftNoteWaterfallCell: UICollectionViewCell {
         countL.text = "\(UserDefaults.standard.integer(forKey: kDraftNoteCount))"
     }
 
+
 }

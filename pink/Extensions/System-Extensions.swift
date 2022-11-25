@@ -5,7 +5,7 @@
 //  Created by isdt on 2022/9/15.
 //
 /*
-    系统扩展
+    基础扩展
  */
 
 import UIKit
@@ -15,7 +15,6 @@ import AVFoundation
 
 // MARK: -
 extension Int{
-    
     //将Int数据转为String类型进行显示
     var formattedStr: String{
         let num = Double(self)
@@ -164,206 +163,8 @@ extension URL{
     }
 }
 
-// MARK: -
-extension UILabel{
-    //更改label文本颜色
-    func setToLight(_ text: String){
-        self.text = text
-        textColor = .label
-    }
-}
 
-// MARK: -
-extension UIButton{
-    
-    //自定义登录按钮的可点击状态
-    func setToEnabled(){
-        isEnabled = true
-        backgroundColor = mainColor
-    }
-    
-    //自定义登录按钮的不可点击状态
-    func setToDisabled(){
-        isEnabled = false
-        backgroundColor = mainLightColor
-    }
-    
-    //变成胶囊按钮
-    func makeCapsule(_ color: UIColor = .label){
-        layer.cornerRadius = frame.height / 2
-        layer.borderWidth = 1
-        layer.borderColor = color.cgColor
-    }
-}
-// MARK: -
-extension UIImage {
-    
-    //初始化构造器三原则:
-    //1.指定构造器必须调用它直接父类的指定构造器方法--见FollowVC
-    //2.便利构造器必须调用同一个类中定义的其它初始化方法
-    //3.便利构造器在最后必须调用一个指定构造器
-    //可失败的便利构造器 init?
-    convenience init?(_ data: Data?){
-        if let unwrappedData = data{
-            self.init(data: unwrappedData)
-        }else{
-            return nil
-        }
-    }
-    
-    enum JPEGQuality: CGFloat{
-        case lowest = 0
-        case low = 0.25
-        case medium = 0.5
-        case high = 0.75
-        case highest = 1
-    }
-    
-    //选择不同画质类型来压缩图片
-    func jpeg(_ jpegQuality: JPEGQuality) -> Data?{
-        jpegData(compressionQuality: jpegQuality.rawValue)
-    }
-}
-// MARK: -
-extension UITextField{
-    //对UITextField 的text 进行安全解包,若当前text为空值,则返回空字符串; 不要直接使用 UITextField.text! 进行强制解包
-    var unwrappedText: String { text ?? "" }
-    
-    //若为空字符串,缩减为""(防止用户输入大量空字符串)
-    var exactText: String {
-        unwrappedText.isBlank ? "" : unwrappedText
-    }
-    
-    //对空字符串进行判断:将空格去掉后,是否有其他字符
-    var isBlank: Bool { unwrappedText.isBlank }
-}
-    // MARK: -
-extension UITextView{
-    //unwrappedText 解包字符串
-    var unwrappedText: String { text ?? "" }
-    
-    //若为空字符串,缩减为""(防止用户输入大量空字符串),与empty 搭配用
-    var exactText: String {
-        unwrappedText.isBlank ? "" : unwrappedText
-    }
-    
-    //对空字符串进行判断:将空格去掉后,是否有其他字符
-    var isBlank: Bool { unwrappedText.isBlank }
-}
-
-    // MARK: -
-extension UIView{
-    
-    //添加 @IBInspectable , 指给故事版的View设置圆角属性
-    @IBInspectable
-    var radius: CGFloat{
-        get{
-            layer.cornerRadius
-        }
-        set{
-            clipsToBounds = true
-            layer.cornerRadius = newValue
-        }
-    }
-}
-
-    //MARK: -
-extension UIAlertAction{
-    
-    //通过函数来设置UIAlertAction文本颜色
-    func setTitleColor(_ color: UIColor){
-        setValue(color, forKey: "titleTextColor")
-    }
-    
-    //通过计算属性来设置UIAlertAction文本颜色
-    var titleTextColor: UIColor?{
-        get{
-            value(forKey: "titleTextColor") as? UIColor
-        }
-        set{
-            setValue(newValue, forKey: "titleTextColor")
-        }
-    }
-}
-
-
-
-    // MARK: -
-extension UIViewController{
-    
-    // MARK: 添加&删除指定子控制器
-    func add(child vc: UIViewController){
-        addChild(vc)
-        vc.view.frame = view.bounds         //若vc是代码创建的需加这句(后面的view即为某个containerview),若都是sb上创建的可不加.建议加
-        view.addSubview(vc.view)            //展示子视图控制器视图
-        vc.didMove(toParent: self)
-    }
-    func remove(child vc: UIViewController){
-        vc.willMove(toParent: nil)
-        vc.view.removeFromSuperview()       //移除子视图控制器的根视图
-        vc.removeFromParent()               //移除子视图控制器
-    }
-    
-    //移除所有子视图控制器
-    func removeAllChildren(){
-        if !children.isEmpty{
-            for vc in children{
-                remove(child: vc)
-            }
-        }
-    }
-    
-    // MARK: 加载框--手动隐藏
-    func showLoadHUD(_ title: String? = nil){
-        let hud = MBProgressHUD.showAdded(to: view, animated: true)
-        hud.label.text = title
-    }
-    func hideLoadHUD(){
-        DispatchQueue.main.async {
-            MBProgressHUD.hide(for: self.view, animated: true)
-        }
-    }
-    
-    // MARK:  提示框--自动隐藏
-    func showTextHUD(_ title: String, _ inCurrentView: Bool = true, _ subTitle: String? = nil){
-        var viewToShow = view!
-        
-        //若不在当前View,将View锁定为当前最上层的View(即使用当前最上层的View来显示提示框)
-        //若界面需要发生跳转,选false
-        if !inCurrentView{
-            viewToShow = UIApplication.shared.windows.last!
-        }
-        
-        let hud = MBProgressHUD.showAdded(to: viewToShow, animated: true)
-        hud.mode = .text        //不指定的话显示菊花和下面配置的文本
-        hud.label.text = title
-        hud.detailsLabel.text = subTitle
-        hud.hide(animated: true, afterDelay: 2)         //2秒后自动隐藏
-    }
-    
-    //用于在本vc调用,让他显示到别的vc(如父vc)里去
-    func showTextHUD(_ title: String, in view: UIView, _ subTitle: String? = nil){
-        let hud = MBProgressHUD.showAdded(to: view, animated: true)
-        hud.mode = .text        //不指定的话显示菊花和下面配置的文本
-        hud.label.text = title
-        hud.detailsLabel.text = subTitle
-        hud.hide(animated: true, afterDelay: 2)
-    }
-    
-    // MARK: 点击空白处收起键盘
-    func hideKeyboardWhenTappedAround(){
-        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        
-        //保证tap手势不会影响到其他touch类控件的手势
-        //若不设，则本页面有tableview时，点击cell不会触发didSelectRowAtIndex（除非长按）
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
-    }
-    
-    @objc func dismissKeyboard(){
-        view.endEditing(true) //让view中的所有textfield失去焦点--即关闭小键盘
-    }
-}
+ 
 
     // MARK: -
 extension Bundle{

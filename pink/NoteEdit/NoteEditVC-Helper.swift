@@ -53,7 +53,8 @@ extension NoteEditVC{
         
     }
     
-    // MARK: 自定义请求授权弹框(首次询问有效,不允许授权后无效)
+    // MARK: 自定义请求授权弹框
+    //第一次发布笔记3篇后,弹出授权弹框
     func showAllowPushAlert(){
         UNUserNotificationCenter.current().getNotificationSettings { settings in
             switch settings.authorizationStatus{
@@ -65,7 +66,6 @@ extension NoteEditVC{
                     let alert = UIAlertController(title: #""小粉书"想给您发送通知"#, message: "收到评论后第一时间就知道哦~", preferredStyle: .alert)
                     let notAllowAction = UIAlertAction(title: "不允许", style: .cancel)
                     let allowAction = UIAlertAction(title: "允许", style: .default) { _ in
-                        //自动开启推送通知设置,但是不会跳转到手机自带的‘设置’页面
                         jumpToSetting()
                     }
                     alert.addAction(notAllowAction)

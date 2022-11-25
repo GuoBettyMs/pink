@@ -32,4 +32,13 @@ extension NoteDetailVC{
         self.commentCount += offset
     }
     
+    // MARK: 笔记详情页返回主页瀑布流的点赞去重
+    func backToCell(){
+        //如果用户是从瀑布流cell过来的话,需更新一下瀑布流cell的点赞去重
+        if let cellItem = cellItem{
+            delegate?.updateLikeBtn(cellItem: cellItem, isLike: isLike, likeCount: likeCount)//反向传值likeBtn状态和likeCount、currentLikeCount到主页瀑布流cell
+        }
+        
+        dismiss(animated: true)
+    }
 }

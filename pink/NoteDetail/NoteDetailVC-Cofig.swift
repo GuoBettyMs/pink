@@ -10,6 +10,7 @@
 import ImageSlideshow
 import GrowingTextView
 import LeanCloud
+import Hero
 
 extension NoteDetailVC{
     
@@ -41,10 +42,19 @@ extension NoteDetailVC{
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         
         //注册可重用的section header(评论view)
-        tableView.register(UINib(nibName: "CommentView", bundle: nil), forHeaderFooterViewReuseIdentifier: kCommentViewID)
+        noteTableView.register(UINib(nibName: "CommentView", bundle: nil), forHeaderFooterViewReuseIdentifier: kCommentViewID)
         
         //注册可重用的section footer(评论view与评论view之间的分隔线)
-        tableView.register(CommentSectionFooterView.self, forHeaderFooterViewReuseIdentifier: kCommentSectionFooterViewID)
+        noteTableView.register(CommentSectionFooterView.self, forHeaderFooterViewReuseIdentifier: kCommentSectionFooterViewID)
+        
+        //视觉动画(非交互动画)
+        //故事版‘NoteDetailVC’的‘is hero enable’改为true,或者 meVC.isHeroEnabled = true
+        view.hero.id = noteHeroID//配置笔记详情页根视图的heroID,和瀑布流cell的heroID匹配
+        
+        //笔记详情页添加交互动画,左移到达个人页面,右移退回首页
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(slide))
+        view.addGestureRecognizer(pan)
+        
     }
     
     // MARK: 一般函数 - 计算tableHeaderView里内容的总height
@@ -90,6 +100,47 @@ extension NoteDetailVC{
             
             textViewBarBottomConstraint.constant = -keyboardH//故事版中firstItem 跟secondItem不同,之间的constant正负不同
             view.layoutIfNeeded()//根据当前layout的constant来刷新view
+        }
+    }
+    
+    // MARK: 同一个view的平移手势
+    //同一个view加同一种手势,用平移手势x轴移动量来判断左移还是右移(左移到达个人页面,右移退回首页)
+    @objc private func slide(pan: UIPanGestureRecognizer){
+        let translationX = pan.translation(in: pan.view).x  //x轴移动量,判断左移还是右移
+        if translationX > 0 {//手指右移,退回首页
+            let progress = translationX / (screenRect.width / 3)        //添加平移灵敏度,平移位置不到view宽度的一半就开始判断
+            switch pan.state{
+            case .began:    //开始平移
+                backToCell()
+            case .changed:  //正在平移
+                Hero.shared.update(progress)
+                
+                //平移时,view能够随手势自由移动本身的位置,但不能在左边自由移动(包的限制,参考进阶版修改)
+                let position = CGPoint(x: translationX + view.center.x, y: pan.translation(in: pan.view).y + view.center.y)
+                Hero.shared.apply(modifiers: [.position(position)], to: view)
+            default:  //根据平移量判断是取消平移(平移量小于view宽度的一半)还是完成平移(平移量大于view宽度的一半)
+                //增加pan.velocity, 当用户快速右滑的时候也finish整个交互动画
+                if progress + pan.velocity(in: pan.view).x / view.bounds.width > 0.5 {
+                    Hero.shared.finish()
+                }else{
+                    Hero.shared.cancel()
+                }
+            }
+            
+        }else if translationX < 0 { //左移到达个人页面
+            let progress = -(translationX / screenRect.width)
+            switch pan.state {
+            case .began:   //开始平移
+                noteToMeVC(author)
+            case .changed:  //正在平移
+                Hero.shared.update(progress)
+            default:
+                if progress > 0.2{
+                    Hero.shared.finish()
+                }else{
+                    Hero.shared.cancel()
+                }
+            }
         }
     }
 }

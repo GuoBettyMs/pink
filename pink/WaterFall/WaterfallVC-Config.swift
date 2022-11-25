@@ -24,7 +24,7 @@ extension WaterfallVC{
             inset = UIEdgeInsets(top: 0, left: kWaterfallPadding, bottom: kWaterfallPadding, right: kWaterfallPadding)
         }
         layout.sectionInset = inset
-         
+
         if isDraft{
             navigationItem.title = "本地草稿"
         }

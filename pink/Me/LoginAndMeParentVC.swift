@@ -13,7 +13,7 @@ import LeanCloud
 var loginAndMeParentVC = UIViewController()
 
 class LoginAndMeParentVC: UIViewController {
-
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,6 +24,7 @@ class LoginAndMeParentVC: UIViewController {
                 MeVC(coder: coder, user: user)
             }
             add(child: meVC)                //跳转到“个人”界面
+            
         } else {
             let loginVC = storyboard!.instantiateViewController(identifier: kLoginVCID)
             add(child: loginVC)             //跳转到“登录”界面
