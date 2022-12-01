@@ -51,9 +51,9 @@ extension LCObject{
     // MARK: 扩展 - 取出云端对象的不同类型字段数据
     func getExactStringVal(_ col: String) -> String { get(col)?.stringValue ?? "" }
     func getExactIntVal(_ col: String) -> Int { get(col)?.intValue ?? 0 }
-    func getExactDoubelVal(_ col: String) -> Double { get(col)?.doubleValue ?? 1 }  //这里取1,方便大多数情况使用
-    func getExactBoolValDefaultF(_ col: String) -> Bool { get(col)?.boolValue ?? false }            //查询不到字段则返回false(如性别)
-    func getExactBoolValDefaultT(_ col: String) -> Bool { get(col)?.boolValue ?? true }     //查询不到字段则返回true(如查hasReply字段)
+    func getExactDoubelVal(_ col: String) -> Double { get(col)?.doubleValue ?? 1 }//这里取1,方便大多数情况使用
+    func getExactBoolValDefaultF(_ col: String) -> Bool { get(col)?.boolValue ?? false }//查询不到则返回false(如性别)
+    func getExactBoolValDefaultT(_ col: String) -> Bool { get(col)?.boolValue ?? true }//查询不到则返回true(如查hasReply字段)
     
     enum imageType {
         case avatar

@@ -47,10 +47,10 @@ extension TabBarC: UITabBarControllerDelegate{
                 //拍视频后的剪辑处理
                 //此包会把拍摄的视频往上移,导致下面多出黑色,遂取消剪辑,从tmp文件夹取出原视频并自己制作封面
                 config.showsVideoTrimmer = false
+                config.hidesStatusBar = false            //显示手机的状态栏
                 /*
                  config.targetImageSize = YPImageSize.original
                  config.overlayView = UIView()           //支持翻转
-                 config.hidesStatusBar = true            //隐藏手机的状态栏
                  config.hidesCancelButton = true
                  config.preferredStatusBarStyle = UIStatusBarStyle.default       //手机状态栏类型为默认
                  config.bottomMenuItemSelectedTextColour = UIColor(red: 38, green: 38, blue: 38, alpha: 1)       //底部菜单栏item 已选择的文本颜色

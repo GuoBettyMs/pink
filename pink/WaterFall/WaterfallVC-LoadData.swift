@@ -14,19 +14,19 @@ import LeanCloud
 extension WaterfallVC{
     // MARK: 从云端取出<当前用户>发布的笔记
     @objc func getMyNotes(){
+        //显示个人页面‘草稿cell’条件:1.横滑tab为第0个 2.个人页面当前用户为登录用户 3. 个人页面当前用户的草稿笔记大于0
         isMyDraft = (UserDefaults.standard.integer(forKey: kDraftNoteCount) > 0)
-        print("user:  \(isMyDraft)")
-        
         
         let query = LCQuery(className: kNoteTable)
         query.whereKey(kAuthorCol, .equalTo(user!))//条件查询
-        query.whereKey(kAuthorCol, .included)//同时查询出作者对象
+        query.whereKey(kAuthorCol, .included)//同时查询出笔记的作者
         query.whereKey(kUpdatedAtCol, .descending)//排序,获取最新发布的
         query.limit = kNotesOffset//上拉加载的分页
         
         query.find { result in
             if case let .success(objects: notes) = result{
                 self.notes = notes
+                
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                 }
@@ -35,6 +35,7 @@ extension WaterfallVC{
                 self.header.endRefreshing()
             }
         }
+ 
     }
     
     // MARK: 从云端取出当前用户收藏的笔记
@@ -143,16 +144,18 @@ extension WaterfallVC{
             case .success(objects: let notes):
                 // notes 是包含满足条件的 objects 对象的数组
                 self.notes = notes
-//                print("notes : \(notes)")           //需要把AppDelegate的LCApplication.logLevel改为 .debug
-                self.collectionView.reloadData()
-                break
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
             case .failure(error: let error):
                 print("云端基础查询失败: \(error)")
             }
             /* 等同于
              if case let .success(objects: notes) = result{
                  self.notes = notes
-                 self.collectionView.reloadData()
+                 DispatchQueue.main.async {
+                     self.collectionView.reloadData()
+                 }
              }
              */
             DispatchQueue.main.async {

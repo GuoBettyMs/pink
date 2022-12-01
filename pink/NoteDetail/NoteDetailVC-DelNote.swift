@@ -23,17 +23,44 @@ extension NoteDetailVC{
 
     
     private func delLCNote(){
+        
+//        note.delete { res in
+//            if case .success = res{
+//                //用户表的noteCount减1,但有时云端未及时更新noteCount
+//                try? self.author?.set(kNoteCountCol, value: self.author!.getExactIntVal(kNoteCountCol) - 1)
+//                self.author?.save{ _ in }
+//
+//                DispatchQueue.main.async {
+//                    self.showTextHUD("笔记已删除")
+//                }
+//            }
+//        }
+        
+        var counts = 0
+        let author = LCApplication.default.currentUser!
+        let query = LCQuery(className: kNoteTable)
+        query.whereKey(kAuthorCol, .equalTo(author))//条件查询
+        query.whereKey(kAuthorCol, .included)//同时查询出作者对象
+        query.whereKey(kUpdatedAtCol, .descending)//排序,获取最新发布的
+        
+        query.find { result in
+            if case let .success(objects: notes) = result{
+//                print("作者笔记总数 noteCount: \(notes.count)")
+                counts = notes.count
+            }
+        }
+
         note.delete { res in
             if case .success = res {
-                //用户表的noteCount减1
-                try? self.author?.set(kNoteCountCol, value: self.author!.getExactIntVal(kNoteCountCol) - 1)
-                self.author?.save(completion: { _ in })
-                
+                //用户表的noteCount 设置为当前笔记总数
+                try? self.author?.set(kNoteCountCol, value: counts - 1)
+                self.author?.save{ _ in }
+
                 //UI操作,在主线程执行,若不在主线程完成,后台执行showTextHUD时会出现卡顿
                 DispatchQueue.main.async {
                     self.showTextHUD("笔记已删除")
                 }
- 
+                print("删除后 kNoteCountCol:  \(counts - 1) ,getExactIntVal(kNoteCountCol): \(self.author!.getExactIntVal(kNoteCountCol) - 1)")//有时获取的noteCount未及时减1
             }
         }
     }

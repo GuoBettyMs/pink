@@ -51,7 +51,7 @@ extension NoteDetailVC{
             if isLike{
                 let userLike = LCObject(className: kUserLikeTable)      //userLike中间表
                 try? userLike.set(kUserCol, value: user)                //将当前用户赋给点赞笔记云端表kUserLikeTable的用户字段
-                try? userLike.set(kNoteCol, value: note)                //将当前用户赋给点赞笔记云端表kUserLikeTable的笔记字段
+                try? userLike.set(kNoteCol, value: note)                //将当前笔记赋给点赞笔记云端表kUserLikeTable的笔记字段
                 userLike.save{ _ in }
                 
                 //点赞数量递增1

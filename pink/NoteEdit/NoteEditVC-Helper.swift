@@ -59,7 +59,10 @@ extension NoteEditVC{
         UNUserNotificationCenter.current().getNotificationSettings { settings in
             switch settings.authorizationStatus{
             //未请求过授权(notDetermined)需再次请求授权,此处省略
-
+            case  .authorized:
+                print("authorized")
+            case .notDetermined:
+                print("notDetermined")
             //未授权(不允许通知)时引导用户去设置App里授权(无效)
             case .denied:
                 DispatchQueue.main.async {
@@ -73,10 +76,12 @@ extension NoteEditVC{
                     
                     //展示全局的弹框
                     self.view.window?.rootViewController?.present(alert, animated: true)
+//                    self.present(alert, animated: true)
                 }
             default:
                 break
             }
         }
+        
     }
 }

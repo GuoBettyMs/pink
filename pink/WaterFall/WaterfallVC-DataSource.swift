@@ -44,6 +44,14 @@ extension WaterfallVC{
             cell.deleteBtn.addTarget(self, action: #selector(showAlert), for: .touchUpInside)
             return cell
         }else{
+            /*
+                 UICollectionViewCell执行顺序:
+                 1. 加载出cell: let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kWaterfallCellID, for: indexPath) as! WaterfallCell
+                 2.配置cell的属性: override func awakeFromNib()
+                 3.传值: cell... return cell
+                 4.override func awakeFromNib()
+                 5.传值...
+             */
             // MARK: 瀑布流布局 - HomeVC 瀑布流
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kWaterfallCellID, for: indexPath) as! WaterfallCell
 
@@ -54,7 +62,7 @@ extension WaterfallVC{
             //情况2: 个人页面'笔记'中有草稿cell, 首页的笔记数 = 个人页面'笔记'数量 - 1
             let offset = isMyDraft ? 1 : 0
             cell.note = notes[indexPath.item - offset]  //把云端笔记的每个对象传到首页“发现”页面
-            
+
             //配置cell的heroID,id与笔记详情页的heroID一样
             cell.hero.id = "noteHeroID\(indexPath.item)"
             

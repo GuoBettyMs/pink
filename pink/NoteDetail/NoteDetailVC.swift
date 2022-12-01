@@ -16,7 +16,6 @@ import GrowingTextView
 
 class NoteDetailVC: UIViewController {
     
-
     var note: LCObject//笔记对象属性
     var isLikeFromWaterfallCell = false             //笔记首页的点赞状态传值到笔记详情页面,判断详情页的当前用户是否点赞
     var delNoteFinished: (() -> ())?                //删除笔记闭包

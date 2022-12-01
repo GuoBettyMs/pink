@@ -16,7 +16,7 @@ extension NoteEditVC{
         do{
             let noteGroup = DispatchGroup()
             
-            //创建云端表格
+            //创建笔记云端表格
             let note = LCObject(className: kNoteTable)
             
             // MARK: 云端存储 - 单个文件
@@ -96,7 +96,7 @@ extension NoteEditVC{
             try note.set(kFavCountCol, value: 0)            //收藏字段
             try note.set(kCommentCountCol, value: 0)
 
-            //存储笔记的作者进云端
+            //笔记的作者存储进云端
             let author = LCApplication.default.currentUser!
             try note.set(kAuthorCol, value: author)
             
@@ -111,20 +111,20 @@ extension NoteEditVC{
             noteGroup.notify(queue: .main) {
 //                print("笔记内容全部存储到云端结束")
                 
-                //请求通知权限.可根据实际业务逻辑灵活放置
-                UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
-                    if let error = error{ print("请求通知授权出错: \(error)") }
-                }
-                
-                //当用户发表过较多笔记时,判断用户对通知的授权状态
-                //若notDetermined(从来未授权过)则请求权限,若denied(拒绝授权)则弹出自定义请求权限框引导用户授权(因系统弹框只弹一次)
-                let noteCount = author.getExactIntVal(kNoteCountCol)
-                //笔记是3的倍数时,弹出自定义请求权限框
-                if noteCount != 0, noteCount % 3 == 0{ self.showAllowPushAlert() }
-
+//                //请求通知权限.可根据实际业务逻辑灵活放置
+//                UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
+//                    if let error = error{ print("请求通知授权出错: \(error)") }
+//                }
+//                
+//    //用户经一定的操作后,判断用户对通知的授权状态,若notDetermined则请求权限,若denied则弹出自定义请求权限框(因系统弹框只弹一次)
+//                let noteCount = author.getExactIntVal(kNoteCountCol)
+//                if noteCount != 0, noteCount % 3 == 0{ self.showAllowPushAlert() }//,有时无法弹窗,以防万一放到该函数外层
+//
                 //用户表的noteCount增1
                 try? author.increase(kNoteCountCol)
                 author.save{ _ in }
+                
+//                print("发布后 kNoteCountCol: \(author.getExactIntVal(kNoteCountCol))")//获取的noteCount为当前手机设备的笔记累计发布数,不是登录用户的笔记总数
                 
                 self.showTextHUD("发布笔记成功", false)           //跳转界面,选false
             }

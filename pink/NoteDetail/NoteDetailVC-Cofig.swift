@@ -103,21 +103,22 @@ extension NoteDetailVC{
         }
     }
     
-    // MARK: 同一个view的平移手势
+    // MARK: 同一个view的平移手势(按住左右移)
     //同一个view加同一种手势,用平移手势x轴移动量来判断左移还是右移(左移到达个人页面,右移退回首页)
     @objc private func slide(pan: UIPanGestureRecognizer){
         let translationX = pan.translation(in: pan.view).x  //x轴移动量,判断左移还是右移
         if translationX > 0 {//手指右移,退回首页
-            let progress = translationX / (screenRect.width / 3)        //添加平移灵敏度,平移位置不到view宽度的一半就开始判断
+            let progress = translationX / (screenRect.width / 4)        //screenRect.width / 3 提升平移灵敏度,平移位置不到view宽度的一半就开始判断
             switch pan.state{
             case .began:    //开始平移
                 backToCell()
             case .changed:  //正在平移
                 Hero.shared.update(progress)
                 
-                //平移时,view能够随手势自由移动本身的位置,但不能在左边自由移动(包的限制,参考进阶版修改)
+                //平移时,view能够随手势自由移动本身的位置,但不能在左边自由移动(第三方包的限制)
                 let position = CGPoint(x: translationX + view.center.x, y: pan.translation(in: pan.view).y + view.center.y)
                 Hero.shared.apply(modifiers: [.position(position)], to: view)
+
             default:  //根据平移量判断是取消平移(平移量小于view宽度的一半)还是完成平移(平移量大于view宽度的一半)
                 //增加pan.velocity, 当用户快速右滑的时候也finish整个交互动画
                 if progress + pan.velocity(in: pan.view).x / view.bounds.width > 0.5 {

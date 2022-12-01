@@ -14,7 +14,7 @@ import PopupDialog
 extension NoteEditVC{
     func setUI(){
        
-        //重新设置笔记编辑导航栏的leftBarButtonItem,使返回按钮不带标题
+        //重新设置个人页面‘草稿’cell中,笔记编辑导航栏的leftBarButtonItem,使返回按钮不带标题
         let icon = largeIcon("chevron.left")
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: icon, style: .plain, target: self, action: #selector(dismissUpdate))
 

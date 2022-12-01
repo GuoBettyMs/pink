@@ -62,8 +62,8 @@ let screenRect = UIScreen.main.bounds   //屏幕宽高
 // MARK: - 业务逻辑相关
 //瀑布流
 let kWaterfallPadding: CGFloat = 4                          //瀑布流 layout间距
-let kDraftNoteWaterfallCellBottomViewH: CGFloat = 80        //本地草稿页面cell 底部StackView的总高度(含TitleLabel+DateLabel上下边距)
-let kWaterfallCellBottomViewH: CGFloat = 76                 //首页发现页面cell底部StackView的总高度(含TitleLabel+authorNickNameL上下边距)
+let kDraftNoteWaterfallCellBottomViewH: CGFloat = 68        //本地草稿页面cell 底部StackView的总高度(含TitleLabel+DateLabel上下边距)
+let kWaterfallCellBottomViewH: CGFloat = 64                 //首页发现页面cell底部StackView的总高度(含TitleLabel+authorNickNameL上下边距)
 
 let kChannels = ["推荐","旅行","娱乐","才艺","美妆","白富美","美食","萌宠"]
 

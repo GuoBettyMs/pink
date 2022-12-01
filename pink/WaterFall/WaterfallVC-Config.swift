@@ -31,7 +31,6 @@ extension WaterfallVC{
         
         //注册个人界面的tab子控制器'笔记'中表示草稿笔记的cell
         collectionView.register(UINib(nibName: "MyDraftNoteWaterfallCell", bundle: nil), forCellWithReuseIdentifier: kMyDraftNoteWaterfallCellID)
-        collectionView.mj_header = header   //下拉刷新加载
     }
     
 }

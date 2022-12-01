@@ -17,7 +17,7 @@ import Kingfisher
 
 class WaterfallCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var titleL: UILabel!
+    @IBOutlet weak var title: UILabel!
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var nickNameL: UILabel!
     @IBOutlet weak var likeBtn: UIButton!
@@ -51,7 +51,7 @@ class WaterfallCell: UICollectionViewCell {
 //            print("avatarURL: \(avatarURL)")
             
             //笔记标题
-            titleL.text = note.getExactStringVal(kTitleCol)
+            title.text =  note.getExactStringVal(kTitleCol)
             
             //作者昵称
             nickNameL.text = author.getExactStringVal(kNickNameCol)

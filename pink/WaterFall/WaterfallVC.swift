@@ -34,6 +34,8 @@ class WaterfallVC: UICollectionViewController, SegementSlideContentScrollViewDel
      return tableView //返回根视图
     }
      */
+
+    
     @objc var scrollView: UIScrollView { collectionView } //瀑布流根视图为collectionView
     
     //笔记草稿页相关数据
@@ -58,29 +60,32 @@ class WaterfallVC: UICollectionViewController, SegementSlideContentScrollViewDel
         
         config()
 
-        
         if let _ = user{//个人页面
             if isMyNote{
                 //个人页面 - ‘笔记’
                 header.setRefreshingTarget(self, refreshingAction: #selector(getMyNotes))
+                collectionView.mj_header = header
             }else if isMyFav{
                 //个人页面 - ‘收藏’
                 header.setRefreshingTarget(self, refreshingAction: #selector(getMyFavNotes))
+                collectionView.mj_header = header
             }else{
                 //个人页面 - ‘赞过’
                 header.setRefreshingTarget(self, refreshingAction: #selector(getMyLikeNotes))
+                collectionView.mj_header = header
             }
             header.beginRefreshing()    //下拉自动刷新
         }else if isDraft{//草稿总页面
             getDraftNotes()
         }else{//首页
             header.setRefreshingTarget(self, refreshingAction: #selector(getNotes))
+            collectionView.mj_header = header
             header.beginRefreshing()    //下拉自动刷新
             
         }
         
     }
-    
+
     
     @IBAction func dismissDraftNotesVC(_ sender: Any) {
         dismiss(animated: true)

@@ -20,7 +20,6 @@ extension WaterfallVC{
             let navi = storyboard!.instantiateViewController(identifier: kDraftNotesNaviID) as! UINavigationController
             navi.modalPresentationStyle = .fullScreen
             ((navi.topViewController) as! WaterfallVC).isDraft = true
-            navi.navigationBar.barTintColor = .red
             present(navi, animated: true)
 
         }else if isDraft{
@@ -64,7 +63,6 @@ extension WaterfallVC{
             }
         }else{
             // MARK: 遵守UICollectionViewDelegate - 跳转-笔记详情页面
-            
             let offset = isMyDraft ? 1 : 0
             let item = indexPath.item - offset
             

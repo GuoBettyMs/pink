@@ -27,8 +27,8 @@ class NoteEditVC: UIViewController {
     @IBOutlet weak var poiNameIcon: UIImageView!
     @IBOutlet weak var poiNameLabel: UILabel!
     
-
-    var editMyNote: LCObject?           //编辑用户自己的笔记
+    
+    var editMyNote: LCObject?        //编辑用户自己的笔记
     //闭包: 更新笔记后的处理
     var updateNoteFinished: ((String) -> ())?
     
@@ -60,6 +60,7 @@ class NoteEditVC: UIViewController {
         super.viewDidLoad()
         config()
         setUI()
+
     }
 
     // MARK: -
@@ -106,6 +107,30 @@ class NoteEditVC: UIViewController {
         }else{
             //发布新笔记
             createNote()
+            
+            //请求通知权限.可根据实际业务逻辑灵活放置
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
+                if let error = error{ print("请求通知授权出错: \(error)") }
+            }
+            
+            //查询登录用户的笔记数,当笔记是3的倍数时弹窗推送通知
+            let author = LCApplication.default.currentUser!
+            let query = LCQuery(className: kNoteTable)
+            query.whereKey(kAuthorCol, .equalTo(author))//条件查询
+            query.whereKey(kAuthorCol, .included)//同时查询出作者对象
+            query.whereKey(kUpdatedAtCol, .descending)//排序,获取最新发布的
+            
+            query.find { result in
+                if case let .success(objects: notes) = result{
+//                    print("作者笔记总数 noteCount: \(notes.count)")
+                    if notes.count != 0, notes.count % 3 == 0{
+                        self.showAllowPushAlert() //有时无法弹窗,以防万一放到这里
+//                        print("发送推送提示成功")
+                    }
+                }
+            }
+
+
         }
     }
     

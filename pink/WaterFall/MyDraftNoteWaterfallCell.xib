@@ -96,6 +96,11 @@
                 <constraint firstItem="HHH-Uk-ZUn" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="tCP-Kx-cMA"/>
             </constraints>
             <size key="customSize" width="178" height="161"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="number" keyPath="radius">
+                    <real key="value" value="5"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
             <connections>
                 <outlet property="countL" destination="25K-QU-RVy" id="tXc-rc-xhU"/>
                 <outlet property="imageView" destination="WYl-YH-s5N" id="e12-cO-0q9"/>

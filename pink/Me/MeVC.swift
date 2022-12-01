@@ -36,9 +36,7 @@ class MeVC: SegementSlideDefaultViewController {
     var isMySelf = false            //true指登录用户本身已经登录,并查看自己的笔记
     
     var user: LCUser                //自定义user对象属性
-    
-    var isMyDraft = false
-    
+
     //初始化自定义的user
     init?(coder: NSCoder, user: LCUser) {
         self.user = user
@@ -51,16 +49,11 @@ class MeVC: SegementSlideDefaultViewController {
         
         config()
         setUI()
-
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        //更新个人信息的显示草稿cell条件: 2.个人页面当前用户为登录用户 3. 个人页面当前用户的草稿笔记大于0
-//        isMyDraft = isMySelf && (UserDefaults.standard.integer(forKey: kDraftNoteCount) > 0)
-//        print("viewWillAppear:  \(isMyDraft)")
-        
+
         // MARK: 从主页面切换到个人页面时,更新个人信息的‘获赞与收藏’
         guard let userObjectId =  user.objectId?.stringValue else { return }
         let query = LCQuery(className: kUserInfoTable)
@@ -100,12 +93,7 @@ class MeVC: SegementSlideDefaultViewController {
     
     //根据横滑tab跳转到对应的子视图控制器:'笔记','收藏','赞过'
     override func segementSlideContentViewController(at index: Int) -> SegementSlideContentScrollViewDelegate? {
-        //显示草稿cell条件:1.横滑tab为第0个 2.个人页面当前用户为登录用户 3. 个人页面当前用户的草稿笔记大于0
-        //由于segementSlideContentViewController()只执行一次,条件2、3在个人页面显示时就刷新
-//        isMyDraft = (index == 0) && isMyDraft
-//        print("segementSlideContentViewController:  \(isMyDraft)")
         let vc = storyboard!.instantiateViewController(withIdentifier: kWaterfallVCID)  as! WaterfallVC
-//        vc.isMyDraft = isMyDraft
         vc.user = user
         vc.isMyNote = index == 0    //若当前用户在第0个横滑tab,表明子视图控制器是'笔记',显示对应瀑布流
         vc.isMyFav = index == 1     //若当前用户在第1个横滑tab,表明子视图控制器是'收藏',显示对应瀑布流
