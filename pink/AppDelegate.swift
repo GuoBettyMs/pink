@@ -18,6 +18,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
 
         config()
+                
+        //系统会缓存LaunchScreen.storyboad中的图片,即使删除App也没用,故需手动删除,迭代时需加入代码(可能还需其余优化操作):
+         //删除快照文件夹
+         do{
+             try FileManager.default.removeItem(atPath: "\(NSHomeDirectory())/Library/SplashBoard")
+         }catch{
+             print(error)
+         }
+        
         return true
     }
 
