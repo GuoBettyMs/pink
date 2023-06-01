@@ -31,3 +31,14 @@ target 'pink' do
   pod 'ActionSheetPicker-3.0'                         #iPhone/iPod(选择器 + UIActionSheet)或者iPad(一个选择器 + UIPopoverController)
   pod 'Hero'                                          #把系统转场动画present、dismiss转换为push、pop动画(push:右往左进入,pop:左往右出去;present:下往上进入、dismiss:上往下出去)
 end
+
+#防止因xcode版本不同而报错 File not found: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/arc/libarclite_iphoneos.a
+post_install do |installer|
+    installer.generated_projects.each do |project|
+          project.targets.each do |target|
+              target.build_configurations.each do |config|
+                  config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+               end
+          end
+   end
+end

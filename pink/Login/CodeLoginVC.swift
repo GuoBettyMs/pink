@@ -107,6 +107,7 @@ class CodeLoginVC: UIViewController {
     
     // MARK: 验证码登录
     //测试手机号:13202161631 测试验证码:464744(使用测试手机号不需要点击获取验证码按钮)
+    //测试手机号:18614349592 测试验证码:656357(使用测试手机号不需要点击获取验证码按钮)
     @IBAction func login(_ sender: UIButton) {
         view.endEditing(true)
         
