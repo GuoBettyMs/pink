@@ -38,6 +38,7 @@
  
  */
 import Alamofire
+import LeanCloud
 
 extension SocialLoginVC{
 
@@ -65,13 +66,13 @@ extension SocialLoginVC{
         
         //4-3-3.拼接成大参数1
         let authInfoStr = "\(infoStr)&sign=\(signedStr)"
-//        print("参数1 authInfoStr: \(authInfoStr)")
+        print("参数1 authInfoStr: \(authInfoStr)")
         
         //4-4.大参数2:appScheme--授权完可自动跳转回本app
         
         //4-5.发起支付宝登录请求
         AlipaySDK.defaultService()?.auth_V2(withInfo: authInfoStr, fromScheme: kAppScheme, callback: { res in
-//            print("登录请求 res: \(res)")     //返回字典类型resultStatus、memo、result
+            print("登录请求 res: \(String(describing: res))")     //返回字典类型resultStatus、memo、result
             guard let res = res else {return}
             
             //4-6.解析并获取到authCode(授权码)
@@ -89,9 +90,9 @@ extension SocialLoginVC{
                     //此处也可用上面的components方法,根据"="分离成数组,这里使用区间运算符方法
                     let equalIndex = subRes.firstIndex(of: "=")!            //等于号的index
                     let equalEndIndex = subRes.index(after: equalIndex)     //等于号后面一个字符的index
-//                    let prefix = subRes[..<equalIndex]                      //半开区间-取出等于号前面的内容
+                    let prefix = subRes[..<equalIndex]                      //半开区间-取出等于号前面的内容
                     let suffix = subRes[equalEndIndex...]                   //闭区间-取出等于号后面的内容
-//                    print("subRes -- \(prefix): \(suffix)")
+                    print("subRes -- \(prefix): \(suffix)")
                     
                     //hasPrefix 看当前字符串是否有auth_code前缀,若有则取出当前字符串等于号后面的内容,即为authCode
                     //大家可用此法同样取出result_code,并处理登录失败时候的情况
@@ -116,39 +117,37 @@ extension SocialLoginVC{
     // MARK: 客户端操作演示(不安全) - 拿authCode去和支付宝换token
     private func getToken(_ authCode: String){
         //https://opendocs.alipay.com/apis/api_9/alipay.system.oauth.token
-        //请求示例:https://openapi.alipay.com/gateway.do?timestamp=2013-01-01 08:08:08&method=alipay.system.oauth.token&app_id=4472&sign_type=RSA2&sign=ERITJKEIJKJHKKKKKKKHJEREEEEEEEEEEE&version=1.0&charset=GBK&grant_type=authorization_code&code=4b203fe6c11548bcabd8da5bb087a83b
-        
-       /*
-        var parameters = [
-            "timestamp": Date().format(with: "yyyy-MM-dd HH:mm:ss"),
-            "method": "alipay.system.oauth.token",
-            "app_id": kAliPayAppID,
-            "sign_type": "RSA2",
-            "version": "1.0",
-            "charset": "utf-8",
-            "grant_type": "authorization_code",         //授权方式,使用用户授权码code换取授权令牌access_token
-            "code": authCode
-        ]
-        
-        //map+sorted后变成按照首字母顺序排序的数组:["sign_type=RSA2","version=1.0"]
-        //joined后变成字符串:"sign_type=RSA2&version=1.0"
-        //$0代表每个key,$1代表每个value,"\($0)=\($1)" 形成一个数组
-        //sorted 表示一个数组按照首字母顺序排序
-        //joined 表示将一个数组转为字符串; joined(separator: "&") 表示用“&”将数组拼接成一个字符串
-        let urlParameters = parameters.map{ "\($0)=\($1)" }.sorted().joined(separator: "&")
-        guard let signer = APRSASigner(privateKey: kAlipayPrivateKey),
-              let signedStr = signer.sign(urlParameters, withRSA2: true) else { return }
-        
-        //给字典signedParameters增加一个新的元素sign,removingPercentEncoding 进行url解码
-        parameters["sign"] = signedStr.removingPercentEncoding ?? signedStr
-        
-        print("parameters: \(parameters)")
-        
-        //手动添加签名,需对所有参数parameters进行排序
-        AF.request("https://openapi.alipay.com/gateway.do", parameters:parameters).responseJSON { response in
-            print("response: \(response)")
-        }
-       */
+       
+//        var parameters = [
+//            "timestamp": Date().format(with: "yyyy-MM-dd HH:mm:ss"),
+//            "method": "alipay.system.oauth.token",
+//            "app_id": kAliPayAppID,
+//            "sign_type": "RSA2",
+//            "version": "1.0",
+//            "charset": "utf-8",
+//            "grant_type": "authorization_code",         //授权方式,使用用户授权码code换取授权令牌access_token
+//            "code": authCode
+//        ]
+//
+//        //map+sorted后变成按照首字母顺序排序的数组:["sign_type=RSA2","version=1.0"]
+//        //joined后变成字符串:"sign_type=RSA2&version=1.0"
+//        //$0代表每个key,$1代表每个value,"\($0)=\($1)" 形成一个数组
+//        //sorted 表示一个数组按照首字母顺序排序
+//        //joined 表示将一个数组转为字符串; joined(separator: "&") 表示用“&”将数组拼接成一个字符串
+//        let urlParameters = parameters.map{ "\($0)=\($1)" }.sorted().joined(separator: "&")
+//        guard let signer = APRSASigner(privateKey: kAlipayPrivateKey),
+//              let signedStr = signer.sign(urlParameters, withRSA2: true) else { return }
+//
+//        //给字典signedParameters增加一个新的元素sign,removingPercentEncoding 进行url解码
+//        parameters["sign"] = signedStr.removingPercentEncoding ?? signedStr
+//
+//        print("parameters: \(parameters)")
+//
+//        //手动添加签名,需对所有参数parameters进行排序
+//        AF.request("https://openapi.alipay.com/gateway.do", parameters:parameters).responseJSON { response in
+//            print("response: \(response)")
+//        }
+      
         
         let parameters = [
             "timestamp": Date().format(with: "yyyy-MM-dd HH:mm:ss"),
@@ -161,12 +160,13 @@ extension SocialLoginVC{
             "code": authCode
         ]
 
+
         //手动添加签名,需对所有参数parameters进行排序
         //对access_token进行解码
         AF.request("https://openapi.alipay.com/gateway.do", parameters: self.signedParameters(parameters)).responseDecodable(of: TokenResponse.self) { response in
-            
+
             print("getToken response: \(response)")
-            
+
             if let tokenResponse = response.value{
                 let accessToken = tokenResponse.alipay_system_oauth_token_response.access_token         //alipay_system_oauth_token_response 授权访问令牌model
 
@@ -179,7 +179,7 @@ extension SocialLoginVC{
     // MARK: 客户端操作演示(不安全) - 拿accessToken去和支付宝换用户信息
     private func getInfo(_ accessToken: String){
         //https://opendocs.alipay.com/apis/api_2/alipay.user.info.share
-        //请求示例:https://openapi.alipay.com/gateway.do?timestamp=2013-01-01 08:08:08&method=alipay.user.info.share&app_id=18344&sign_type=RSA2&sign=ERITJKEIJKJHKKKKKKKHJEREEEEEEEEEEE&version=1.0&charset=GBK&auth_token=20130319e9b8d53d09034da8998caefa756c4006
+
         let parameters = [
             "timestamp": Date().format(with: "yyyy-MM-dd HH:mm:ss"),
             "method": "alipay.user.info.share",    //调用了支付宝会员授权信息查询接口 alipay.user.info.share,配合支付宝会员授权接口，查询授权信息
@@ -189,20 +189,71 @@ extension SocialLoginVC{
             "charset": "utf-8",
             "auth_token": accessToken
         ]
-
-        AF.request("https://openapi.alipay.com/gateway.do", parameters: self.signedParameters(parameters)).responseDecodable(of: InfoShareResponse.self){response in
+        
+        AF.request("https://openapi.alipay.com/gateway.do", parameters: self.signedParameters(parameters)).responseDecodable(of: InfoShareResponse.self){ response in
             
-            print("getInfo response: \(response)")
+//            print("getInfo response: \(response)")
             
             if let infoShareResponse = response.value{
                 let info = infoShareResponse.alipay_user_info_share_response            //alipay_user_info_share_response 用户信息model
-                print("用户信息: \(info.nick_name),\(info.avatar)")
-                //UI操作,在主线程执行,若不在主线程完成,后台执行showTextHUD时会出现卡顿
-                DispatchQueue.main.async {
-                    self.showTextHUD("支付宝登录成功", in: self.parent!.view)   //在父视图居中展示提示框
-                }
+                print("成功获取支付宝用户信息: \n -- \(info.nick_name),\(info.avatar)")
+                
+//                //UI操作,在主线程执行,若不在主线程完成,后台执行showTextHUD时会出现卡顿
+//                DispatchQueue.main.async {
+//                    self.showTextHUD("支付宝登录成功", in: self.parent!.view)   //在父视图居中展示提示框
+//                }
             }
         }
+        
+        do {
+            // 创建实例
+            let user = LCUser()
+
+            // 等同于 user.set("username", value: "Tom")
+            user.username = LCString("Alipay")
+            user.password = LCString("cat123123")
+
+            // 可选
+            let letters = "0123456789"
+            let randomPhonenum = String((0..<10).map{ _ in letters.randomElement()! })
+
+            user.email = LCString("alipay@xd.com")
+            user.mobilePhoneNumber = LCString("1"+randomPhonenum)
+//            print("randomPhonenum", "1"+randomPhonenum)
+
+            // 设置其他属性的方法跟 LCObject 一样
+            try user.set(kGenderCol, value: true)
+            try user.set(kIsSetPasswordCol, value: true)
+            
+
+            _ = user.signUp { (result) in
+                switch result {
+                case .success:
+                    print("注册成功")
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+2, execute: {
+                        LCUser.logIn(mobilePhoneNumber: "1"+randomPhonenum, password: "cat123123"){ result in
+                            switch result {
+                            case let .success(object: user):
+                                
+                                let randomNickName = "小粉薯\(String.randomString(6))"
+                                self.configAfterLogin(user, randomNickName, "alipay@xd.com")//LeanCloud数据存储,退出登录界面,显示个人页面
+                                
+                            case let .failure(error: error):
+                                self.hideLoadHUD()
+                                print("密码登录失败", error.reason as Any)
+                            }
+                        }
+                    })
+
+                case .failure(error: let error):
+                    print("注册失败",error)
+                }
+            }
+        } catch {
+            print("set LCObject 失败",error)
+        }
+        
+        
     }
 }
 // MARK: -
@@ -233,6 +284,7 @@ extension SocialLoginVC{
     }
 }
 // MARK: -
+
 extension SocialLoginVC{
 
     // MARK: 客户端操作演示(不安全) - DataModel,TokenResponse
@@ -245,6 +297,7 @@ extension SocialLoginVC{
         }
     }
 
+
     // MARK: 客户端操作演示(不安全) - DataModel,InfoShareResponse
     //用户信息model
     struct InfoShareResponse: Decodable {
@@ -252,7 +305,7 @@ extension SocialLoginVC{
         struct InfoShareResponseInfo: Decodable {
             let avatar: String
             let nick_name: String
-
+            
             //若无法使用api获取用户信息,可设置静态数据
 //            let avatar: String = "https://pixabay.com/zh/photos/dog-corgi-cute-animal-4988985/"                 //用户头像
 //            let nick_name: String = "大黄"              //用户昵称

@@ -103,13 +103,16 @@ let kPOIsInitArr = [["不显示位置", ""]]          //完全同步copy周边�
 let kPOIsOffset = 20                           //每页展示的搜索数量
 
 //极光一键登录
-let kJAppKey = "e590b77d81335e8dd9d9f960"       //配置一键登录Key
+let kJAppKey = "e590b77d81335e8dd9d9f960"       //配置一键登录Key,登录极光安全认证,集成设置中的AppKey
 
-//支付宝登录
-//kAliPayAppID: 应用真实ID、kAliPayPID: 商户ID、kAlipayPrivateKey:极光一键登录平台上传的公钥对应的私钥(建议用支付宝开发平台开发助手申请的)
+//支付宝登录(沙箱虚拟ID 支付宝登录请求会失败)
+//1⃣️kAliPayAppID: 应用真实ID、登录 https://b.alipay.com/page/account-manage-oc/bind/appIdBindList 的账号中心->APPID绑定->已绑定应用->APPID 查询
+//2⃣️kAliPayPID: 商户ID, 登录 https://b.alipay.com/page/store-management/infomanage 的账号中心->商户基本信息->商户号(收单账号) 查询
+//3⃣️kAlipayPrivateKey: 用支付宝开发平台开发助手申请到应用密钥对,https://opendocs.alipay.com/common/02kipk ,应用私钥单独保存,将应用公钥上传到支付宝开放平台得到支付宝公钥,赋值给 kAlipayPrivateKey
+//使用 kAlipayPrivateKey 对常规key-value参数进行加签,得到一个新的加签参数,结合常规key-value参数一起进行支付宝登录请求
 let kAppScheme = "pink"                             //浏览器搜索栏输入"pink://",回车后可直接跳转到App
-let kAliPayAppID = "2021000121677944"               //沙箱APPID
-let kAliPayPID = "2088621993691831"                 //沙箱PID
+let kAliPayAppID = "2021000121677944"               //沙箱APPID(2021000121677944)
+let kAliPayPID = "2088621993691831"                 //沙箱PID(2088621993691831)
 let kAlipayPrivateKey = "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCNLQOqKnkbVlK6Zm57tZR/ldjAD2hYtN5oz1O8HdxRI4hIOPqUONaz3aiLozX/lMT75FjKazLZIcUaNtyduSb7NKp9/sNKi+qrHMZuteiQTQrsdhcLi15KgKShbKCzsiknyQ/BW7fnL/3xp8oj5ZzBwobepAVadxatGRDKDY/TMGFwePGlcQph8FmnR2gi/Z6tw8jxDVmfoc6t9ER7M35u4fsXQ2EbBp2qNFhlzzM3kT3we482BGiBUKmfJJm2qdZ5E8EWVPC/zOCOelhVKqgFbnJYMOzxE89b6gJVcjGQhRl0VqrFU6hwv8XFu22qsfn4QOYl2JaTUST1jT9VWoTzAgMBAAECggEAeVWE3s2eRLaOZ5H9xukq9fTN01PqtMLOnHoEV5u6bSoCyT/fbWDkdrY9U7Y0hLNSEcQR4/b6Ps/dXUhlmFE3hZOgLKW3JuzWBba3fRNvDAaLKuvbpppjsdiapfp8q7Sl1oHhvqebiWEf+n/hJbUEYytTSyrhRv0vShpO6bl6MWEI2Y/uYWNW3DdXw8a4ljRNvNRCp7za0/1ljg2bH9obpqoKl62wDGz00qgQC+LHwp49Qa3w/X9c6j3g+jXvheGvksWRk/dVZ49E2Q6IdqdzMddvZx62igC8yhZiAhd1DEJUOJ6s/ZKB0jbsvjE1LkjyPT/LJp95IChY6TdjLcY5gQKBgQDlrX8NVb5GZq5zxXfWh4SA23zH9TG7HY8a4cmJWSgpyttTmIcJ4owkDbNcQfpwMgfhanDIfB4xc3gVQfbJck8k4QvMBcBu9XEimq45V9MdxyRzUuPQwUouAmjkFSy+peP23P3qFqf5hvswdp3ukBUG/K+9C/NEDII+6nQOtpp3kwKBgQCdWvcqRUX+g3zIXvx2XE2VxGD8OH/Fl0wLMyaSUAGpQ7qC33qKNKD5b5PMQ3OE7AC/0DqPHdB2APPvSk3ZAyoxOUERWtKVxnJWdj2lwsH3OdBd+xVmP42Id3pIN5fDIKBjN2OilZpVVBlAbmKE7tOF1Gz0GIeK53Ic25DUdgVZIQKBgQCtDDVn9KxyGrdiHuwVxPE+rSCs/77Cfpjt5iSUyYoLQv5RU+CawAhaub/jyQpKMkfhvPLQ+0M8ewWE7rhkOy4KWU0sIUFF2MOvEOAn8FXuX7bE9TUUei3L0KD7CEE4O4Ew5HyjPQK+bMchUp3XutM8+nHme/SD1vDjOn7K/yYO5QKBgEteyereWYNqObfD/4s19Reag5Xr/g+Hw63Np1kHp3QK8+hB4PEX+k7fydxaJpfxbv5xX8szTaloFW91mMosgOYo9Wi5pwqEjjmp0yd1nPCtKYgKfxqFsGZATDsRHckh9JDxc/DpVY4vhRTeiqP/vSNqN3HH2gyHhZoa9Uk+6prhAoGBAKl5jlHNVvpfzQMdv4dF2PN2wSk7IQCOl1PEzftd1GejmKuliFFu30zn8WVuwkOoSVZzo2IAZ133s76DGHrISV9bVAtgL2eG1cVhpg2/ekgdL+qsG+ea2YtD7DqW16L90OObz5tOVc+UHwN2gIDRPcSBHxbcc7Hcqn7oABzvtA6M"  //沙箱公钥对应的私钥
 
 //正则表达式
