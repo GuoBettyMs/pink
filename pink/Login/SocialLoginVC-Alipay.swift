@@ -219,7 +219,7 @@ extension SocialLoginVC{
 
             user.email = LCString("alipay@xd.com")
             user.mobilePhoneNumber = LCString("1"+randomPhonenum)
-//            print("randomPhonenum", "1"+randomPhonenum)
+            print("randomPhonenum", "1"+randomPhonenum)
 
             // 设置其他属性的方法跟 LCObject 一样
             try user.set(kGenderCol, value: true)
@@ -247,6 +247,9 @@ extension SocialLoginVC{
 
                 case .failure(error: let error):
                     print("注册失败",error)
+                    DispatchQueue.main.async {
+                        self.showTextHUD("注册失败 \(error)")      //跳转界面,选false
+                    }
                 }
             }
         } catch {
