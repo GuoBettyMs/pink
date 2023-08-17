@@ -101,7 +101,7 @@ extension SocialLoginVC{
                         //4-7和4-8需在服务端进行,此处仅演示在客户端
                         
                         //4-7.拿authCode去和支付宝换token(访问令牌和更新令牌)
-//                        self.getToken(String(suffix))
+                        self.getToken(String(suffix))
                     }
                 }
             }
@@ -229,20 +229,21 @@ extension SocialLoginVC{
             _ = user.signUp { (result) in
                 switch result {
                 case .success:
-                    print("注册成功")
+                    print("注册成功, \(String(describing: user.password))")
                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+2, execute: {
                         LCUser.logIn(mobilePhoneNumber: "1"+randomPhonenum, password: "cat123123"){ result in
                             switch result {
                             case let .success(object: user):
-                                
+
                                 let randomNickName = "小粉薯\(String.randomString(6))"
                                 self.configAfterLogin(user, randomNickName, "alipay@xd.com")//LeanCloud数据存储,退出登录界面,显示个人页面
-                                
+
                             case let .failure(error: error):
                                 self.hideLoadHUD()
                                 print("密码登录失败", error.reason as Any)
                             }
                         }
+                      
                     })
 
                 case .failure(error: let error):
