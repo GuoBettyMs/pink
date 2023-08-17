@@ -101,7 +101,7 @@ extension SocialLoginVC{
                         //4-7和4-8需在服务端进行,此处仅演示在客户端
                         
                         //4-7.拿authCode去和支付宝换token(访问令牌和更新令牌)
-                        self.getToken(String(suffix))
+//                        self.getToken(String(suffix))
                     }
                 }
             }
@@ -211,15 +211,15 @@ extension SocialLoginVC{
 
             // 等同于 user.set("username", value: "Tom")
             user.username = LCString("Alipay")
-            user.password = LCString("cat123123")
+            user.password = LCString("alipay123")//注册成功后,密码是以明文方式通过 HTTPS 加密传输给云端，云端会以密文存储密码,开发者只能通过控制台还是 API 重置密码，不能查看
 
             // 可选
             let letters = "0123456789"
             let randomPhonenum = String((0..<10).map{ _ in letters.randomElement()! })
 
-            user.email = LCString("alipay@xd.com")
-            user.mobilePhoneNumber = LCString("1"+randomPhonenum)
-            print("randomPhonenum", "1"+randomPhonenum)
+            user.email = LCString("alipay@test.com")
+            user.mobilePhoneNumber = LCString("+861"+randomPhonenum)
+            print("randomPhonenum", "+861"+randomPhonenum)
 
             // 设置其他属性的方法跟 LCObject 一样
             try user.set(kGenderCol, value: true)
@@ -229,9 +229,9 @@ extension SocialLoginVC{
             _ = user.signUp { (result) in
                 switch result {
                 case .success:
-                    print("注册成功, \(String(describing: user.password))")
+                    print("注册成功")
                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+2, execute: {
-                        LCUser.logIn(mobilePhoneNumber: "1"+randomPhonenum, password: "cat123123"){ result in
+                        LCUser.logIn(mobilePhoneNumber: "+861"+randomPhonenum, password: "alipay123"){ result in
                             switch result {
                             case let .success(object: user):
 
@@ -249,7 +249,7 @@ extension SocialLoginVC{
                 case .failure(error: let error):
                     print("注册失败",error)
                     DispatchQueue.main.async {
-                        self.showTextHUD("注册失败 \(error)")      //跳转界面,选false
+                        self.showTextHUD("注册失败 \(String(describing: error.reason))")      //跳转界面,选false
                     }
                 }
             }

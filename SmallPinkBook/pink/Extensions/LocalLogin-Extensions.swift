@@ -70,65 +70,12 @@ extension UIViewController{
                 
                 print("一键登录成功,loginToken: \(loginToken)")
                 JVERIFICATIONService.clearPreLoginCache()                //清除预取号缓存
-
-                do {
-                    // 创建实例
-                    let user = LCUser()
-
-                    // 等同于 user.set("username", value: "Tom")
-                    user.username = LCString("JiguangLogIn")
-                    user.password = LCString("cat123123")
-
-                    // 可选
-                    let letters = "0123456789"
-                    let randomPhonenum = String((0..<10).map{ _ in letters.randomElement()! })
-
-                    user.email = LCString("jiguangLogIn@jg.com")
-                    user.mobilePhoneNumber = LCString("1"+randomPhonenum)
-                    print("jiguangLogIn randomPhonenum", "1"+randomPhonenum)
-
-                    // 设置其他属性的方法跟 LCObject 一样
-                    try user.set(kGenderCol, value: true)
-                    try user.set(kIsSetPasswordCol, value: true)
-                    
-
-                    _ = user.signUp { (result) in
-                        switch result {
-                        case .success:
-                            print("注册成功")
-                            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+2, execute: {
-                                LCUser.logIn(mobilePhoneNumber: "1"+randomPhonenum, password: "cat123123"){ result in
-                                    switch result {
-                                    case let .success(object: user):
-
-                                        let randomNickName = "小粉薯\(String.randomString(6))"
-                                        self.configAfterLogin(user, randomNickName, "jiguangLogIn@jg.com")//LeanCloud数据存储,退出登录界面,显示个人页面
-
-                                    case let .failure(error: error):
-                                        self.hideLoadHUD()
-                                        print("密码登录失败", error.reason as Any)
-                                    }
-                                }
-                            })
-
-                        case .failure(error: let error):
-                            print("注册失败",error)
-                            DispatchQueue.main.async {
-                                self.showTextHUD("注册失败 \(error)")      //跳转界面,选false
-                            }
-                        }
-                    }
-                } catch {
-                    print("set LCObject 失败",error)
-                }
-                
-
                 
                 //发送token到我们自己的服务器
                 //1.服务器收到后携带此token并调用运营商接口（参考极光REST API）--可用postman模拟发送（注意鉴权和body中发参数）
                 //2.成功则返回被公钥加密后的用户手机号，需在服务端解密（可在公私钥网站解密）得出明文手机号
                 //3.手机号存入数据库等操作后向客户端返回登录成功的信息
-//                self.getEncryptedPhoneNum(loginToken)           //Alamofire测试-网络请求加密手机号码
+                self.getEncryptedPhoneNum(loginToken)           //Alamofire测试-网络请求加密手机号码
             }else{
                 print("一键登录失败")                   //可提示用户UI并指引用户接下来的操作
                 self.otherLogin()
