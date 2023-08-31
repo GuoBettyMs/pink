@@ -80,7 +80,7 @@ class CodeLoginVC: UIViewController {
         //需要在LeanCloud开通短信服务、添加短信签名和短信模板,否则无法发送短信(因为该应用不准备上线,所以没有添加签名)
         //短信服务 详情见 https://leancloud.cn/docs/sms-guide.html
         
-        //使用审核通过的签名签名模板
+        //使用审核通过的签名模板，否则短信无法发送,但是应运营商的审核要求，创建签名需要提交相应的证明材料，证明具体该签名的使用权,本app使用测试手机号
         //name:不指定的话为在LeanCloud上创建的应用名
         //ttl:失效时间.0-30分钟，官方说默认10分钟，实测为30，故这里重新指定
         let variables: LCDictionary = ["name": LCString("小粉书"), "ttl": LCNumber(5)]
@@ -92,7 +92,7 @@ class CodeLoginVC: UIViewController {
             variables: variables)
         { result in
             if case let .failure(error: error) = result{
-                print(error.reason ?? "短信验证码未知错误")
+                print("获取验证码失败",error.reason ?? "短信验证码未知错误")
             }
             /* 等同于
              switch result {
@@ -107,7 +107,6 @@ class CodeLoginVC: UIViewController {
     
     // MARK: 验证码登录
     //测试手机号:13202161631 测试验证码:464744(使用测试手机号不需要点击获取验证码按钮)
-    //测试手机号:18614349592 测试验证码:656357(使用测试手机号不需要点击获取验证码按钮)
     @IBAction func login(_ sender: UIButton) {
         view.endEditing(true)
         

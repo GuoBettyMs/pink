@@ -115,7 +115,61 @@ extension SocialLoginVC{
             if let data = response.data {
                 let decoder = JSONDecoder()
                 if let person = try? decoder.decode(AlipayUserInfo.self, from: data){
-                    print("nick_name ",person.nick_name)
+//                    print("nick_name ",person.nick_name)
+                    
+                    //LeanCloud 新建用户,进入小粉书个人界面
+                    do {
+                        // 创建实例
+                        let user = LCUser()
+
+                        // 等同于 user.set("username", value: "Tom")
+                        user.username = LCString("Alipay")
+                        user.password = LCString("alipay123")//注册成功后,密码是以明文方式通过 HTTPS 加密传输给云端，云端会以密文存储密码,开发者只能通过控制台还是 API 重置密码，不能查看
+
+                        // 可选
+                        let letters = "0123456789"
+                        let randomPhonenum = String((0..<10).map{ _ in letters.randomElement()! })
+
+                        user.email = LCString("alipay@test.com")
+                        user.mobilePhoneNumber = LCString("+861"+randomPhonenum)
+                        print("randomPhonenum", "+861"+randomPhonenum)
+
+                        // 设置其他属性的方法跟 LCObject 一样
+                        try user.set(kGenderCol, value: true)
+                        try user.set(kIsSetPasswordCol, value: true)
+                        
+
+                        _ = user.signUp { (result) in
+                            switch result {
+                            case .success:
+//                                print("注册成功")
+                                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+2, execute: {
+                                    LCUser.logIn(mobilePhoneNumber: "+861"+randomPhonenum, password: "alipay123"){ result in
+                                        switch result {
+                                        case let .success(object: user):
+
+                                            let randomNickName = "alipay小粉薯(\(person.nick_name))"
+                                            self.configAfterLogin(user, randomNickName, "alipay@xd.com")//LeanCloud数据存储,退出登录界面,显示个人页面
+
+                                        case let .failure(error: error):
+                                            self.hideLoadHUD()
+                                            print("密码登录失败", error.reason as Any)
+                                        }
+                                    }
+                                  
+                                })
+
+                            case .failure(error: let error):
+                                print("注册失败",error)
+                                DispatchQueue.main.async {
+                                    self.showTextHUD("注册失败 \(String(describing: error.reason))")      //跳转界面,选false
+                                }
+                            }
+                        }
+                    } catch {
+                        print("set LCObject 失败",error)
+                    }
+                    
                 }
             }
             
@@ -295,7 +349,7 @@ extension SocialLoginVC{
 //                }
             }
         }
-        
+        //LeanCloud 新建用户,进入小粉书个人界面
         do {
             // 创建实例
             let user = LCUser()
