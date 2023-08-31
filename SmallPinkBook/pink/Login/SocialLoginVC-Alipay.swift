@@ -44,9 +44,101 @@ extension SocialLoginVC{
 
     //4-2.准备请求
     //auth_V2方法,带两个大参数(在4-3和4-4中分别准备)
-    // MARK: 支付宝登录
+    //4-3.大参数1:authInfoStr,由两部分组成:infoStr和signedStr,infoStr是常规key-value参数,signedStr是把infoStr加签后的参数
+    //4-4.大参数2:appScheme--授权完可自动跳转回本app
+    // MARK: 支付宝登录-服务端
+    func signInWithAlipay_ServerSide(){
+        
+        let requestAddressUrl = kServer_LoginReqAddUrl_Alipay
+        //在服务器中完成大参数1:authInfoStr
+        AF.request(requestAddressUrl,
+                   method: .post).response { response in
+//            debugPrint(response)
+
+            if let data = response.data, let authInfoStr = try? JSONDecoder().decode(AlipayLoginInfo.self, from: data){
+                let auth_V2Str = "\(authInfoStr.requestInfoStr)&sign=\(authInfoStr.signedStr)"
+
+                //4-5.发起支付宝登录请求
+                AlipaySDK.defaultService()?.auth_V2(withInfo: auth_V2Str, fromScheme: kAppScheme, callback: { res in
+//                    print("登录请求 res: \(String(describing: res))") //返回字典类型resultStatus、memo、result
+                    guard let res = res else {return}
+
+                    //4-6.解析并获取到authCode(授权码)
+                    let resStatus = res["resultStatus"] as! String //状态返回值
+                    if resStatus == "9000" {
+                        //请求处理成功
+                        let resStr = res["result"] as! String//返回的结果数据
+                        
+                        //["success=true","result_code=200","auth_code=xxx",...]
+                        let resArr = resStr.components(separatedBy: "&")//components 根据"&"进行分割
+                        
+                        for subRes in resArr{
+                            //subRes长这样:"result_code=200","auth_code=xxx",等等
+                            //此处也可用上面的components方法,根据"="分离成数组,这里使用区间运算符方法
+                            let equalIndex = subRes.firstIndex(of: "=")!            //等于号的index
+                            let equalEndIndex = subRes.index(after: equalIndex)     //等于号后面一个字符的index
+//                            let prefix = subRes[..<equalIndex]                      //半开区间-取出等于号前面的内容
+                            let suffix = subRes[equalEndIndex...]                   //闭区间-取出等于号后面的内容
+                            
+                            //hasPrefix 看当前字符串是否有auth_code前缀,若有则取出当前字符串等于号后面的内容,即为authCode
+                            //大家可用此法同样取出result_code,并处理登录失败时候的情况
+                            if subRes.hasPrefix("auth_code"){
+//                                print("authCode = \(suffix)")//获取支付宝访问令牌
+                                
+                                //auth_V2 方法完成后,应用从支付宝回到本app,如果立刻使用NSURLSession可能会出现断连,故延时请求
+                                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+5, execute: {
+                                    self.getUserInfo(String(suffix))
+                                })
+                                
+                            }
+                        }
+                    }
+
+                })
+                
+            }
+
+        }
+    }
+    
+    //MARK: 服务端演示
+    private func getUserInfo(_ autoCode: String){
+        let requestAddressUrl = kServer_UserInfoReqAddUrl_Alipay
+        let authCode = ["authCode": autoCode]
+        
+        AF.request(requestAddressUrl,
+                   method: .post,
+                   parameters: authCode).response { response in
+//            debugPrint(response)
+
+            //从服务端获取到支付宝用户信息,客服端将数据解析成model格式
+            if let data = response.data {
+                let decoder = JSONDecoder()
+                if let person = try? decoder.decode(AlipayUserInfo.self, from: data){
+                    print("nick_name ",person.nick_name)
+                }
+            }
+            
+        }
+    }
+    
+    struct AlipayLoginInfo: Codable {
+        let requestInfoStr: String
+        let signedStr: String
+    }
+    struct AlipayUserInfo: Codable {
+        let avatar: String
+        let nick_name: String
+    }
+
+}
+
+// MARK: -
+extension SocialLoginVC{
+    
+    // MARK: 支付宝登录-客户端
     //<#实际开发需在服务端sign(加签)(因privateKey放客户端风险很大),然后传回客户端--这里是为了演示而在客户端搞#>
-    func signInWithAlipay(){
+    func signInWithAlipay_ClientSide(){
         
         //4-3.大参数1:authInfoStr,由两部分组成:infoStr和signedStr,infoStr是常规key-value参数,signedStr是把infoStr加签后的参数
         //https://opendocs.alipay.com/open/218/105325
@@ -66,55 +158,53 @@ extension SocialLoginVC{
         
         //4-3-3.拼接成大参数1
         let authInfoStr = "\(infoStr)&sign=\(signedStr)"
-        print("参数1 authInfoStr: \(authInfoStr)")
+//        print("参数1 authInfoStr: \(authInfoStr)")
         
         //4-4.大参数2:appScheme--授权完可自动跳转回本app
-        
+     
         //4-5.发起支付宝登录请求
         AlipaySDK.defaultService()?.auth_V2(withInfo: authInfoStr, fromScheme: kAppScheme, callback: { res in
-            print("登录请求 res: \(String(describing: res))")     //返回字典类型resultStatus、memo、result
+//            print("登录请求 res: \(String(describing: res))")     //返回字典类型resultStatus、memo、result
             guard let res = res else {return}
-            
+
             //4-6.解析并获取到authCode(授权码)
             let resStatus = res["resultStatus"] as! String               //状态返回值
             if resStatus == "9000" {
                 //请求处理成功
                 //"success=true&result_code=200&app_id=2021003156621524&auth_code=e0f9ee3fc8fa4fb68042420aa03cSX35&scope=kuaijie&alipay_open_id=20880004690117562736785150313535&user_id=2088612154791354&target_id=20211009"
                 let resStr = res["result"] as! String                    //返回的结果数据
-                
+
                 //["success=true","result_code=200","auth_code=xxx",...]
                 let resArr = resStr.components(separatedBy: "&")         //components 根据"&"进行分割
-                
+
                 for subRes in resArr{
                     //subRes长这样:"result_code=200","auth_code=xxx",等等
                     //此处也可用上面的components方法,根据"="分离成数组,这里使用区间运算符方法
                     let equalIndex = subRes.firstIndex(of: "=")!            //等于号的index
                     let equalEndIndex = subRes.index(after: equalIndex)     //等于号后面一个字符的index
-                    let prefix = subRes[..<equalIndex]                      //半开区间-取出等于号前面的内容
+//                    let prefix = subRes[..<equalIndex]                      //半开区间-取出等于号前面的内容
                     let suffix = subRes[equalEndIndex...]                   //闭区间-取出等于号后面的内容
-                    print("subRes -- \(prefix): \(suffix)")
-                    
+//                    print("subRes -- \(prefix): \(suffix)")
+
                     //hasPrefix 看当前字符串是否有auth_code前缀,若有则取出当前字符串等于号后面的内容,即为authCode
                     //大家可用此法同样取出result_code,并处理登录失败时候的情况
                     if subRes.hasPrefix("auth_code"){
-                        print("authCode = \(suffix)")
-                        //4-7和4-8需在服务端进行,此处仅演示在客户端
+//                        print("authCode = \(suffix)")//获取支付宝访问令牌
                         
+                        //4-7和4-8需在服务端进行,此处仅演示在客户端
                         //4-7.拿authCode去和支付宝换token(访问令牌和更新令牌)
 //                        self.getToken(String(suffix))
+
                     }
                 }
             }
-            
+
         })
         
     }
     
-}
-// MARK: -
-extension SocialLoginVC{
-    
     // MARK: 客户端操作演示(不安全) - 拿authCode去和支付宝换token
+    //用支付宝登录令牌authCode 换取支付宝信息授权访问令牌accessToken
     private func getToken(_ authCode: String){
         //https://opendocs.alipay.com/apis/api_9/alipay.system.oauth.token
        
@@ -165,18 +255,19 @@ extension SocialLoginVC{
         //对access_token进行解码
         AF.request("https://openapi.alipay.com/gateway.do", parameters: self.signedParameters(parameters)).responseDecodable(of: TokenResponse.self) { response in
 
-            print("getToken response: \(response)")
+//            print("getToken response: \(response)")
 
             if let tokenResponse = response.value{
                 let accessToken = tokenResponse.alipay_system_oauth_token_response.access_token         //alipay_system_oauth_token_response 授权访问令牌model
-
+                print("accessToken: \(accessToken)")
                 //4-8.拿accessToken去和支付宝换用户信息
-                self.getInfo(accessToken)
+//                self.getInfo(accessToken)
             }
         }
     }
     
     // MARK: 客户端操作演示(不安全) - 拿accessToken去和支付宝换用户信息
+    //用支付宝信息授权令牌accessToken获取支付宝用户信息
     private func getInfo(_ accessToken: String){
         //https://opendocs.alipay.com/apis/api_2/alipay.user.info.share
 
@@ -256,12 +347,8 @@ extension SocialLoginVC{
         } catch {
             print("set LCObject 失败",error)
         }
-        
-        
+ 
     }
-}
-// MARK: -
-extension SocialLoginVC{
     
     // MARK: 客户端操作演示(不安全) - 辅助函数,返回签名参数字典
     //手动添加签名,需对所有参数parameters进行排序
@@ -286,11 +373,7 @@ extension SocialLoginVC{
         
         return signedParameters
     }
-}
-// MARK: -
-
-extension SocialLoginVC{
-
+    
     // MARK: 客户端操作演示(不安全) - DataModel,TokenResponse
     //授权访问令牌 access_token model
     struct TokenResponse: Decodable {
@@ -300,8 +383,7 @@ extension SocialLoginVC{
             let access_token: String
         }
     }
-
-
+    
     // MARK: 客户端操作演示(不安全) - DataModel,InfoShareResponse
     //用户信息model
     struct InfoShareResponse: Decodable {
@@ -319,4 +401,6 @@ extension SocialLoginVC{
         }
     }
 }
+
+
 

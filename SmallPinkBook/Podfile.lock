@@ -44,6 +44,7 @@ PODS:
   - SKPhotoBrowser (7.1.0)
   - SteviaLayout (4.7.3)
   - SwiftProtobuf (1.20.1)
+  - SwiftyJSON (5.0.1)
   - XLPagerTabStrip (9.0.0)
   - YPImagePicker (5.2.1):
     - PryntTrimmerView (= 4.0.2)
@@ -71,6 +72,7 @@ DEPENDENCIES:
   - PopupDialog (~> 1.1)
   - SegementSlide (= 3.0.1)
   - SKPhotoBrowser
+  - SwiftyJSON (~> 5.0.1)
   - XLPagerTabStrip (~> 9.0)
   - YPImagePicker
 
@@ -103,6 +105,7 @@ SPEC REPOS:
     - SKPhotoBrowser
     - SteviaLayout
     - SwiftProtobuf
+    - SwiftyJSON
     - XLPagerTabStrip
     - YPImagePicker
 
@@ -134,9 +137,10 @@ SPEC CHECKSUMS:
   SKPhotoBrowser: cd95b95a6f352fc2a50992721299f75ead77f9ab
   SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
   SwiftProtobuf: e40a7684079620e84ba522dbaeab0cddb0ec7ffd
+  SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
   YPImagePicker: f36043210c10b0783034eb1947d6e06e31c461e4
 
-PODFILE CHECKSUM: cc1c3a42fe1a931704fc4abfe96290e2c2ed0dad
+PODFILE CHECKSUM: 165eefccc1beace29d660b2a357ce4fba035ddfa
 
 COCOAPODS: 1.12.0

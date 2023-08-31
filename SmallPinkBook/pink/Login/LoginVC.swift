@@ -13,6 +13,7 @@
        生成极光认证平台所需的RSA密钥,保存为 “应用公钥1024.txt” 和 “应用私钥1024.txt”
  */
 import UIKit
+import Alamofire
 
 class LoginVC: UIViewController {
 

@@ -21,7 +21,7 @@ extension UIViewController{
         let config = JVAuthConfig()         //JVAuthConfig类，应用配置信息类
         config.appKey = kJAppKey
         config.authBlock = { _ in
-            
+
             //获取初始化状态
             if JVERIFICATIONService.isSetupClient(){
 
@@ -29,7 +29,7 @@ extension UIViewController{
                 JVERIFICATIONService.preLogin(10000) { (result) in
 //                    print(result)  //字典result 有两个Key: Code、content
                     self.hideLoadHUD()
-                    
+
                     //当code = 7000时表示当前网络环境可以发起认证,当前设备可使用一键登录
                     if let result = result, let code = result["code"] as? Int, code == 7000 {
                         self.setLocalLoginUI()
@@ -45,7 +45,7 @@ extension UIViewController{
                 self.presentCodeLoginVC()              //验证码登录
             }
         }
-        
+
         /* isSetupClient()等同于
         config.authBlock = { (result) -> Void in
                 if let result = result {
@@ -55,8 +55,10 @@ extension UIViewController{
                 }
             }
          */
-        
+
         JVERIFICATIONService.setup(with: config)        //初始化JVAuthConfig类接口
+        
+        
     }
     
     // MARK: 预取手机号码一键登录 - 弹出一键登录授权页+用户点击登录后
@@ -75,7 +77,7 @@ extension UIViewController{
                 //1.服务器收到后携带此token并调用运营商接口（参考极光REST API）--可用postman模拟发送（注意鉴权和body中发参数）
                 //2.成功则返回被公钥加密后的用户手机号，需在服务端解密（可在公私钥网站解密）得出明文手机号
                 //3.手机号存入数据库等操作后向客户端返回登录成功的信息
-                self.getEncryptedPhoneNum(loginToken)           //Alamofire测试-网络请求加密手机号码
+                self.getEncryptedPhoneNum(loginToken)           //提交 loginToken，验证后返回加密的手机号码。
             }else{
                 print("一键登录失败")                   //可提示用户UI并指引用户接下来的操作
                 self.otherLogin()
@@ -210,26 +212,45 @@ extension UIViewController{
     }
     
     // MARK: Alamofire测试 - 网络请求加密手机号码
+    ////发送token到我们自己的服务器
+    //1.服务器收到后携带此token并调用运营商接口（参考极光REST API）--可用postman模拟发送（注意鉴权和body中发参数）
+    //2.成功则返回被公钥加密后的用户手机号，需在服务端解密（可在公私钥网站解密）得出明文手机号
+    //3.手机号存入数据库等操作后向客户端返回登录成功的信息
     private func getEncryptedPhoneNum(_ loginToken: String){
         
         //测试时需把Master Secret改成自己的
         let headers: HTTPHeaders = [
-            .authorization(username: kJAppKey, password: "Master Secret")
+            .authorization(username: kJAppKey, password: kJGMasterSecretKey)
         ]
         
         let parameters = ["loginToken": loginToken]
         
         //responseDecodable 响应,把jason字段一一解码为规定的字段phone
+//        AF.request(
+//            "https://api.verification.jpush.cn/v1/web/loginTokenVerify",
+//            method: .post,
+//            parameters: parameters,
+//            encoder: JSONParameterEncoder.default,
+//            headers: headers
+//        ).responseDecodable(of: LocalLoginRes.self) { response in
+//
+//            if let localLoginRes = response.value{
+//                print("localLoginRes.phone: \(localLoginRes.phone) \n \(response)")//返回被公钥加密后的用户手机号
+//            }else{
+//                print("response.error: \(response.error)")
+//            }
+//        }
+        
         AF.request(
             "https://api.verification.jpush.cn/v1/web/loginTokenVerify",
             method: .post,
             parameters: parameters,
             encoder: JSONParameterEncoder.default,
             headers: headers
-        ).responseDecodable(of: LocalLoginRes.self) { response in
-            if let localLoginRes = response.value{
-                print("localLoginRes.phone: \(localLoginRes.phone)")
-            }
-        }
+        ).responseJSON(completionHandler: { response in
+            print("response: \(response)")
+        })
+        
+        
     }
 }

@@ -23,7 +23,8 @@ class SocialLoginVC: UIViewController {
 
     // MARK: 支付宝登录
     @IBAction func signInWithAlipay(_ sender: Any) {
-        signInWithAlipay()
+        signInWithAlipay_ServerSide()
+//        signInWithAlipay_ClientSide()
     }
     
     // MARK: 苹果登录

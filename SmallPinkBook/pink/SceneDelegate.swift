@@ -50,7 +50,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             case .success:
                 break
             case .failure(error: let error):
-                print(error)
+                print("LCApplication.default.currentInstallation save error",error)
             }
         }
         
