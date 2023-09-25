@@ -104,7 +104,7 @@ let kPOIsOffset = 20                           //每页展示的搜索数量
 
 //极光一键登录
 let kJAppKey = "e590b77d81335e8dd9d9f960"       //配置一键登录Key,登录极光安全认证,集成设置中的AppKey
-let kJGMasterSecretKey = "Master Secret" //敏感数据，请妥善保管,"Master Secret",登录极光安全认证,集成设置中的 Master Secret
+let kJGMasterSecretKey = "10c61f9131235f0153ff3993" //敏感数据，请妥善保管,"Master Secret",登录极光安全认证,集成设置中的 Master Secret
 
 //支付宝登录(沙箱虚拟ID 支付宝登录请求会失败)
 //1⃣️kAliPayAppID: 应用真实ID、登录 https://b.alipay.com/page/account-manage-oc/bind/appIdBindList 的账号中心->APPID绑定->已绑定应用->APPID 查询

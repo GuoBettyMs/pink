@@ -64,7 +64,7 @@ extension UIViewController{
     // MARK: 预取手机号码一键登录 - 弹出一键登录授权页+用户点击登录后
     private func presentLocalLoginVC(){
         
-        //getAuthorizationWith 请求授权一键登录
+        //getAuthorizationWith 请求授权一键登录,获取登录token
         JVERIFICATIONService.getAuthorizationWith(self, hide: true, animated: true, timeout: 5*1000, completion: { (result) in
             
             //由官方文档得知,当code=6000时获取loginToken成功,code=6001时获取loginToken失败
@@ -73,11 +73,11 @@ extension UIViewController{
                 print("一键登录成功,loginToken: \(loginToken)")
                 JVERIFICATIONService.clearPreLoginCache()                //清除预取号缓存
                 
-                //发送token到我们自己的服务器
+                //发送token到我们自己的服务器,调用运营商一键登录的接口换取手机号码
                 //1.服务器收到后携带此token并调用运营商接口（参考极光REST API）--可用postman模拟发送（注意鉴权和body中发参数）
                 //2.成功则返回被公钥加密后的用户手机号，需在服务端解密（可在公私钥网站解密）得出明文手机号
                 //3.手机号存入数据库等操作后向客户端返回登录成功的信息
-                self.getEncryptedPhoneNum(loginToken)           //提交 loginToken，验证后返回加密的手机号码。
+                self.getEncryptedPhoneNum(loginToken)
             }else{
                 print("一键登录失败")                   //可提示用户UI并指引用户接下来的操作
                 self.otherLogin()
@@ -91,34 +91,61 @@ extension UIViewController{
         }
     }
 
-    // MARK: 验证码登录
-   func presentCodeLoginVC(){
-        let mainSB = UIStoryboard(name: "Main", bundle: nil)
-        let loginNaviC = mainSB.instantiateViewController(identifier: kLoginNaviID)
-        loginNaviC.modalPresentationStyle = .fullScreen
-        present(loginNaviC, animated: true)
-    }
+
 
 }
-// MARK: -
-extension UIViewController{
-    
-    // MARK: 监听 - 除一键登录外的其他方式登录
-    @objc private func otherLogin(){
-        JVERIFICATIONService.dismissLoginController(animated: true) {
-            self.presentCodeLoginVC()
-        }
-    }
-    
-    // MARK: 监听 - 退出预取手机号码一键登录
-    @objc private func dismissLocalLoginVC(){
-        JVERIFICATIONService.dismissLoginController(animated: true, completion: nil)
-    }
-}
+
 
 // MARK: -
 extension UIViewController{
 
+    struct LocalLoginRes: Decodable {
+        let phone: String
+    }
+    
+    // MARK: Alamofire测试 - 网络请求加密手机号码
+    //1.发送token到自己的服务器
+    //2.服务器收到此token,调用运营商一键登录接口
+    //3.成功则返回被公钥加密后的用户手机号，在服务端继续解密,得出明文手机号
+    //4.向客户端返回登录成功的信息,供客户端查询明文手机号
+    private func getEncryptedPhoneNum(_ loginToken: String){
+        
+        //测试时需把Master Secret改成自己的
+        let headers: HTTPHeaders = [
+            .authorization(username: kJAppKey, password: kJGMasterSecretKey)
+        ]
+        
+        let parameters = ["loginToken": loginToken]
+        
+        //responseDecodable 响应,把jason字段一一解码为规定的字段phone
+//        AF.request(
+//            "https://api.verification.jpush.cn/v1/web/loginTokenVerify",
+//            method: .post,
+//            parameters: parameters,
+//            encoder: JSONParameterEncoder.default,
+//            headers: headers
+//        ).responseDecodable(of: LocalLoginRes.self) { response in
+//
+//            if let localLoginRes = response.value{
+//                print("localLoginRes.phone: \(localLoginRes.phone) \n \(response)")//返回被公钥加密后的用户手机号
+//            }else{
+//                print("response.error: \(response.error)")
+//            }
+//        }
+        
+        AF.request(
+            "https://api.verification.jpush.cn/v2/web/loginTokenVerify",//https://api.verification.jpush.cn/v1/web/loginTokenVerify
+            method: .post,
+            parameters: parameters,
+            encoder: JSONParameterEncoder.default,
+            headers: headers
+        ).responseJSON(completionHandler: { response in
+            debugPrint("response: \(response)")
+          
+        })
+    }
+    
+    
     // MARK: UI - 预取手机号码一键登录界面
     private func setLocalLoginUI(){
         let config = JVUIConfig()               //JVUIConfig 登录界面UI配置基类
@@ -204,53 +231,27 @@ extension UIViewController{
         }
     }
 }
+
 // MARK: -
 extension UIViewController{
     
-    struct LocalLoginRes: Decodable {
-        let phone: String
+    // MARK: 监听 - 除一键登录外的其他方式登录
+    @objc private func otherLogin(){
+        JVERIFICATIONService.dismissLoginController(animated: true) {
+            self.presentCodeLoginVC()
+        }
     }
     
-    // MARK: Alamofire测试 - 网络请求加密手机号码
-    ////发送token到我们自己的服务器
-    //1.服务器收到后携带此token并调用运营商接口（参考极光REST API）--可用postman模拟发送（注意鉴权和body中发参数）
-    //2.成功则返回被公钥加密后的用户手机号，需在服务端解密（可在公私钥网站解密）得出明文手机号
-    //3.手机号存入数据库等操作后向客户端返回登录成功的信息
-    private func getEncryptedPhoneNum(_ loginToken: String){
-        
-        //测试时需把Master Secret改成自己的
-        let headers: HTTPHeaders = [
-            .authorization(username: kJAppKey, password: kJGMasterSecretKey)
-        ]
-        
-        let parameters = ["loginToken": loginToken]
-        
-        //responseDecodable 响应,把jason字段一一解码为规定的字段phone
-//        AF.request(
-//            "https://api.verification.jpush.cn/v1/web/loginTokenVerify",
-//            method: .post,
-//            parameters: parameters,
-//            encoder: JSONParameterEncoder.default,
-//            headers: headers
-//        ).responseDecodable(of: LocalLoginRes.self) { response in
-//
-//            if let localLoginRes = response.value{
-//                print("localLoginRes.phone: \(localLoginRes.phone) \n \(response)")//返回被公钥加密后的用户手机号
-//            }else{
-//                print("response.error: \(response.error)")
-//            }
-//        }
-        
-        AF.request(
-            "https://api.verification.jpush.cn/v1/web/loginTokenVerify",
-            method: .post,
-            parameters: parameters,
-            encoder: JSONParameterEncoder.default,
-            headers: headers
-        ).responseJSON(completionHandler: { response in
-            print("response: \(response)")
-        })
-        
-        
+    // MARK: 验证码登录
+   func presentCodeLoginVC(){
+        let mainSB = UIStoryboard(name: "Main", bundle: nil)
+        let loginNaviC = mainSB.instantiateViewController(identifier: kLoginNaviID)
+        loginNaviC.modalPresentationStyle = .fullScreen
+        present(loginNaviC, animated: true)
+    }
+    
+    // MARK: 监听 - 退出预取手机号码一键登录
+    @objc private func dismissLocalLoginVC(){
+        JVERIFICATIONService.dismissLoginController(animated: true, completion: nil)
     }
 }
