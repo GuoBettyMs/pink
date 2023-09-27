@@ -87,7 +87,7 @@ extension SocialLoginVC{
                                 
                                 //auth_V2 方法完成后,应用从支付宝回到本app,如果立刻使用NSURLSession可能会出现断连,故延时请求
                                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+5, execute: {
-                                    self.getUserInfo(String(suffix))
+                                    self.getUserInfo_ServerSlide(String(suffix))
                                 })
                                 
                             }
@@ -102,21 +102,21 @@ extension SocialLoginVC{
     }
     
     //MARK: 服务端演示
-    private func getUserInfo(_ autoCode: String){
+    private func getUserInfo_ServerSlide(_ autoCode: String){
         let requestAddressUrl = kServer_UserInfoReqAddUrl_Alipay
         let authCode = ["authCode": autoCode]
         
         AF.request(requestAddressUrl,
                    method: .post,
                    parameters: authCode).response { response in
-//            debugPrint(response)
+            debugPrint(response)
 
             //从服务端获取到支付宝用户信息,客服端将数据解析成model格式
             if let data = response.data {
                 let decoder = JSONDecoder()
                 if let person = try? decoder.decode(AlipayUserInfo.self, from: data){
 //                    print("nick_name ",person.nick_name)
-                    
+
                     //LeanCloud 新建用户,进入小粉书个人界面
                     do {
                         // 创建实例
@@ -137,7 +137,6 @@ extension SocialLoginVC{
                         // 设置其他属性的方法跟 LCObject 一样
                         try user.set(kGenderCol, value: true)
                         try user.set(kIsSetPasswordCol, value: true)
-                        
 
                         _ = user.signUp { (result) in
                             switch result {
@@ -156,7 +155,7 @@ extension SocialLoginVC{
                                             print("密码登录失败", error.reason as Any)
                                         }
                                     }
-                                  
+
                                 })
 
                             case .failure(error: let error):
@@ -169,7 +168,7 @@ extension SocialLoginVC{
                     } catch {
                         print("set LCObject 失败",error)
                     }
-                    
+
                 }
             }
             
@@ -247,7 +246,7 @@ extension SocialLoginVC{
                         
                         //4-7和4-8需在服务端进行,此处仅演示在客户端
                         //4-7.拿authCode去和支付宝换token(访问令牌和更新令牌)
-//                        self.getToken(String(suffix))
+//                        self.getToken_ClientSide(String(suffix))
 
                     }
                 }
@@ -259,7 +258,7 @@ extension SocialLoginVC{
     
     // MARK: 客户端操作演示(不安全) - 拿authCode去和支付宝换token
     //用支付宝登录令牌authCode 换取支付宝信息授权访问令牌accessToken
-    private func getToken(_ authCode: String){
+    private func getToken_ClientSide(_ authCode: String){
         //https://opendocs.alipay.com/apis/api_9/alipay.system.oauth.token
        
 //        var parameters = [
@@ -315,14 +314,14 @@ extension SocialLoginVC{
                 let accessToken = tokenResponse.alipay_system_oauth_token_response.access_token         //alipay_system_oauth_token_response 授权访问令牌model
                 print("accessToken: \(accessToken)")
                 //4-8.拿accessToken去和支付宝换用户信息
-//                self.getInfo(accessToken)
+//                self.getInfo_ClientSide(accessToken)
             }
         }
     }
     
     // MARK: 客户端操作演示(不安全) - 拿accessToken去和支付宝换用户信息
     //用支付宝信息授权令牌accessToken获取支付宝用户信息
-    private func getInfo(_ accessToken: String){
+    private func getInfo_ClientSide(_ accessToken: String){
         //https://opendocs.alipay.com/apis/api_2/alipay.user.info.share
 
         let parameters = [
@@ -454,6 +453,7 @@ extension SocialLoginVC{
 //            let city: String = "深圳市"                   //用户城市
         }
     }
+    
 }
 
 

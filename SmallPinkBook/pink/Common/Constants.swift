@@ -104,15 +104,15 @@ let kPOIsOffset = 20                           //每页展示的搜索数量
 
 //极光一键登录
 let kJAppKey = "e590b77d81335e8dd9d9f960"       //配置一键登录Key,登录极光安全认证,集成设置中的AppKey
-let kJGMasterSecretKey = "10c61f9131235f0153ff3993" //敏感数据，请妥善保管,"Master Secret",登录极光安全认证,集成设置中的 Master Secret
+let kServer_LoginReqAddUrl_Jiguang = "https://api.queblog.cn/testGetLoginInPhoneNum_Jiguang.php"//服务端地址,获得极光一键登录的状态和用户的明文手机号
 
 //支付宝登录(沙箱虚拟ID 支付宝登录请求会失败)
 //1⃣️kAliPayAppID: 应用真实ID、登录 https://b.alipay.com/page/account-manage-oc/bind/appIdBindList 的账号中心->APPID绑定->已绑定应用->APPID 查询
 //2⃣️kAliPayPID: 商户ID, 登录 https://b.alipay.com/page/store-management/infomanage 的账号中心->商户基本信息->商户号(收单账号) 查询
 //3⃣️kAlipayPrivateKey: 用支付宝开发平台开发助手申请到应用密钥对,https://opendocs.alipay.com/common/02kipk ,应用私钥单独保存,将应用公钥上传到支付宝开放平台得到支付宝公钥,赋值给 kAlipayPrivateKey
 //使用 kAlipayPrivateKey 对常规key-value参数进行加签,得到一个新的加签参数,结合常规key-value参数一起进行支付宝登录请求
-let kServer_LoginReqAddUrl_Alipay = "https://api.queblog.cn/testLoginReqAddUrl_Alipay.php" //服务端地址
-let kServer_UserInfoReqAddUrl_Alipay = "https://api.queblog.cn/testUserInfoReqAddUrl_Alipay.php" //服务端地址
+let kServer_LoginReqAddUrl_Alipay = "https://api.queblog.cn/testLoginReqAddUrl_Alipay.php" //服务端地址,获得支付宝登录请求的加签参数
+let kServer_UserInfoReqAddUrl_Alipay = "https://api.queblog.cn/testUserInfoReqAddUrl_Alipay.php" //服务端地址,获得支付宝登录的用户信息
 let kAppScheme = "pink"                             //浏览器搜索栏输入"pink://",回车后可直接跳转到App
 let kAliPayAppID = "2021000121677944"               //沙箱APPID(2021000121677944)
 let kAliPayPID = "2088621993691831"                 //沙箱PID(2088621993691831)
